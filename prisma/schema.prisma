@@ -18,7 +18,6 @@ model Event {
 
   stores  Store[]
   tickets Ticket[]
-  users   User[]
   staffs  Staff[]
 
   createdAt DateTime @default(now())
@@ -81,8 +80,6 @@ model User {
   isSubscribed  Boolean @default(false)
   isNotificated Boolean @default(false)
 
-  eventId Int
-  event   Event    @relation(fields: [eventId], references: [id])
   tickets Ticket[]
 
   createdAt DateTime @default(now())

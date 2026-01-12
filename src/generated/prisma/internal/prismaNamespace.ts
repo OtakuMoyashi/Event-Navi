@@ -869,7 +869,6 @@ export const UserScalarFieldEnum = {
   uuid: 'uuid',
   isSubscribed: 'isSubscribed',
   isNotificated: 'isNotificated',
-  eventId: 'eventId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

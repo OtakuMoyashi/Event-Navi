@@ -28,12 +28,10 @@ export type AggregateUser = {
 
 export type UserAvgAggregateOutputType = {
   id: number | null
-  eventId: number | null
 }
 
 export type UserSumAggregateOutputType = {
   id: number | null
-  eventId: number | null
 }
 
 export type UserMinAggregateOutputType = {
@@ -41,7 +39,6 @@ export type UserMinAggregateOutputType = {
   uuid: string | null
   isSubscribed: boolean | null
   isNotificated: boolean | null
-  eventId: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -51,7 +48,6 @@ export type UserMaxAggregateOutputType = {
   uuid: string | null
   isSubscribed: boolean | null
   isNotificated: boolean | null
-  eventId: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -61,7 +57,6 @@ export type UserCountAggregateOutputType = {
   uuid: number
   isSubscribed: number
   isNotificated: number
-  eventId: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -70,12 +65,10 @@ export type UserCountAggregateOutputType = {
 
 export type UserAvgAggregateInputType = {
   id?: true
-  eventId?: true
 }
 
 export type UserSumAggregateInputType = {
   id?: true
-  eventId?: true
 }
 
 export type UserMinAggregateInputType = {
@@ -83,7 +76,6 @@ export type UserMinAggregateInputType = {
   uuid?: true
   isSubscribed?: true
   isNotificated?: true
-  eventId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -93,7 +85,6 @@ export type UserMaxAggregateInputType = {
   uuid?: true
   isSubscribed?: true
   isNotificated?: true
-  eventId?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -103,7 +94,6 @@ export type UserCountAggregateInputType = {
   uuid?: true
   isSubscribed?: true
   isNotificated?: true
-  eventId?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -200,7 +190,6 @@ export type UserGroupByOutputType = {
   uuid: string
   isSubscribed: boolean
   isNotificated: boolean
-  eventId: number
   createdAt: Date
   updatedAt: Date
   _count: UserCountAggregateOutputType | null
@@ -233,10 +222,8 @@ export type UserWhereInput = {
   uuid?: Prisma.StringFilter<"User"> | string
   isSubscribed?: Prisma.BoolFilter<"User"> | boolean
   isNotificated?: Prisma.BoolFilter<"User"> | boolean
-  eventId?: Prisma.IntFilter<"User"> | number
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
-  event?: Prisma.XOR<Prisma.EventScalarRelationFilter, Prisma.EventWhereInput>
   tickets?: Prisma.TicketListRelationFilter
 }
 
@@ -245,10 +232,8 @@ export type UserOrderByWithRelationInput = {
   uuid?: Prisma.SortOrder
   isSubscribed?: Prisma.SortOrder
   isNotificated?: Prisma.SortOrder
-  eventId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-  event?: Prisma.EventOrderByWithRelationInput
   tickets?: Prisma.TicketOrderByRelationAggregateInput
 }
 
@@ -260,10 +245,8 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[]
   isSubscribed?: Prisma.BoolFilter<"User"> | boolean
   isNotificated?: Prisma.BoolFilter<"User"> | boolean
-  eventId?: Prisma.IntFilter<"User"> | number
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
-  event?: Prisma.XOR<Prisma.EventScalarRelationFilter, Prisma.EventWhereInput>
   tickets?: Prisma.TicketListRelationFilter
 }, "id" | "uuid">
 
@@ -272,7 +255,6 @@ export type UserOrderByWithAggregationInput = {
   uuid?: Prisma.SortOrder
   isSubscribed?: Prisma.SortOrder
   isNotificated?: Prisma.SortOrder
-  eventId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
@@ -290,7 +272,6 @@ export type UserScalarWhereWithAggregatesInput = {
   uuid?: Prisma.StringWithAggregatesFilter<"User"> | string
   isSubscribed?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
   isNotificated?: Prisma.BoolWithAggregatesFilter<"User"> | boolean
-  eventId?: Prisma.IntWithAggregatesFilter<"User"> | number
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
 }
@@ -301,7 +282,6 @@ export type UserCreateInput = {
   isNotificated?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  event: Prisma.EventCreateNestedOneWithoutUsersInput
   tickets?: Prisma.TicketCreateNestedManyWithoutUserInput
 }
 
@@ -310,7 +290,6 @@ export type UserUncheckedCreateInput = {
   uuid: string
   isSubscribed?: boolean
   isNotificated?: boolean
-  eventId: number
   createdAt?: Date | string
   updatedAt?: Date | string
   tickets?: Prisma.TicketUncheckedCreateNestedManyWithoutUserInput
@@ -322,7 +301,6 @@ export type UserUpdateInput = {
   isNotificated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  event?: Prisma.EventUpdateOneRequiredWithoutUsersNestedInput
   tickets?: Prisma.TicketUpdateManyWithoutUserNestedInput
 }
 
@@ -331,7 +309,6 @@ export type UserUncheckedUpdateInput = {
   uuid?: Prisma.StringFieldUpdateOperationsInput | string
   isSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isNotificated?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  eventId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tickets?: Prisma.TicketUncheckedUpdateManyWithoutUserNestedInput
@@ -342,7 +319,6 @@ export type UserCreateManyInput = {
   uuid: string
   isSubscribed?: boolean
   isNotificated?: boolean
-  eventId: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -360,19 +336,8 @@ export type UserUncheckedUpdateManyInput = {
   uuid?: Prisma.StringFieldUpdateOperationsInput | string
   isSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
   isNotificated?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  eventId?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type UserListRelationFilter = {
-  every?: Prisma.UserWhereInput
-  some?: Prisma.UserWhereInput
-  none?: Prisma.UserWhereInput
-}
-
-export type UserOrderByRelationAggregateInput = {
-  _count?: Prisma.SortOrder
 }
 
 export type UserScalarRelationFilter = {
@@ -385,14 +350,12 @@ export type UserCountOrderByAggregateInput = {
   uuid?: Prisma.SortOrder
   isSubscribed?: Prisma.SortOrder
   isNotificated?: Prisma.SortOrder
-  eventId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type UserAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  eventId?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
@@ -400,7 +363,6 @@ export type UserMaxOrderByAggregateInput = {
   uuid?: Prisma.SortOrder
   isSubscribed?: Prisma.SortOrder
   isNotificated?: Prisma.SortOrder
-  eventId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -410,56 +372,12 @@ export type UserMinOrderByAggregateInput = {
   uuid?: Prisma.SortOrder
   isSubscribed?: Prisma.SortOrder
   isNotificated?: Prisma.SortOrder
-  eventId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type UserSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  eventId?: Prisma.SortOrder
-}
-
-export type UserCreateNestedManyWithoutEventInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutEventInput, Prisma.UserUncheckedCreateWithoutEventInput> | Prisma.UserCreateWithoutEventInput[] | Prisma.UserUncheckedCreateWithoutEventInput[]
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutEventInput | Prisma.UserCreateOrConnectWithoutEventInput[]
-  createMany?: Prisma.UserCreateManyEventInputEnvelope
-  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
-}
-
-export type UserUncheckedCreateNestedManyWithoutEventInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutEventInput, Prisma.UserUncheckedCreateWithoutEventInput> | Prisma.UserCreateWithoutEventInput[] | Prisma.UserUncheckedCreateWithoutEventInput[]
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutEventInput | Prisma.UserCreateOrConnectWithoutEventInput[]
-  createMany?: Prisma.UserCreateManyEventInputEnvelope
-  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
-}
-
-export type UserUpdateManyWithoutEventNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutEventInput, Prisma.UserUncheckedCreateWithoutEventInput> | Prisma.UserCreateWithoutEventInput[] | Prisma.UserUncheckedCreateWithoutEventInput[]
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutEventInput | Prisma.UserCreateOrConnectWithoutEventInput[]
-  upsert?: Prisma.UserUpsertWithWhereUniqueWithoutEventInput | Prisma.UserUpsertWithWhereUniqueWithoutEventInput[]
-  createMany?: Prisma.UserCreateManyEventInputEnvelope
-  set?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
-  disconnect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
-  delete?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
-  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
-  update?: Prisma.UserUpdateWithWhereUniqueWithoutEventInput | Prisma.UserUpdateWithWhereUniqueWithoutEventInput[]
-  updateMany?: Prisma.UserUpdateManyWithWhereWithoutEventInput | Prisma.UserUpdateManyWithWhereWithoutEventInput[]
-  deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
-}
-
-export type UserUncheckedUpdateManyWithoutEventNestedInput = {
-  create?: Prisma.XOR<Prisma.UserCreateWithoutEventInput, Prisma.UserUncheckedCreateWithoutEventInput> | Prisma.UserCreateWithoutEventInput[] | Prisma.UserUncheckedCreateWithoutEventInput[]
-  connectOrCreate?: Prisma.UserCreateOrConnectWithoutEventInput | Prisma.UserCreateOrConnectWithoutEventInput[]
-  upsert?: Prisma.UserUpsertWithWhereUniqueWithoutEventInput | Prisma.UserUpsertWithWhereUniqueWithoutEventInput[]
-  createMany?: Prisma.UserCreateManyEventInputEnvelope
-  set?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
-  disconnect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
-  delete?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
-  connect?: Prisma.UserWhereUniqueInput | Prisma.UserWhereUniqueInput[]
-  update?: Prisma.UserUpdateWithWhereUniqueWithoutEventInput | Prisma.UserUpdateWithWhereUniqueWithoutEventInput[]
-  updateMany?: Prisma.UserUpdateManyWithWhereWithoutEventInput | Prisma.UserUpdateManyWithWhereWithoutEventInput[]
-  deleteMany?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
 }
 
 export type UserCreateNestedOneWithoutTicketsInput = {
@@ -476,71 +394,12 @@ export type UserUpdateOneRequiredWithoutTicketsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutTicketsInput, Prisma.UserUpdateWithoutTicketsInput>, Prisma.UserUncheckedUpdateWithoutTicketsInput>
 }
 
-export type UserCreateWithoutEventInput = {
-  uuid: string
-  isSubscribed?: boolean
-  isNotificated?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  tickets?: Prisma.TicketCreateNestedManyWithoutUserInput
-}
-
-export type UserUncheckedCreateWithoutEventInput = {
-  id?: number
-  uuid: string
-  isSubscribed?: boolean
-  isNotificated?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  tickets?: Prisma.TicketUncheckedCreateNestedManyWithoutUserInput
-}
-
-export type UserCreateOrConnectWithoutEventInput = {
-  where: Prisma.UserWhereUniqueInput
-  create: Prisma.XOR<Prisma.UserCreateWithoutEventInput, Prisma.UserUncheckedCreateWithoutEventInput>
-}
-
-export type UserCreateManyEventInputEnvelope = {
-  data: Prisma.UserCreateManyEventInput | Prisma.UserCreateManyEventInput[]
-  skipDuplicates?: boolean
-}
-
-export type UserUpsertWithWhereUniqueWithoutEventInput = {
-  where: Prisma.UserWhereUniqueInput
-  update: Prisma.XOR<Prisma.UserUpdateWithoutEventInput, Prisma.UserUncheckedUpdateWithoutEventInput>
-  create: Prisma.XOR<Prisma.UserCreateWithoutEventInput, Prisma.UserUncheckedCreateWithoutEventInput>
-}
-
-export type UserUpdateWithWhereUniqueWithoutEventInput = {
-  where: Prisma.UserWhereUniqueInput
-  data: Prisma.XOR<Prisma.UserUpdateWithoutEventInput, Prisma.UserUncheckedUpdateWithoutEventInput>
-}
-
-export type UserUpdateManyWithWhereWithoutEventInput = {
-  where: Prisma.UserScalarWhereInput
-  data: Prisma.XOR<Prisma.UserUpdateManyMutationInput, Prisma.UserUncheckedUpdateManyWithoutEventInput>
-}
-
-export type UserScalarWhereInput = {
-  AND?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
-  OR?: Prisma.UserScalarWhereInput[]
-  NOT?: Prisma.UserScalarWhereInput | Prisma.UserScalarWhereInput[]
-  id?: Prisma.IntFilter<"User"> | number
-  uuid?: Prisma.StringFilter<"User"> | string
-  isSubscribed?: Prisma.BoolFilter<"User"> | boolean
-  isNotificated?: Prisma.BoolFilter<"User"> | boolean
-  eventId?: Prisma.IntFilter<"User"> | number
-  createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
-}
-
 export type UserCreateWithoutTicketsInput = {
   uuid: string
   isSubscribed?: boolean
   isNotificated?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
-  event: Prisma.EventCreateNestedOneWithoutUsersInput
 }
 
 export type UserUncheckedCreateWithoutTicketsInput = {
@@ -548,7 +407,6 @@ export type UserUncheckedCreateWithoutTicketsInput = {
   uuid: string
   isSubscribed?: boolean
   isNotificated?: boolean
-  eventId: number
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -575,48 +433,9 @@ export type UserUpdateWithoutTicketsInput = {
   isNotificated?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  event?: Prisma.EventUpdateOneRequiredWithoutUsersNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTicketsInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  uuid?: Prisma.StringFieldUpdateOperationsInput | string
-  isSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isNotificated?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  eventId?: Prisma.IntFieldUpdateOperationsInput | number
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type UserCreateManyEventInput = {
-  id?: number
-  uuid: string
-  isSubscribed?: boolean
-  isNotificated?: boolean
-  createdAt?: Date | string
-  updatedAt?: Date | string
-}
-
-export type UserUpdateWithoutEventInput = {
-  uuid?: Prisma.StringFieldUpdateOperationsInput | string
-  isSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isNotificated?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tickets?: Prisma.TicketUpdateManyWithoutUserNestedInput
-}
-
-export type UserUncheckedUpdateWithoutEventInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  uuid?: Prisma.StringFieldUpdateOperationsInput | string
-  isSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isNotificated?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tickets?: Prisma.TicketUncheckedUpdateManyWithoutUserNestedInput
-}
-
-export type UserUncheckedUpdateManyWithoutEventInput = {
   id?: Prisma.IntFieldUpdateOperationsInput | number
   uuid?: Prisma.StringFieldUpdateOperationsInput | string
   isSubscribed?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -661,10 +480,8 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   uuid?: boolean
   isSubscribed?: boolean
   isNotificated?: boolean
-  eventId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
   tickets?: boolean | Prisma.User$ticketsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
@@ -674,10 +491,8 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   uuid?: boolean
   isSubscribed?: boolean
   isNotificated?: boolean
-  eventId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -685,10 +500,8 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   uuid?: boolean
   isSubscribed?: boolean
   isNotificated?: boolean
-  eventId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectScalar = {
@@ -696,28 +509,21 @@ export type UserSelectScalar = {
   uuid?: boolean
   isSubscribed?: boolean
   isNotificated?: boolean
-  eventId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "uuid" | "isSubscribed" | "isNotificated" | "eventId" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "uuid" | "isSubscribed" | "isNotificated" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
   tickets?: boolean | Prisma.User$ticketsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
-export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
-}
-export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
-}
+export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
+export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
 
 export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "User"
   objects: {
-    event: Prisma.$EventPayload<ExtArgs>
     tickets: Prisma.$TicketPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -725,7 +531,6 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     uuid: string
     isSubscribed: boolean
     isNotificated: boolean
-    eventId: number
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["user"]>
@@ -1122,7 +927,6 @@ readonly fields: UserFieldRefs;
  */
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  event<T extends Prisma.EventDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EventDefaultArgs<ExtArgs>>): Prisma.Prisma__EventClient<runtime.Types.Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   tickets<T extends Prisma.User$ticketsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$ticketsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TicketPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1157,7 +961,6 @@ export interface UserFieldRefs {
   readonly uuid: Prisma.FieldRef<"User", 'String'>
   readonly isSubscribed: Prisma.FieldRef<"User", 'Boolean'>
   readonly isNotificated: Prisma.FieldRef<"User", 'Boolean'>
-  readonly eventId: Prisma.FieldRef<"User", 'Int'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
 }
@@ -1409,10 +1212,6 @@ export type UserCreateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions
    */
   data: Prisma.UserCreateManyInput | Prisma.UserCreateManyInput[]
   skipDuplicates?: boolean
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.UserIncludeCreateManyAndReturn<ExtArgs> | null
 }
 
 /**
@@ -1483,10 +1282,6 @@ export type UserUpdateManyAndReturnArgs<ExtArgs extends runtime.Types.Extensions
    * Limit how many Users to update.
    */
   limit?: number
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.UserIncludeUpdateManyAndReturn<ExtArgs> | null
 }
 
 /**
