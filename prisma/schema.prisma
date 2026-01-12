@@ -1,0 +1,114 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Event {
+  id          Int      @id @default(autoincrement())
+  slug        String   @unique
+  name        String
+  isActive    Boolean  @default(false)
+  startedAt   DateTime
+  finishedAt  DateTime
+  description String?
+
+  stores  Store[]
+  tickets Ticket[]
+  users   User[]
+  staffs  Staff[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("events")
+}
+
+model Store {
+  id          Int      @id @default(autoincrement())
+  slug        String   @unique
+  name        String
+  isActive    Boolean  @default(false)
+  startedAt   DateTime
+  finishedAt  DateTime
+  description String?
+
+  event   Event?   @relation(fields: [eventId], references: [id])
+  eventId Int?
+  tickets Ticket[]
+  staffs  Staff[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("stores")
+}
+
+enum TicketStatus {
+  ISSUED
+  CALLED
+  COMPLETED
+  CANCELLED
+}
+
+model Ticket {
+  id   Int    @id @default(autoincrement())
+  uuid String @unique
+
+  index          Int
+  numberOfPeople Int
+  status         TicketStatus @default(ISSUED)
+
+  eventId Int
+  event   Event @relation(fields: [eventId], references: [id])
+  storeId Int
+  store   Store @relation(fields: [storeId], references: [id])
+  user    User  @relation(fields: [userId], references: [id])
+  userId  Int
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("tickets")
+}
+
+model User {
+  id            Int     @id @default(autoincrement())
+  uuid          String  @unique
+  isSubscribed  Boolean @default(false)
+  isNotificated Boolean @default(false)
+
+  eventId Int
+  event   Event    @relation(fields: [eventId], references: [id])
+  tickets Ticket[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+enum StaffRole {
+  STAFF
+  ADMIN
+}
+
+model Staff {
+  id       Int       @id @default(autoincrement())
+  email    String    @unique
+  password String
+  role     StaffRole
+
+  eventId Int
+  storeId Int?
+  event   Event  @relation(fields: [eventId], references: [id])
+  store   Store? @relation(fields: [storeId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("staffs")
+}
