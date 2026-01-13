@@ -75,17 +75,31 @@ model Ticket {
 }
 
 model User {
-  id            Int     @id @default(autoincrement())
-  uuid          String  @unique
-  isSubscribed  Boolean @default(false)
-  isNotificated Boolean @default(false)
+  id   Int    @id @default(autoincrement())
+  uuid String @unique
 
-  tickets Ticket[]
+  tickets           Ticket[]
+  pushSubscriptions PushSubscription[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@map("users")
+}
+
+model PushSubscription {
+  id       Int    @id @default(autoincrement())
+  endpoint String @unique
+  p256dh   String
+  auth     String
+
+  userId Int
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("push_subscriptions")
 }
 
 enum StaffRole {

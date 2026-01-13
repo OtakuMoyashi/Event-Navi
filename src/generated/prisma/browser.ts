@@ -38,6 +38,11 @@ export type Ticket = Prisma.TicketModel
  */
 export type User = Prisma.UserModel
 /**
+ * Model PushSubscription
+ * 
+ */
+export type PushSubscription = Prisma.PushSubscriptionModel
+/**
  * Model Staff
  * 
  */

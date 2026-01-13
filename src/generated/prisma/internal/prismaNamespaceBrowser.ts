@@ -55,6 +55,7 @@ export const ModelName = {
   Store: 'Store',
   Ticket: 'Ticket',
   User: 'User',
+  PushSubscription: 'PushSubscription',
   Staff: 'Staff'
 } as const
 
@@ -124,13 +125,24 @@ export type TicketScalarFieldEnum = (typeof TicketScalarFieldEnum)[keyof typeof 
 export const UserScalarFieldEnum = {
   id: 'id',
   uuid: 'uuid',
-  isSubscribed: 'isSubscribed',
-  isNotificated: 'isNotificated',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const PushSubscriptionScalarFieldEnum = {
+  id: 'id',
+  endpoint: 'endpoint',
+  p256dh: 'p256dh',
+  auth: 'auth',
+  userId: 'userId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PushSubscriptionScalarFieldEnum = (typeof PushSubscriptionScalarFieldEnum)[keyof typeof PushSubscriptionScalarFieldEnum]
 
 
 export const StaffScalarFieldEnum = {
