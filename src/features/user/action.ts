@@ -9,7 +9,7 @@ export async function createUser(): Promise<User | null> {
   const cookieStore = await cookies();
   const userUuid = cookieStore.get("user_uuid")?.value;
 
-  if (!userUuid) return null; //エラーにすべきか？
+  if (!userUuid) return null;
 
   const createdUser: User = await prisma.user.upsert({
     where: { uuid: userUuid },
@@ -24,7 +24,7 @@ export async function getCurrentUser(): Promise<User | null> {
   const cookieStore = await cookies();
   const userUuid = cookieStore.get("user_uuid")?.value;
 
-  if (!userUuid) return null; //エラーにすべきか？
+  if (!userUuid) return null;
 
   const fetchedUser: User | null = await prisma.user.findUnique({
     where: {

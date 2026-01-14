@@ -17,7 +17,7 @@ function urlBase64ToUint8Array(base64String: string) {
   return outputArray;
 }
 
-function PushNotificationManager() {
+export function PushNotificationManager() {
   const [isSupported, setIsSupported] = useState(false);
   const [subscription, setSubscription] = useState<PushSubscription | null>(
     null
@@ -61,21 +61,21 @@ function PushNotificationManager() {
   }
 
   if (!isSupported) {
-    return <p>Push notifications are not supported in this browser.</p>;
+    return <p>お使いのブラウザはプッシュ通知をサポートしていません。</p>;
   }
 
   return (
     <div>
-      <h3>Push Notifications</h3>
+      <h3>プッシュ通知の購読設定</h3>
       {subscription ? (
         <>
-          <p>You are subscribed to push notifications.</p>
-          <button onClick={unsubscribeFromPush}>Unsubscribe</button>
+          <p>プッシュ通知を購読しています。</p>
+          <button onClick={unsubscribeFromPush}>通知の購読を解除する</button>
         </>
       ) : (
         <>
-          <p>You are not subscribed to push notifications.</p>
-          <button onClick={subscribeToPush}>Subscribe</button>
+          <p>プッシュ通知を購読していません。</p>
+          <button onClick={subscribeToPush}>通知を購読する</button>
         </>
       )}
     </div>
