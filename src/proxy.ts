@@ -3,16 +3,16 @@ import type { NextRequest } from 'next/server'
 import { v4 as uuidv4 } from 'uuid'
 
 export function proxy(request: NextRequest) {
-  const uuid = request.cookies.get('uuid')
+  const user_uuid = request.cookies.get('user_uuid')
 
-  if (!uuid) {
+  if (!user_uuid) {
     const newUuid = uuidv4()
     const response = NextResponse.next()
-    response.cookies.set('uuid', newUuid, {
+    response.cookies.set('user_uuid', newUuid, {
       path: '/',
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      maxAge: 60 * 60 * 24 * 400, // ~13 months
+      maxAge: 60 * 60 * 24 * 400, // 13ヶ月
     })
 
     return response

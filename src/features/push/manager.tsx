@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
 import { useState, useEffect } from "react";
@@ -33,7 +34,6 @@ function PushNotificationManager() {
 
   useEffect(() => {
     if ("serviceWorker" in navigator && "PushManager" in window) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect
       setIsSupported(true);
       registerServiceWorker();
     }

@@ -1,24 +1,23 @@
-'use server'
+"use server";
 
-import webpush from 'web-push'
+import prisma from "@/lib/prisma";
+import webpush from "web-push";
 
 webpush.setVapidDetails(
-  '<mailto:kinshiapp2@gmail.com>',
+  "<mailto:kinshiapp2@gmail.com>",
   process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY!,
   process.env.VAPID_PRIVATE_KEY!
-)
-
-let subscription: PushSubscription | null = null
+);
 
 export async function subscribeUser(sub: PushSubscription) {
-  subscription = sub
-  //TODO DBの処理書く
-  return { success: true }
+  /*const createdSubscription = await prisma.pushSubscription.create({
+    
+  })*/
 }
 
 export async function unsubscribeUser() {
   //TODO DBの処理書く
-  return { success: true }
+  return { success: true };
 }
 
 /*　
