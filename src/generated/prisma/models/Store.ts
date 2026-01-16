@@ -20,44 +20,32 @@ export type StoreModel = runtime.Types.Result.DefaultSelection<Prisma.$StorePayl
 
 export type AggregateStore = {
   _count: StoreCountAggregateOutputType | null
-  _avg: StoreAvgAggregateOutputType | null
-  _sum: StoreSumAggregateOutputType | null
   _min: StoreMinAggregateOutputType | null
   _max: StoreMaxAggregateOutputType | null
 }
 
-export type StoreAvgAggregateOutputType = {
-  id: number | null
-  eventId: number | null
-}
-
-export type StoreSumAggregateOutputType = {
-  id: number | null
-  eventId: number | null
-}
-
 export type StoreMinAggregateOutputType = {
-  id: number | null
+  id: string | null
   slug: string | null
   name: string | null
   isActive: boolean | null
   startedAt: Date | null
   finishedAt: Date | null
   description: string | null
-  eventId: number | null
+  eventId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
 
 export type StoreMaxAggregateOutputType = {
-  id: number | null
+  id: string | null
   slug: string | null
   name: string | null
   isActive: boolean | null
   startedAt: Date | null
   finishedAt: Date | null
   description: string | null
-  eventId: number | null
+  eventId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -76,16 +64,6 @@ export type StoreCountAggregateOutputType = {
   _all: number
 }
 
-
-export type StoreAvgAggregateInputType = {
-  id?: true
-  eventId?: true
-}
-
-export type StoreSumAggregateInputType = {
-  id?: true
-  eventId?: true
-}
 
 export type StoreMinAggregateInputType = {
   id?: true
@@ -165,18 +143,6 @@ export type StoreAggregateArgs<ExtArgs extends runtime.Types.Extensions.Internal
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
-   * Select which fields to average
-  **/
-  _avg?: StoreAvgAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
-   * Select which fields to sum
-  **/
-  _sum?: StoreSumAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
    * Select which fields to find the minimum value
   **/
   _min?: StoreMinAggregateInputType
@@ -207,26 +173,22 @@ export type StoreGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
   take?: number
   skip?: number
   _count?: StoreCountAggregateInputType | true
-  _avg?: StoreAvgAggregateInputType
-  _sum?: StoreSumAggregateInputType
   _min?: StoreMinAggregateInputType
   _max?: StoreMaxAggregateInputType
 }
 
 export type StoreGroupByOutputType = {
-  id: number
+  id: string
   slug: string
   name: string
   isActive: boolean
   startedAt: Date
   finishedAt: Date
   description: string | null
-  eventId: number | null
+  eventId: string | null
   createdAt: Date
   updatedAt: Date
   _count: StoreCountAggregateOutputType | null
-  _avg: StoreAvgAggregateOutputType | null
-  _sum: StoreSumAggregateOutputType | null
   _min: StoreMinAggregateOutputType | null
   _max: StoreMaxAggregateOutputType | null
 }
@@ -250,14 +212,14 @@ export type StoreWhereInput = {
   AND?: Prisma.StoreWhereInput | Prisma.StoreWhereInput[]
   OR?: Prisma.StoreWhereInput[]
   NOT?: Prisma.StoreWhereInput | Prisma.StoreWhereInput[]
-  id?: Prisma.IntFilter<"Store"> | number
+  id?: Prisma.StringFilter<"Store"> | string
   slug?: Prisma.StringFilter<"Store"> | string
   name?: Prisma.StringFilter<"Store"> | string
   isActive?: Prisma.BoolFilter<"Store"> | boolean
   startedAt?: Prisma.DateTimeFilter<"Store"> | Date | string
   finishedAt?: Prisma.DateTimeFilter<"Store"> | Date | string
   description?: Prisma.StringNullableFilter<"Store"> | string | null
-  eventId?: Prisma.IntNullableFilter<"Store"> | number | null
+  eventId?: Prisma.StringNullableFilter<"Store"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Store"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Store"> | Date | string
   event?: Prisma.XOR<Prisma.EventNullableScalarRelationFilter, Prisma.EventWhereInput> | null
@@ -282,7 +244,7 @@ export type StoreOrderByWithRelationInput = {
 }
 
 export type StoreWhereUniqueInput = Prisma.AtLeast<{
-  id?: number
+  id?: string
   slug?: string
   AND?: Prisma.StoreWhereInput | Prisma.StoreWhereInput[]
   OR?: Prisma.StoreWhereInput[]
@@ -292,7 +254,7 @@ export type StoreWhereUniqueInput = Prisma.AtLeast<{
   startedAt?: Prisma.DateTimeFilter<"Store"> | Date | string
   finishedAt?: Prisma.DateTimeFilter<"Store"> | Date | string
   description?: Prisma.StringNullableFilter<"Store"> | string | null
-  eventId?: Prisma.IntNullableFilter<"Store"> | number | null
+  eventId?: Prisma.StringNullableFilter<"Store"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Store"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Store"> | Date | string
   event?: Prisma.XOR<Prisma.EventNullableScalarRelationFilter, Prisma.EventWhereInput> | null
@@ -312,29 +274,28 @@ export type StoreOrderByWithAggregationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.StoreCountOrderByAggregateInput
-  _avg?: Prisma.StoreAvgOrderByAggregateInput
   _max?: Prisma.StoreMaxOrderByAggregateInput
   _min?: Prisma.StoreMinOrderByAggregateInput
-  _sum?: Prisma.StoreSumOrderByAggregateInput
 }
 
 export type StoreScalarWhereWithAggregatesInput = {
   AND?: Prisma.StoreScalarWhereWithAggregatesInput | Prisma.StoreScalarWhereWithAggregatesInput[]
   OR?: Prisma.StoreScalarWhereWithAggregatesInput[]
   NOT?: Prisma.StoreScalarWhereWithAggregatesInput | Prisma.StoreScalarWhereWithAggregatesInput[]
-  id?: Prisma.IntWithAggregatesFilter<"Store"> | number
+  id?: Prisma.StringWithAggregatesFilter<"Store"> | string
   slug?: Prisma.StringWithAggregatesFilter<"Store"> | string
   name?: Prisma.StringWithAggregatesFilter<"Store"> | string
   isActive?: Prisma.BoolWithAggregatesFilter<"Store"> | boolean
   startedAt?: Prisma.DateTimeWithAggregatesFilter<"Store"> | Date | string
   finishedAt?: Prisma.DateTimeWithAggregatesFilter<"Store"> | Date | string
   description?: Prisma.StringNullableWithAggregatesFilter<"Store"> | string | null
-  eventId?: Prisma.IntNullableWithAggregatesFilter<"Store"> | number | null
+  eventId?: Prisma.StringNullableWithAggregatesFilter<"Store"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Store"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Store"> | Date | string
 }
 
 export type StoreCreateInput = {
+  id?: string
   slug: string
   name: string
   isActive?: boolean
@@ -349,14 +310,14 @@ export type StoreCreateInput = {
 }
 
 export type StoreUncheckedCreateInput = {
-  id?: number
+  id?: string
   slug: string
   name: string
   isActive?: boolean
   startedAt: Date | string
   finishedAt: Date | string
   description?: string | null
-  eventId?: number | null
+  eventId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   tickets?: Prisma.TicketUncheckedCreateNestedManyWithoutStoreInput
@@ -364,6 +325,7 @@ export type StoreUncheckedCreateInput = {
 }
 
 export type StoreUpdateInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -378,14 +340,14 @@ export type StoreUpdateInput = {
 }
 
 export type StoreUncheckedUpdateInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   finishedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  eventId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  eventId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tickets?: Prisma.TicketUncheckedUpdateManyWithoutStoreNestedInput
@@ -393,19 +355,20 @@ export type StoreUncheckedUpdateInput = {
 }
 
 export type StoreCreateManyInput = {
-  id?: number
+  id?: string
   slug: string
   name: string
   isActive?: boolean
   startedAt: Date | string
   finishedAt: Date | string
   description?: string | null
-  eventId?: number | null
+  eventId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type StoreUpdateManyMutationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -417,14 +380,14 @@ export type StoreUpdateManyMutationInput = {
 }
 
 export type StoreUncheckedUpdateManyInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   finishedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  eventId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  eventId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -452,11 +415,6 @@ export type StoreCountOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
 }
 
-export type StoreAvgOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  eventId?: Prisma.SortOrder
-}
-
 export type StoreMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   slug?: Prisma.SortOrder
@@ -481,11 +439,6 @@ export type StoreMinOrderByAggregateInput = {
   eventId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-}
-
-export type StoreSumOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  eventId?: Prisma.SortOrder
 }
 
 export type StoreScalarRelationFilter = {
@@ -540,14 +493,6 @@ export type StoreUncheckedUpdateManyWithoutEventNestedInput = {
   deleteMany?: Prisma.StoreScalarWhereInput | Prisma.StoreScalarWhereInput[]
 }
 
-export type NullableIntFieldUpdateOperationsInput = {
-  set?: number | null
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
 export type StoreCreateNestedOneWithoutTicketsInput = {
   create?: Prisma.XOR<Prisma.StoreCreateWithoutTicketsInput, Prisma.StoreUncheckedCreateWithoutTicketsInput>
   connectOrCreate?: Prisma.StoreCreateOrConnectWithoutTicketsInput
@@ -579,6 +524,7 @@ export type StoreUpdateOneWithoutStaffsNestedInput = {
 }
 
 export type StoreCreateWithoutEventInput = {
+  id?: string
   slug: string
   name: string
   isActive?: boolean
@@ -592,7 +538,7 @@ export type StoreCreateWithoutEventInput = {
 }
 
 export type StoreUncheckedCreateWithoutEventInput = {
-  id?: number
+  id?: string
   slug: string
   name: string
   isActive?: boolean
@@ -635,19 +581,20 @@ export type StoreScalarWhereInput = {
   AND?: Prisma.StoreScalarWhereInput | Prisma.StoreScalarWhereInput[]
   OR?: Prisma.StoreScalarWhereInput[]
   NOT?: Prisma.StoreScalarWhereInput | Prisma.StoreScalarWhereInput[]
-  id?: Prisma.IntFilter<"Store"> | number
+  id?: Prisma.StringFilter<"Store"> | string
   slug?: Prisma.StringFilter<"Store"> | string
   name?: Prisma.StringFilter<"Store"> | string
   isActive?: Prisma.BoolFilter<"Store"> | boolean
   startedAt?: Prisma.DateTimeFilter<"Store"> | Date | string
   finishedAt?: Prisma.DateTimeFilter<"Store"> | Date | string
   description?: Prisma.StringNullableFilter<"Store"> | string | null
-  eventId?: Prisma.IntNullableFilter<"Store"> | number | null
+  eventId?: Prisma.StringNullableFilter<"Store"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Store"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Store"> | Date | string
 }
 
 export type StoreCreateWithoutTicketsInput = {
+  id?: string
   slug: string
   name: string
   isActive?: boolean
@@ -661,14 +608,14 @@ export type StoreCreateWithoutTicketsInput = {
 }
 
 export type StoreUncheckedCreateWithoutTicketsInput = {
-  id?: number
+  id?: string
   slug: string
   name: string
   isActive?: boolean
   startedAt: Date | string
   finishedAt: Date | string
   description?: string | null
-  eventId?: number | null
+  eventId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   staffs?: Prisma.StaffUncheckedCreateNestedManyWithoutStoreInput
@@ -691,6 +638,7 @@ export type StoreUpdateToOneWithWhereWithoutTicketsInput = {
 }
 
 export type StoreUpdateWithoutTicketsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -704,20 +652,21 @@ export type StoreUpdateWithoutTicketsInput = {
 }
 
 export type StoreUncheckedUpdateWithoutTicketsInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   finishedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  eventId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  eventId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   staffs?: Prisma.StaffUncheckedUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreCreateWithoutStaffsInput = {
+  id?: string
   slug: string
   name: string
   isActive?: boolean
@@ -731,14 +680,14 @@ export type StoreCreateWithoutStaffsInput = {
 }
 
 export type StoreUncheckedCreateWithoutStaffsInput = {
-  id?: number
+  id?: string
   slug: string
   name: string
   isActive?: boolean
   startedAt: Date | string
   finishedAt: Date | string
   description?: string | null
-  eventId?: number | null
+  eventId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   tickets?: Prisma.TicketUncheckedCreateNestedManyWithoutStoreInput
@@ -761,6 +710,7 @@ export type StoreUpdateToOneWithWhereWithoutStaffsInput = {
 }
 
 export type StoreUpdateWithoutStaffsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -774,21 +724,21 @@ export type StoreUpdateWithoutStaffsInput = {
 }
 
 export type StoreUncheckedUpdateWithoutStaffsInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   finishedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  eventId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  eventId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tickets?: Prisma.TicketUncheckedUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreCreateManyEventInput = {
-  id?: number
+  id?: string
   slug: string
   name: string
   isActive?: boolean
@@ -800,6 +750,7 @@ export type StoreCreateManyEventInput = {
 }
 
 export type StoreUpdateWithoutEventInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -813,7 +764,7 @@ export type StoreUpdateWithoutEventInput = {
 }
 
 export type StoreUncheckedUpdateWithoutEventInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -827,7 +778,7 @@ export type StoreUncheckedUpdateWithoutEventInput = {
 }
 
 export type StoreUncheckedUpdateManyWithoutEventInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -958,14 +909,14 @@ export type $StorePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     staffs: Prisma.$StaffPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: number
+    id: string
     slug: string
     name: string
     isActive: boolean
     startedAt: Date
     finishedAt: Date
     description: string | null
-    eventId: number | null
+    eventId: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["store"]>
@@ -1394,14 +1345,14 @@ export interface Prisma__StoreClient<T, Null = never, ExtArgs extends runtime.Ty
  * Fields of the Store model
  */
 export interface StoreFieldRefs {
-  readonly id: Prisma.FieldRef<"Store", 'Int'>
+  readonly id: Prisma.FieldRef<"Store", 'String'>
   readonly slug: Prisma.FieldRef<"Store", 'String'>
   readonly name: Prisma.FieldRef<"Store", 'String'>
   readonly isActive: Prisma.FieldRef<"Store", 'Boolean'>
   readonly startedAt: Prisma.FieldRef<"Store", 'DateTime'>
   readonly finishedAt: Prisma.FieldRef<"Store", 'DateTime'>
   readonly description: Prisma.FieldRef<"Store", 'String'>
-  readonly eventId: Prisma.FieldRef<"Store", 'Int'>
+  readonly eventId: Prisma.FieldRef<"Store", 'String'>
   readonly createdAt: Prisma.FieldRef<"Store", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Store", 'DateTime'>
 }

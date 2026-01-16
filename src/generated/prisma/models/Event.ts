@@ -20,22 +20,12 @@ export type EventModel = runtime.Types.Result.DefaultSelection<Prisma.$EventPayl
 
 export type AggregateEvent = {
   _count: EventCountAggregateOutputType | null
-  _avg: EventAvgAggregateOutputType | null
-  _sum: EventSumAggregateOutputType | null
   _min: EventMinAggregateOutputType | null
   _max: EventMaxAggregateOutputType | null
 }
 
-export type EventAvgAggregateOutputType = {
-  id: number | null
-}
-
-export type EventSumAggregateOutputType = {
-  id: number | null
-}
-
 export type EventMinAggregateOutputType = {
-  id: number | null
+  id: string | null
   slug: string | null
   name: string | null
   isActive: boolean | null
@@ -47,7 +37,7 @@ export type EventMinAggregateOutputType = {
 }
 
 export type EventMaxAggregateOutputType = {
-  id: number | null
+  id: string | null
   slug: string | null
   name: string | null
   isActive: boolean | null
@@ -71,14 +61,6 @@ export type EventCountAggregateOutputType = {
   _all: number
 }
 
-
-export type EventAvgAggregateInputType = {
-  id?: true
-}
-
-export type EventSumAggregateInputType = {
-  id?: true
-}
 
 export type EventMinAggregateInputType = {
   id?: true
@@ -155,18 +137,6 @@ export type EventAggregateArgs<ExtArgs extends runtime.Types.Extensions.Internal
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
-   * Select which fields to average
-  **/
-  _avg?: EventAvgAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
-   * Select which fields to sum
-  **/
-  _sum?: EventSumAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
    * Select which fields to find the minimum value
   **/
   _min?: EventMinAggregateInputType
@@ -197,14 +167,12 @@ export type EventGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
   take?: number
   skip?: number
   _count?: EventCountAggregateInputType | true
-  _avg?: EventAvgAggregateInputType
-  _sum?: EventSumAggregateInputType
   _min?: EventMinAggregateInputType
   _max?: EventMaxAggregateInputType
 }
 
 export type EventGroupByOutputType = {
-  id: number
+  id: string
   slug: string
   name: string
   isActive: boolean
@@ -214,8 +182,6 @@ export type EventGroupByOutputType = {
   createdAt: Date
   updatedAt: Date
   _count: EventCountAggregateOutputType | null
-  _avg: EventAvgAggregateOutputType | null
-  _sum: EventSumAggregateOutputType | null
   _min: EventMinAggregateOutputType | null
   _max: EventMaxAggregateOutputType | null
 }
@@ -239,7 +205,7 @@ export type EventWhereInput = {
   AND?: Prisma.EventWhereInput | Prisma.EventWhereInput[]
   OR?: Prisma.EventWhereInput[]
   NOT?: Prisma.EventWhereInput | Prisma.EventWhereInput[]
-  id?: Prisma.IntFilter<"Event"> | number
+  id?: Prisma.StringFilter<"Event"> | string
   slug?: Prisma.StringFilter<"Event"> | string
   name?: Prisma.StringFilter<"Event"> | string
   isActive?: Prisma.BoolFilter<"Event"> | boolean
@@ -249,7 +215,6 @@ export type EventWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Event"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Event"> | Date | string
   stores?: Prisma.StoreListRelationFilter
-  tickets?: Prisma.TicketListRelationFilter
   staffs?: Prisma.StaffListRelationFilter
 }
 
@@ -264,12 +229,11 @@ export type EventOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   stores?: Prisma.StoreOrderByRelationAggregateInput
-  tickets?: Prisma.TicketOrderByRelationAggregateInput
   staffs?: Prisma.StaffOrderByRelationAggregateInput
 }
 
 export type EventWhereUniqueInput = Prisma.AtLeast<{
-  id?: number
+  id?: string
   slug?: string
   AND?: Prisma.EventWhereInput | Prisma.EventWhereInput[]
   OR?: Prisma.EventWhereInput[]
@@ -282,7 +246,6 @@ export type EventWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Event"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Event"> | Date | string
   stores?: Prisma.StoreListRelationFilter
-  tickets?: Prisma.TicketListRelationFilter
   staffs?: Prisma.StaffListRelationFilter
 }, "id" | "slug">
 
@@ -297,17 +260,15 @@ export type EventOrderByWithAggregationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.EventCountOrderByAggregateInput
-  _avg?: Prisma.EventAvgOrderByAggregateInput
   _max?: Prisma.EventMaxOrderByAggregateInput
   _min?: Prisma.EventMinOrderByAggregateInput
-  _sum?: Prisma.EventSumOrderByAggregateInput
 }
 
 export type EventScalarWhereWithAggregatesInput = {
   AND?: Prisma.EventScalarWhereWithAggregatesInput | Prisma.EventScalarWhereWithAggregatesInput[]
   OR?: Prisma.EventScalarWhereWithAggregatesInput[]
   NOT?: Prisma.EventScalarWhereWithAggregatesInput | Prisma.EventScalarWhereWithAggregatesInput[]
-  id?: Prisma.IntWithAggregatesFilter<"Event"> | number
+  id?: Prisma.StringWithAggregatesFilter<"Event"> | string
   slug?: Prisma.StringWithAggregatesFilter<"Event"> | string
   name?: Prisma.StringWithAggregatesFilter<"Event"> | string
   isActive?: Prisma.BoolWithAggregatesFilter<"Event"> | boolean
@@ -319,6 +280,7 @@ export type EventScalarWhereWithAggregatesInput = {
 }
 
 export type EventCreateInput = {
+  id?: string
   slug: string
   name: string
   isActive?: boolean
@@ -328,12 +290,11 @@ export type EventCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   stores?: Prisma.StoreCreateNestedManyWithoutEventInput
-  tickets?: Prisma.TicketCreateNestedManyWithoutEventInput
   staffs?: Prisma.StaffCreateNestedManyWithoutEventInput
 }
 
 export type EventUncheckedCreateInput = {
-  id?: number
+  id?: string
   slug: string
   name: string
   isActive?: boolean
@@ -343,11 +304,11 @@ export type EventUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   stores?: Prisma.StoreUncheckedCreateNestedManyWithoutEventInput
-  tickets?: Prisma.TicketUncheckedCreateNestedManyWithoutEventInput
   staffs?: Prisma.StaffUncheckedCreateNestedManyWithoutEventInput
 }
 
 export type EventUpdateInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -357,12 +318,11 @@ export type EventUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stores?: Prisma.StoreUpdateManyWithoutEventNestedInput
-  tickets?: Prisma.TicketUpdateManyWithoutEventNestedInput
   staffs?: Prisma.StaffUpdateManyWithoutEventNestedInput
 }
 
 export type EventUncheckedUpdateInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -372,12 +332,11 @@ export type EventUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stores?: Prisma.StoreUncheckedUpdateManyWithoutEventNestedInput
-  tickets?: Prisma.TicketUncheckedUpdateManyWithoutEventNestedInput
   staffs?: Prisma.StaffUncheckedUpdateManyWithoutEventNestedInput
 }
 
 export type EventCreateManyInput = {
-  id?: number
+  id?: string
   slug: string
   name: string
   isActive?: boolean
@@ -389,6 +348,7 @@ export type EventCreateManyInput = {
 }
 
 export type EventUpdateManyMutationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -400,7 +360,7 @@ export type EventUpdateManyMutationInput = {
 }
 
 export type EventUncheckedUpdateManyInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -421,10 +381,6 @@ export type EventCountOrderByAggregateInput = {
   description?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-}
-
-export type EventAvgOrderByAggregateInput = {
-  id?: Prisma.SortOrder
 }
 
 export type EventMaxOrderByAggregateInput = {
@@ -451,18 +407,9 @@ export type EventMinOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
 }
 
-export type EventSumOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-}
-
 export type EventNullableScalarRelationFilter = {
   is?: Prisma.EventWhereInput | null
   isNot?: Prisma.EventWhereInput | null
-}
-
-export type EventScalarRelationFilter = {
-  is?: Prisma.EventWhereInput
-  isNot?: Prisma.EventWhereInput
 }
 
 export type StringFieldUpdateOperationsInput = {
@@ -481,14 +428,6 @@ export type NullableStringFieldUpdateOperationsInput = {
   set?: string | null
 }
 
-export type IntFieldUpdateOperationsInput = {
-  set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
 export type EventCreateNestedOneWithoutStoresInput = {
   create?: Prisma.XOR<Prisma.EventCreateWithoutStoresInput, Prisma.EventUncheckedCreateWithoutStoresInput>
   connectOrCreate?: Prisma.EventCreateOrConnectWithoutStoresInput
@@ -505,35 +444,24 @@ export type EventUpdateOneWithoutStoresNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.EventUpdateToOneWithWhereWithoutStoresInput, Prisma.EventUpdateWithoutStoresInput>, Prisma.EventUncheckedUpdateWithoutStoresInput>
 }
 
-export type EventCreateNestedOneWithoutTicketsInput = {
-  create?: Prisma.XOR<Prisma.EventCreateWithoutTicketsInput, Prisma.EventUncheckedCreateWithoutTicketsInput>
-  connectOrCreate?: Prisma.EventCreateOrConnectWithoutTicketsInput
-  connect?: Prisma.EventWhereUniqueInput
-}
-
-export type EventUpdateOneRequiredWithoutTicketsNestedInput = {
-  create?: Prisma.XOR<Prisma.EventCreateWithoutTicketsInput, Prisma.EventUncheckedCreateWithoutTicketsInput>
-  connectOrCreate?: Prisma.EventCreateOrConnectWithoutTicketsInput
-  upsert?: Prisma.EventUpsertWithoutTicketsInput
-  connect?: Prisma.EventWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.EventUpdateToOneWithWhereWithoutTicketsInput, Prisma.EventUpdateWithoutTicketsInput>, Prisma.EventUncheckedUpdateWithoutTicketsInput>
-}
-
 export type EventCreateNestedOneWithoutStaffsInput = {
   create?: Prisma.XOR<Prisma.EventCreateWithoutStaffsInput, Prisma.EventUncheckedCreateWithoutStaffsInput>
   connectOrCreate?: Prisma.EventCreateOrConnectWithoutStaffsInput
   connect?: Prisma.EventWhereUniqueInput
 }
 
-export type EventUpdateOneRequiredWithoutStaffsNestedInput = {
+export type EventUpdateOneWithoutStaffsNestedInput = {
   create?: Prisma.XOR<Prisma.EventCreateWithoutStaffsInput, Prisma.EventUncheckedCreateWithoutStaffsInput>
   connectOrCreate?: Prisma.EventCreateOrConnectWithoutStaffsInput
   upsert?: Prisma.EventUpsertWithoutStaffsInput
+  disconnect?: Prisma.EventWhereInput | boolean
+  delete?: Prisma.EventWhereInput | boolean
   connect?: Prisma.EventWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.EventUpdateToOneWithWhereWithoutStaffsInput, Prisma.EventUpdateWithoutStaffsInput>, Prisma.EventUncheckedUpdateWithoutStaffsInput>
 }
 
 export type EventCreateWithoutStoresInput = {
+  id?: string
   slug: string
   name: string
   isActive?: boolean
@@ -542,12 +470,11 @@ export type EventCreateWithoutStoresInput = {
   description?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  tickets?: Prisma.TicketCreateNestedManyWithoutEventInput
   staffs?: Prisma.StaffCreateNestedManyWithoutEventInput
 }
 
 export type EventUncheckedCreateWithoutStoresInput = {
-  id?: number
+  id?: string
   slug: string
   name: string
   isActive?: boolean
@@ -556,7 +483,6 @@ export type EventUncheckedCreateWithoutStoresInput = {
   description?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  tickets?: Prisma.TicketUncheckedCreateNestedManyWithoutEventInput
   staffs?: Prisma.StaffUncheckedCreateNestedManyWithoutEventInput
 }
 
@@ -577,6 +503,7 @@ export type EventUpdateToOneWithWhereWithoutStoresInput = {
 }
 
 export type EventUpdateWithoutStoresInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -585,12 +512,11 @@ export type EventUpdateWithoutStoresInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tickets?: Prisma.TicketUpdateManyWithoutEventNestedInput
   staffs?: Prisma.StaffUpdateManyWithoutEventNestedInput
 }
 
 export type EventUncheckedUpdateWithoutStoresInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -599,81 +525,11 @@ export type EventUncheckedUpdateWithoutStoresInput = {
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tickets?: Prisma.TicketUncheckedUpdateManyWithoutEventNestedInput
-  staffs?: Prisma.StaffUncheckedUpdateManyWithoutEventNestedInput
-}
-
-export type EventCreateWithoutTicketsInput = {
-  slug: string
-  name: string
-  isActive?: boolean
-  startedAt: Date | string
-  finishedAt: Date | string
-  description?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  stores?: Prisma.StoreCreateNestedManyWithoutEventInput
-  staffs?: Prisma.StaffCreateNestedManyWithoutEventInput
-}
-
-export type EventUncheckedCreateWithoutTicketsInput = {
-  id?: number
-  slug: string
-  name: string
-  isActive?: boolean
-  startedAt: Date | string
-  finishedAt: Date | string
-  description?: string | null
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  stores?: Prisma.StoreUncheckedCreateNestedManyWithoutEventInput
-  staffs?: Prisma.StaffUncheckedCreateNestedManyWithoutEventInput
-}
-
-export type EventCreateOrConnectWithoutTicketsInput = {
-  where: Prisma.EventWhereUniqueInput
-  create: Prisma.XOR<Prisma.EventCreateWithoutTicketsInput, Prisma.EventUncheckedCreateWithoutTicketsInput>
-}
-
-export type EventUpsertWithoutTicketsInput = {
-  update: Prisma.XOR<Prisma.EventUpdateWithoutTicketsInput, Prisma.EventUncheckedUpdateWithoutTicketsInput>
-  create: Prisma.XOR<Prisma.EventCreateWithoutTicketsInput, Prisma.EventUncheckedCreateWithoutTicketsInput>
-  where?: Prisma.EventWhereInput
-}
-
-export type EventUpdateToOneWithWhereWithoutTicketsInput = {
-  where?: Prisma.EventWhereInput
-  data: Prisma.XOR<Prisma.EventUpdateWithoutTicketsInput, Prisma.EventUncheckedUpdateWithoutTicketsInput>
-}
-
-export type EventUpdateWithoutTicketsInput = {
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  finishedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  stores?: Prisma.StoreUpdateManyWithoutEventNestedInput
-  staffs?: Prisma.StaffUpdateManyWithoutEventNestedInput
-}
-
-export type EventUncheckedUpdateWithoutTicketsInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
-  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  finishedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  stores?: Prisma.StoreUncheckedUpdateManyWithoutEventNestedInput
   staffs?: Prisma.StaffUncheckedUpdateManyWithoutEventNestedInput
 }
 
 export type EventCreateWithoutStaffsInput = {
+  id?: string
   slug: string
   name: string
   isActive?: boolean
@@ -683,11 +539,10 @@ export type EventCreateWithoutStaffsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   stores?: Prisma.StoreCreateNestedManyWithoutEventInput
-  tickets?: Prisma.TicketCreateNestedManyWithoutEventInput
 }
 
 export type EventUncheckedCreateWithoutStaffsInput = {
-  id?: number
+  id?: string
   slug: string
   name: string
   isActive?: boolean
@@ -697,7 +552,6 @@ export type EventUncheckedCreateWithoutStaffsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   stores?: Prisma.StoreUncheckedCreateNestedManyWithoutEventInput
-  tickets?: Prisma.TicketUncheckedCreateNestedManyWithoutEventInput
 }
 
 export type EventCreateOrConnectWithoutStaffsInput = {
@@ -717,6 +571,7 @@ export type EventUpdateToOneWithWhereWithoutStaffsInput = {
 }
 
 export type EventUpdateWithoutStaffsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -726,11 +581,10 @@ export type EventUpdateWithoutStaffsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stores?: Prisma.StoreUpdateManyWithoutEventNestedInput
-  tickets?: Prisma.TicketUpdateManyWithoutEventNestedInput
 }
 
 export type EventUncheckedUpdateWithoutStaffsInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -740,7 +594,6 @@ export type EventUncheckedUpdateWithoutStaffsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stores?: Prisma.StoreUncheckedUpdateManyWithoutEventNestedInput
-  tickets?: Prisma.TicketUncheckedUpdateManyWithoutEventNestedInput
 }
 
 
@@ -750,13 +603,11 @@ export type EventUncheckedUpdateWithoutStaffsInput = {
 
 export type EventCountOutputType = {
   stores: number
-  tickets: number
   staffs: number
 }
 
 export type EventCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   stores?: boolean | EventCountOutputTypeCountStoresArgs
-  tickets?: boolean | EventCountOutputTypeCountTicketsArgs
   staffs?: boolean | EventCountOutputTypeCountStaffsArgs
 }
 
@@ -780,13 +631,6 @@ export type EventCountOutputTypeCountStoresArgs<ExtArgs extends runtime.Types.Ex
 /**
  * EventCountOutputType without action
  */
-export type EventCountOutputTypeCountTicketsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.TicketWhereInput
-}
-
-/**
- * EventCountOutputType without action
- */
 export type EventCountOutputTypeCountStaffsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.StaffWhereInput
 }
@@ -803,7 +647,6 @@ export type EventSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   createdAt?: boolean
   updatedAt?: boolean
   stores?: boolean | Prisma.Event$storesArgs<ExtArgs>
-  tickets?: boolean | Prisma.Event$ticketsArgs<ExtArgs>
   staffs?: boolean | Prisma.Event$staffsArgs<ExtArgs>
   _count?: boolean | Prisma.EventCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["event"]>
@@ -847,7 +690,6 @@ export type EventSelectScalar = {
 export type EventOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "slug" | "name" | "isActive" | "startedAt" | "finishedAt" | "description" | "createdAt" | "updatedAt", ExtArgs["result"]["event"]>
 export type EventInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   stores?: boolean | Prisma.Event$storesArgs<ExtArgs>
-  tickets?: boolean | Prisma.Event$ticketsArgs<ExtArgs>
   staffs?: boolean | Prisma.Event$staffsArgs<ExtArgs>
   _count?: boolean | Prisma.EventCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -858,11 +700,10 @@ export type $EventPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   name: "Event"
   objects: {
     stores: Prisma.$StorePayload<ExtArgs>[]
-    tickets: Prisma.$TicketPayload<ExtArgs>[]
     staffs: Prisma.$StaffPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: number
+    id: string
     slug: string
     name: string
     isActive: boolean
@@ -1266,7 +1107,6 @@ readonly fields: EventFieldRefs;
 export interface Prisma__EventClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   stores<T extends Prisma.Event$storesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Event$storesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StorePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-  tickets<T extends Prisma.Event$ticketsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Event$ticketsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TicketPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   staffs<T extends Prisma.Event$staffsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Event$staffsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StaffPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1297,7 +1137,7 @@ export interface Prisma__EventClient<T, Null = never, ExtArgs extends runtime.Ty
  * Fields of the Event model
  */
 export interface EventFieldRefs {
-  readonly id: Prisma.FieldRef<"Event", 'Int'>
+  readonly id: Prisma.FieldRef<"Event", 'String'>
   readonly slug: Prisma.FieldRef<"Event", 'String'>
   readonly name: Prisma.FieldRef<"Event", 'String'>
   readonly isActive: Prisma.FieldRef<"Event", 'Boolean'>
@@ -1715,30 +1555,6 @@ export type Event$storesArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
   take?: number
   skip?: number
   distinct?: Prisma.StoreScalarFieldEnum | Prisma.StoreScalarFieldEnum[]
-}
-
-/**
- * Event.tickets
- */
-export type Event$ticketsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Ticket
-   */
-  select?: Prisma.TicketSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Ticket
-   */
-  omit?: Prisma.TicketOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.TicketInclude<ExtArgs> | null
-  where?: Prisma.TicketWhereInput
-  orderBy?: Prisma.TicketOrderByWithRelationInput | Prisma.TicketOrderByWithRelationInput[]
-  cursor?: Prisma.TicketWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.TicketScalarFieldEnum | Prisma.TicketScalarFieldEnum[]
 }
 
 /**

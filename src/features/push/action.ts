@@ -1,9 +1,6 @@
 "use server";
 
-import {
-  PushSubscription as PrismaPushSub,
-  User,
-} from "@/generated/prisma/client";
+import { User } from "@/generated/prisma/client";
 import prisma from "@/lib/prisma";
 import webpush from "web-push";
 import { getCurrentUser } from "../user/action";

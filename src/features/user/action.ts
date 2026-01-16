@@ -7,14 +7,14 @@ import prisma from "@/lib/prisma";
 
 export async function createUser(): Promise<User | null> {
   const cookieStore = await cookies();
-  const userUuid = cookieStore.get("user_uuid")?.value;
+  const userCuid = cookieStore.get("user_cuid")?.value;
 
-  if (!userUuid) return null;
+  if (!userCuid) return null;
 
   const createdUser: User = await prisma.user.upsert({
-    where: { uuid: userUuid },
+    where: { id: userCuid },
     update: {},
-    create: { uuid: userUuid },
+    create: { id: userCuid },
   });
 
   return createdUser;
@@ -22,13 +22,13 @@ export async function createUser(): Promise<User | null> {
 
 export async function getCurrentUser(): Promise<User | null> {
   const cookieStore = await cookies();
-  const userUuid = cookieStore.get("user_uuid")?.value;
+  const userCuid = cookieStore.get("user_cuid")?.value;
 
-  if (!userUuid) return null;
+  if (!userCuid) return null;
 
   const fetchedUser: User | null = await prisma.user.findUnique({
     where: {
-      uuid: userUuid,
+      id: userCuid,
     },
   });
 

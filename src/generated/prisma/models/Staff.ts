@@ -28,14 +28,10 @@ export type AggregateStaff = {
 
 export type StaffAvgAggregateOutputType = {
   id: number | null
-  eventId: number | null
-  storeId: number | null
 }
 
 export type StaffSumAggregateOutputType = {
   id: number | null
-  eventId: number | null
-  storeId: number | null
 }
 
 export type StaffMinAggregateOutputType = {
@@ -43,8 +39,8 @@ export type StaffMinAggregateOutputType = {
   email: string | null
   password: string | null
   role: $Enums.StaffRole | null
-  eventId: number | null
-  storeId: number | null
+  eventId: string | null
+  storeId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -54,8 +50,8 @@ export type StaffMaxAggregateOutputType = {
   email: string | null
   password: string | null
   role: $Enums.StaffRole | null
-  eventId: number | null
-  storeId: number | null
+  eventId: string | null
+  storeId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -75,14 +71,10 @@ export type StaffCountAggregateOutputType = {
 
 export type StaffAvgAggregateInputType = {
   id?: true
-  eventId?: true
-  storeId?: true
 }
 
 export type StaffSumAggregateInputType = {
   id?: true
-  eventId?: true
-  storeId?: true
 }
 
 export type StaffMinAggregateInputType = {
@@ -210,8 +202,8 @@ export type StaffGroupByOutputType = {
   email: string
   password: string
   role: $Enums.StaffRole
-  eventId: number
-  storeId: number | null
+  eventId: string | null
+  storeId: string | null
   createdAt: Date
   updatedAt: Date
   _count: StaffCountAggregateOutputType | null
@@ -244,11 +236,11 @@ export type StaffWhereInput = {
   email?: Prisma.StringFilter<"Staff"> | string
   password?: Prisma.StringFilter<"Staff"> | string
   role?: Prisma.EnumStaffRoleFilter<"Staff"> | $Enums.StaffRole
-  eventId?: Prisma.IntFilter<"Staff"> | number
-  storeId?: Prisma.IntNullableFilter<"Staff"> | number | null
+  eventId?: Prisma.StringNullableFilter<"Staff"> | string | null
+  storeId?: Prisma.StringNullableFilter<"Staff"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Staff"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Staff"> | Date | string
-  event?: Prisma.XOR<Prisma.EventScalarRelationFilter, Prisma.EventWhereInput>
+  event?: Prisma.XOR<Prisma.EventNullableScalarRelationFilter, Prisma.EventWhereInput> | null
   store?: Prisma.XOR<Prisma.StoreNullableScalarRelationFilter, Prisma.StoreWhereInput> | null
 }
 
@@ -257,7 +249,7 @@ export type StaffOrderByWithRelationInput = {
   email?: Prisma.SortOrder
   password?: Prisma.SortOrder
   role?: Prisma.SortOrder
-  eventId?: Prisma.SortOrder
+  eventId?: Prisma.SortOrderInput | Prisma.SortOrder
   storeId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -273,11 +265,11 @@ export type StaffWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.StaffWhereInput | Prisma.StaffWhereInput[]
   password?: Prisma.StringFilter<"Staff"> | string
   role?: Prisma.EnumStaffRoleFilter<"Staff"> | $Enums.StaffRole
-  eventId?: Prisma.IntFilter<"Staff"> | number
-  storeId?: Prisma.IntNullableFilter<"Staff"> | number | null
+  eventId?: Prisma.StringNullableFilter<"Staff"> | string | null
+  storeId?: Prisma.StringNullableFilter<"Staff"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Staff"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Staff"> | Date | string
-  event?: Prisma.XOR<Prisma.EventScalarRelationFilter, Prisma.EventWhereInput>
+  event?: Prisma.XOR<Prisma.EventNullableScalarRelationFilter, Prisma.EventWhereInput> | null
   store?: Prisma.XOR<Prisma.StoreNullableScalarRelationFilter, Prisma.StoreWhereInput> | null
 }, "id" | "email">
 
@@ -286,7 +278,7 @@ export type StaffOrderByWithAggregationInput = {
   email?: Prisma.SortOrder
   password?: Prisma.SortOrder
   role?: Prisma.SortOrder
-  eventId?: Prisma.SortOrder
+  eventId?: Prisma.SortOrderInput | Prisma.SortOrder
   storeId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -305,8 +297,8 @@ export type StaffScalarWhereWithAggregatesInput = {
   email?: Prisma.StringWithAggregatesFilter<"Staff"> | string
   password?: Prisma.StringWithAggregatesFilter<"Staff"> | string
   role?: Prisma.EnumStaffRoleWithAggregatesFilter<"Staff"> | $Enums.StaffRole
-  eventId?: Prisma.IntWithAggregatesFilter<"Staff"> | number
-  storeId?: Prisma.IntNullableWithAggregatesFilter<"Staff"> | number | null
+  eventId?: Prisma.StringNullableWithAggregatesFilter<"Staff"> | string | null
+  storeId?: Prisma.StringNullableWithAggregatesFilter<"Staff"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Staff"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Staff"> | Date | string
 }
@@ -317,7 +309,7 @@ export type StaffCreateInput = {
   role: $Enums.StaffRole
   createdAt?: Date | string
   updatedAt?: Date | string
-  event: Prisma.EventCreateNestedOneWithoutStaffsInput
+  event?: Prisma.EventCreateNestedOneWithoutStaffsInput
   store?: Prisma.StoreCreateNestedOneWithoutStaffsInput
 }
 
@@ -326,8 +318,8 @@ export type StaffUncheckedCreateInput = {
   email: string
   password: string
   role: $Enums.StaffRole
-  eventId: number
-  storeId?: number | null
+  eventId?: string | null
+  storeId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -338,7 +330,7 @@ export type StaffUpdateInput = {
   role?: Prisma.EnumStaffRoleFieldUpdateOperationsInput | $Enums.StaffRole
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  event?: Prisma.EventUpdateOneRequiredWithoutStaffsNestedInput
+  event?: Prisma.EventUpdateOneWithoutStaffsNestedInput
   store?: Prisma.StoreUpdateOneWithoutStaffsNestedInput
 }
 
@@ -347,8 +339,8 @@ export type StaffUncheckedUpdateInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumStaffRoleFieldUpdateOperationsInput | $Enums.StaffRole
-  eventId?: Prisma.IntFieldUpdateOperationsInput | number
-  storeId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  eventId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -358,8 +350,8 @@ export type StaffCreateManyInput = {
   email: string
   password: string
   role: $Enums.StaffRole
-  eventId: number
-  storeId?: number | null
+  eventId?: string | null
+  storeId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -377,8 +369,8 @@ export type StaffUncheckedUpdateManyInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumStaffRoleFieldUpdateOperationsInput | $Enums.StaffRole
-  eventId?: Prisma.IntFieldUpdateOperationsInput | number
-  storeId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  eventId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -406,8 +398,6 @@ export type StaffCountOrderByAggregateInput = {
 
 export type StaffAvgOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  eventId?: Prisma.SortOrder
-  storeId?: Prisma.SortOrder
 }
 
 export type StaffMaxOrderByAggregateInput = {
@@ -434,8 +424,6 @@ export type StaffMinOrderByAggregateInput = {
 
 export type StaffSumOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  eventId?: Prisma.SortOrder
-  storeId?: Prisma.SortOrder
 }
 
 export type StaffCreateNestedManyWithoutEventInput = {
@@ -540,7 +528,7 @@ export type StaffUncheckedCreateWithoutEventInput = {
   email: string
   password: string
   role: $Enums.StaffRole
-  storeId?: number | null
+  storeId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -579,8 +567,8 @@ export type StaffScalarWhereInput = {
   email?: Prisma.StringFilter<"Staff"> | string
   password?: Prisma.StringFilter<"Staff"> | string
   role?: Prisma.EnumStaffRoleFilter<"Staff"> | $Enums.StaffRole
-  eventId?: Prisma.IntFilter<"Staff"> | number
-  storeId?: Prisma.IntNullableFilter<"Staff"> | number | null
+  eventId?: Prisma.StringNullableFilter<"Staff"> | string | null
+  storeId?: Prisma.StringNullableFilter<"Staff"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Staff"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Staff"> | Date | string
 }
@@ -591,7 +579,7 @@ export type StaffCreateWithoutStoreInput = {
   role: $Enums.StaffRole
   createdAt?: Date | string
   updatedAt?: Date | string
-  event: Prisma.EventCreateNestedOneWithoutStaffsInput
+  event?: Prisma.EventCreateNestedOneWithoutStaffsInput
 }
 
 export type StaffUncheckedCreateWithoutStoreInput = {
@@ -599,7 +587,7 @@ export type StaffUncheckedCreateWithoutStoreInput = {
   email: string
   password: string
   role: $Enums.StaffRole
-  eventId: number
+  eventId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -635,7 +623,7 @@ export type StaffCreateManyEventInput = {
   email: string
   password: string
   role: $Enums.StaffRole
-  storeId?: number | null
+  storeId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -654,7 +642,7 @@ export type StaffUncheckedUpdateWithoutEventInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumStaffRoleFieldUpdateOperationsInput | $Enums.StaffRole
-  storeId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  storeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -664,7 +652,7 @@ export type StaffUncheckedUpdateManyWithoutEventInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumStaffRoleFieldUpdateOperationsInput | $Enums.StaffRole
-  storeId?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  storeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -674,7 +662,7 @@ export type StaffCreateManyStoreInput = {
   email: string
   password: string
   role: $Enums.StaffRole
-  eventId: number
+  eventId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -685,7 +673,7 @@ export type StaffUpdateWithoutStoreInput = {
   role?: Prisma.EnumStaffRoleFieldUpdateOperationsInput | $Enums.StaffRole
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  event?: Prisma.EventUpdateOneRequiredWithoutStaffsNestedInput
+  event?: Prisma.EventUpdateOneWithoutStaffsNestedInput
 }
 
 export type StaffUncheckedUpdateWithoutStoreInput = {
@@ -693,7 +681,7 @@ export type StaffUncheckedUpdateWithoutStoreInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumStaffRoleFieldUpdateOperationsInput | $Enums.StaffRole
-  eventId?: Prisma.IntFieldUpdateOperationsInput | number
+  eventId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -703,7 +691,7 @@ export type StaffUncheckedUpdateManyWithoutStoreInput = {
   email?: Prisma.StringFieldUpdateOperationsInput | string
   password?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumStaffRoleFieldUpdateOperationsInput | $Enums.StaffRole
-  eventId?: Prisma.IntFieldUpdateOperationsInput | number
+  eventId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -719,7 +707,7 @@ export type StaffSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   storeId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
+  event?: boolean | Prisma.Staff$eventArgs<ExtArgs>
   store?: boolean | Prisma.Staff$storeArgs<ExtArgs>
 }, ExtArgs["result"]["staff"]>
 
@@ -732,7 +720,7 @@ export type StaffSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   storeId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
+  event?: boolean | Prisma.Staff$eventArgs<ExtArgs>
   store?: boolean | Prisma.Staff$storeArgs<ExtArgs>
 }, ExtArgs["result"]["staff"]>
 
@@ -745,7 +733,7 @@ export type StaffSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   storeId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
-  event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
+  event?: boolean | Prisma.Staff$eventArgs<ExtArgs>
   store?: boolean | Prisma.Staff$storeArgs<ExtArgs>
 }, ExtArgs["result"]["staff"]>
 
@@ -762,22 +750,22 @@ export type StaffSelectScalar = {
 
 export type StaffOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "password" | "role" | "eventId" | "storeId" | "createdAt" | "updatedAt", ExtArgs["result"]["staff"]>
 export type StaffInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
+  event?: boolean | Prisma.Staff$eventArgs<ExtArgs>
   store?: boolean | Prisma.Staff$storeArgs<ExtArgs>
 }
 export type StaffIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
+  event?: boolean | Prisma.Staff$eventArgs<ExtArgs>
   store?: boolean | Prisma.Staff$storeArgs<ExtArgs>
 }
 export type StaffIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
+  event?: boolean | Prisma.Staff$eventArgs<ExtArgs>
   store?: boolean | Prisma.Staff$storeArgs<ExtArgs>
 }
 
 export type $StaffPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Staff"
   objects: {
-    event: Prisma.$EventPayload<ExtArgs>
+    event: Prisma.$EventPayload<ExtArgs> | null
     store: Prisma.$StorePayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -785,8 +773,8 @@ export type $StaffPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     email: string
     password: string
     role: $Enums.StaffRole
-    eventId: number
-    storeId: number | null
+    eventId: string | null
+    storeId: string | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["staff"]>
@@ -1183,7 +1171,7 @@ readonly fields: StaffFieldRefs;
  */
 export interface Prisma__StaffClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  event<T extends Prisma.EventDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EventDefaultArgs<ExtArgs>>): Prisma.Prisma__EventClient<runtime.Types.Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  event<T extends Prisma.Staff$eventArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Staff$eventArgs<ExtArgs>>): Prisma.Prisma__EventClient<runtime.Types.Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   store<T extends Prisma.Staff$storeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Staff$storeArgs<ExtArgs>>): Prisma.Prisma__StoreClient<runtime.Types.Result.GetResult<Prisma.$StorePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1218,8 +1206,8 @@ export interface StaffFieldRefs {
   readonly email: Prisma.FieldRef<"Staff", 'String'>
   readonly password: Prisma.FieldRef<"Staff", 'String'>
   readonly role: Prisma.FieldRef<"Staff", 'StaffRole'>
-  readonly eventId: Prisma.FieldRef<"Staff", 'Int'>
-  readonly storeId: Prisma.FieldRef<"Staff", 'Int'>
+  readonly eventId: Prisma.FieldRef<"Staff", 'String'>
+  readonly storeId: Prisma.FieldRef<"Staff", 'String'>
   readonly createdAt: Prisma.FieldRef<"Staff", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Staff", 'DateTime'>
 }
@@ -1615,6 +1603,25 @@ export type StaffDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Interna
    * Limit how many Staff to delete.
    */
   limit?: number
+}
+
+/**
+ * Staff.event
+ */
+export type Staff$eventArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Event
+   */
+  select?: Prisma.EventSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Event
+   */
+  omit?: Prisma.EventOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.EventInclude<ExtArgs> | null
+  where?: Prisma.EventWhereInput
 }
 
 /**

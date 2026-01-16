@@ -20,38 +20,26 @@ export type PushSubscriptionModel = runtime.Types.Result.DefaultSelection<Prisma
 
 export type AggregatePushSubscription = {
   _count: PushSubscriptionCountAggregateOutputType | null
-  _avg: PushSubscriptionAvgAggregateOutputType | null
-  _sum: PushSubscriptionSumAggregateOutputType | null
   _min: PushSubscriptionMinAggregateOutputType | null
   _max: PushSubscriptionMaxAggregateOutputType | null
 }
 
-export type PushSubscriptionAvgAggregateOutputType = {
-  id: number | null
-  userId: number | null
-}
-
-export type PushSubscriptionSumAggregateOutputType = {
-  id: number | null
-  userId: number | null
-}
-
 export type PushSubscriptionMinAggregateOutputType = {
-  id: number | null
+  id: string | null
   endpoint: string | null
   p256dh: string | null
   auth: string | null
-  userId: number | null
+  userId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
 
 export type PushSubscriptionMaxAggregateOutputType = {
-  id: number | null
+  id: string | null
   endpoint: string | null
   p256dh: string | null
   auth: string | null
-  userId: number | null
+  userId: string | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -67,16 +55,6 @@ export type PushSubscriptionCountAggregateOutputType = {
   _all: number
 }
 
-
-export type PushSubscriptionAvgAggregateInputType = {
-  id?: true
-  userId?: true
-}
-
-export type PushSubscriptionSumAggregateInputType = {
-  id?: true
-  userId?: true
-}
 
 export type PushSubscriptionMinAggregateInputType = {
   id?: true
@@ -147,18 +125,6 @@ export type PushSubscriptionAggregateArgs<ExtArgs extends runtime.Types.Extensio
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
-   * Select which fields to average
-  **/
-  _avg?: PushSubscriptionAvgAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
-   * Select which fields to sum
-  **/
-  _sum?: PushSubscriptionSumAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
    * Select which fields to find the minimum value
   **/
   _min?: PushSubscriptionMinAggregateInputType
@@ -189,23 +155,19 @@ export type PushSubscriptionGroupByArgs<ExtArgs extends runtime.Types.Extensions
   take?: number
   skip?: number
   _count?: PushSubscriptionCountAggregateInputType | true
-  _avg?: PushSubscriptionAvgAggregateInputType
-  _sum?: PushSubscriptionSumAggregateInputType
   _min?: PushSubscriptionMinAggregateInputType
   _max?: PushSubscriptionMaxAggregateInputType
 }
 
 export type PushSubscriptionGroupByOutputType = {
-  id: number
+  id: string
   endpoint: string
   p256dh: string
   auth: string
-  userId: number
+  userId: string
   createdAt: Date
   updatedAt: Date
   _count: PushSubscriptionCountAggregateOutputType | null
-  _avg: PushSubscriptionAvgAggregateOutputType | null
-  _sum: PushSubscriptionSumAggregateOutputType | null
   _min: PushSubscriptionMinAggregateOutputType | null
   _max: PushSubscriptionMaxAggregateOutputType | null
 }
@@ -229,11 +191,11 @@ export type PushSubscriptionWhereInput = {
   AND?: Prisma.PushSubscriptionWhereInput | Prisma.PushSubscriptionWhereInput[]
   OR?: Prisma.PushSubscriptionWhereInput[]
   NOT?: Prisma.PushSubscriptionWhereInput | Prisma.PushSubscriptionWhereInput[]
-  id?: Prisma.IntFilter<"PushSubscription"> | number
+  id?: Prisma.StringFilter<"PushSubscription"> | string
   endpoint?: Prisma.StringFilter<"PushSubscription"> | string
   p256dh?: Prisma.StringFilter<"PushSubscription"> | string
   auth?: Prisma.StringFilter<"PushSubscription"> | string
-  userId?: Prisma.IntFilter<"PushSubscription"> | number
+  userId?: Prisma.StringFilter<"PushSubscription"> | string
   createdAt?: Prisma.DateTimeFilter<"PushSubscription"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"PushSubscription"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -251,14 +213,14 @@ export type PushSubscriptionOrderByWithRelationInput = {
 }
 
 export type PushSubscriptionWhereUniqueInput = Prisma.AtLeast<{
-  id?: number
+  id?: string
   endpoint?: string
   AND?: Prisma.PushSubscriptionWhereInput | Prisma.PushSubscriptionWhereInput[]
   OR?: Prisma.PushSubscriptionWhereInput[]
   NOT?: Prisma.PushSubscriptionWhereInput | Prisma.PushSubscriptionWhereInput[]
   p256dh?: Prisma.StringFilter<"PushSubscription"> | string
   auth?: Prisma.StringFilter<"PushSubscription"> | string
-  userId?: Prisma.IntFilter<"PushSubscription"> | number
+  userId?: Prisma.StringFilter<"PushSubscription"> | string
   createdAt?: Prisma.DateTimeFilter<"PushSubscription"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"PushSubscription"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
@@ -273,26 +235,25 @@ export type PushSubscriptionOrderByWithAggregationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.PushSubscriptionCountOrderByAggregateInput
-  _avg?: Prisma.PushSubscriptionAvgOrderByAggregateInput
   _max?: Prisma.PushSubscriptionMaxOrderByAggregateInput
   _min?: Prisma.PushSubscriptionMinOrderByAggregateInput
-  _sum?: Prisma.PushSubscriptionSumOrderByAggregateInput
 }
 
 export type PushSubscriptionScalarWhereWithAggregatesInput = {
   AND?: Prisma.PushSubscriptionScalarWhereWithAggregatesInput | Prisma.PushSubscriptionScalarWhereWithAggregatesInput[]
   OR?: Prisma.PushSubscriptionScalarWhereWithAggregatesInput[]
   NOT?: Prisma.PushSubscriptionScalarWhereWithAggregatesInput | Prisma.PushSubscriptionScalarWhereWithAggregatesInput[]
-  id?: Prisma.IntWithAggregatesFilter<"PushSubscription"> | number
+  id?: Prisma.StringWithAggregatesFilter<"PushSubscription"> | string
   endpoint?: Prisma.StringWithAggregatesFilter<"PushSubscription"> | string
   p256dh?: Prisma.StringWithAggregatesFilter<"PushSubscription"> | string
   auth?: Prisma.StringWithAggregatesFilter<"PushSubscription"> | string
-  userId?: Prisma.IntWithAggregatesFilter<"PushSubscription"> | number
+  userId?: Prisma.StringWithAggregatesFilter<"PushSubscription"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"PushSubscription"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"PushSubscription"> | Date | string
 }
 
 export type PushSubscriptionCreateInput = {
+  id?: string
   endpoint: string
   p256dh: string
   auth: string
@@ -302,16 +263,17 @@ export type PushSubscriptionCreateInput = {
 }
 
 export type PushSubscriptionUncheckedCreateInput = {
-  id?: number
+  id?: string
   endpoint: string
   p256dh: string
   auth: string
-  userId: number
+  userId: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type PushSubscriptionUpdateInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   endpoint?: Prisma.StringFieldUpdateOperationsInput | string
   p256dh?: Prisma.StringFieldUpdateOperationsInput | string
   auth?: Prisma.StringFieldUpdateOperationsInput | string
@@ -321,26 +283,27 @@ export type PushSubscriptionUpdateInput = {
 }
 
 export type PushSubscriptionUncheckedUpdateInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   endpoint?: Prisma.StringFieldUpdateOperationsInput | string
   p256dh?: Prisma.StringFieldUpdateOperationsInput | string
   auth?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type PushSubscriptionCreateManyInput = {
-  id?: number
+  id?: string
   endpoint: string
   p256dh: string
   auth: string
-  userId: number
+  userId: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
 
 export type PushSubscriptionUpdateManyMutationInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   endpoint?: Prisma.StringFieldUpdateOperationsInput | string
   p256dh?: Prisma.StringFieldUpdateOperationsInput | string
   auth?: Prisma.StringFieldUpdateOperationsInput | string
@@ -349,11 +312,11 @@ export type PushSubscriptionUpdateManyMutationInput = {
 }
 
 export type PushSubscriptionUncheckedUpdateManyInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   endpoint?: Prisma.StringFieldUpdateOperationsInput | string
   p256dh?: Prisma.StringFieldUpdateOperationsInput | string
   auth?: Prisma.StringFieldUpdateOperationsInput | string
-  userId?: Prisma.IntFieldUpdateOperationsInput | number
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -378,11 +341,6 @@ export type PushSubscriptionCountOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
 }
 
-export type PushSubscriptionAvgOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
-}
-
 export type PushSubscriptionMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   endpoint?: Prisma.SortOrder
@@ -401,11 +359,6 @@ export type PushSubscriptionMinOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-}
-
-export type PushSubscriptionSumOrderByAggregateInput = {
-  id?: Prisma.SortOrder
-  userId?: Prisma.SortOrder
 }
 
 export type PushSubscriptionCreateNestedManyWithoutUserInput = {
@@ -451,6 +404,7 @@ export type PushSubscriptionUncheckedUpdateManyWithoutUserNestedInput = {
 }
 
 export type PushSubscriptionCreateWithoutUserInput = {
+  id?: string
   endpoint: string
   p256dh: string
   auth: string
@@ -459,7 +413,7 @@ export type PushSubscriptionCreateWithoutUserInput = {
 }
 
 export type PushSubscriptionUncheckedCreateWithoutUserInput = {
-  id?: number
+  id?: string
   endpoint: string
   p256dh: string
   auth: string
@@ -497,17 +451,17 @@ export type PushSubscriptionScalarWhereInput = {
   AND?: Prisma.PushSubscriptionScalarWhereInput | Prisma.PushSubscriptionScalarWhereInput[]
   OR?: Prisma.PushSubscriptionScalarWhereInput[]
   NOT?: Prisma.PushSubscriptionScalarWhereInput | Prisma.PushSubscriptionScalarWhereInput[]
-  id?: Prisma.IntFilter<"PushSubscription"> | number
+  id?: Prisma.StringFilter<"PushSubscription"> | string
   endpoint?: Prisma.StringFilter<"PushSubscription"> | string
   p256dh?: Prisma.StringFilter<"PushSubscription"> | string
   auth?: Prisma.StringFilter<"PushSubscription"> | string
-  userId?: Prisma.IntFilter<"PushSubscription"> | number
+  userId?: Prisma.StringFilter<"PushSubscription"> | string
   createdAt?: Prisma.DateTimeFilter<"PushSubscription"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"PushSubscription"> | Date | string
 }
 
 export type PushSubscriptionCreateManyUserInput = {
-  id?: number
+  id?: string
   endpoint: string
   p256dh: string
   auth: string
@@ -516,6 +470,7 @@ export type PushSubscriptionCreateManyUserInput = {
 }
 
 export type PushSubscriptionUpdateWithoutUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   endpoint?: Prisma.StringFieldUpdateOperationsInput | string
   p256dh?: Prisma.StringFieldUpdateOperationsInput | string
   auth?: Prisma.StringFieldUpdateOperationsInput | string
@@ -524,7 +479,7 @@ export type PushSubscriptionUpdateWithoutUserInput = {
 }
 
 export type PushSubscriptionUncheckedUpdateWithoutUserInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   endpoint?: Prisma.StringFieldUpdateOperationsInput | string
   p256dh?: Prisma.StringFieldUpdateOperationsInput | string
   auth?: Prisma.StringFieldUpdateOperationsInput | string
@@ -533,7 +488,7 @@ export type PushSubscriptionUncheckedUpdateWithoutUserInput = {
 }
 
 export type PushSubscriptionUncheckedUpdateManyWithoutUserInput = {
-  id?: Prisma.IntFieldUpdateOperationsInput | number
+  id?: Prisma.StringFieldUpdateOperationsInput | string
   endpoint?: Prisma.StringFieldUpdateOperationsInput | string
   p256dh?: Prisma.StringFieldUpdateOperationsInput | string
   auth?: Prisma.StringFieldUpdateOperationsInput | string
@@ -603,11 +558,11 @@ export type $PushSubscriptionPayload<ExtArgs extends runtime.Types.Extensions.In
     user: Prisma.$UserPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
-    id: number
+    id: string
     endpoint: string
     p256dh: string
     auth: string
-    userId: number
+    userId: string
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["pushSubscription"]>
@@ -1034,11 +989,11 @@ export interface Prisma__PushSubscriptionClient<T, Null = never, ExtArgs extends
  * Fields of the PushSubscription model
  */
 export interface PushSubscriptionFieldRefs {
-  readonly id: Prisma.FieldRef<"PushSubscription", 'Int'>
+  readonly id: Prisma.FieldRef<"PushSubscription", 'String'>
   readonly endpoint: Prisma.FieldRef<"PushSubscription", 'String'>
   readonly p256dh: Prisma.FieldRef<"PushSubscription", 'String'>
   readonly auth: Prisma.FieldRef<"PushSubscription", 'String'>
-  readonly userId: Prisma.FieldRef<"PushSubscription", 'Int'>
+  readonly userId: Prisma.FieldRef<"PushSubscription", 'String'>
   readonly createdAt: Prisma.FieldRef<"PushSubscription", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"PushSubscription", 'DateTime'>
 }

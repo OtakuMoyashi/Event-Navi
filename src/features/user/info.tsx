@@ -9,7 +9,6 @@ export default async function UserInfo() {
       {user ? (
         <div>
           <p>ユーザーID:{user.id}</p>
-          <p>UUID:{user.uuid}</p>
         </div>
       ) : (
         <div>

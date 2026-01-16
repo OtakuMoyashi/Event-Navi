@@ -108,11 +108,9 @@ export type StoreScalarFieldEnum = (typeof StoreScalarFieldEnum)[keyof typeof St
 
 export const TicketScalarFieldEnum = {
   id: 'id',
-  uuid: 'uuid',
   index: 'index',
   numberOfPeople: 'numberOfPeople',
   status: 'status',
-  eventId: 'eventId',
   storeId: 'storeId',
   userId: 'userId',
   createdAt: 'createdAt',
@@ -124,7 +122,6 @@ export type TicketScalarFieldEnum = (typeof TicketScalarFieldEnum)[keyof typeof 
 
 export const UserScalarFieldEnum = {
   id: 'id',
-  uuid: 'uuid',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
