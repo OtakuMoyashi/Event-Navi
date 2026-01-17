@@ -10,6 +10,8 @@
  */
 export type * from './models/Event'
 export type * from './models/Store'
+export type * from './models/Attraction'
+export type * from './models/Food'
 export type * from './models/Ticket'
 export type * from './models/User'
 export type * from './models/PushSubscription'

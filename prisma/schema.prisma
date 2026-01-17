@@ -25,6 +25,11 @@ model Event {
   @@map("events")
 }
 
+enum StoreType {
+  ATTRACTION
+  FOOD
+}
+
 model Store {
   id          String     @id @default(cuid())
   slug        String   @unique
@@ -34,15 +39,45 @@ model Store {
   finishedAt  DateTime
   description String?
 
+  storeType StoreType
+
+  attraction Attraction?
+  food Food?
+
   event   Event?   @relation(fields: [eventId], references: [id])
   eventId String?
-  tickets Ticket[]
   staffs  Staff[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@map("stores")
+}
+
+model Attraction {
+  id String @id @default(cuid())
+
+  storeId String @unique
+  store Store @relation(fields: [storeId], references: [id], onDelete: Cascade)
+
+  tickets Ticket[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("attracions")
+}
+
+model Food {
+  id String @id @default(cuid())
+
+  storeId String @unique
+  store Store @relation(fields: [storeId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("foods")
 }
 
 enum TicketStatus {
@@ -59,8 +94,8 @@ model Ticket {
   numberOfPeople Int
   status         TicketStatus @default(ISSUED)
 
-  storeId String
-  store   Store @relation(fields: [storeId], references: [id])
+  attractionId String
+  attraction   Attraction @relation(fields: [attractionId], references: [id])
 
   userId  String
   user    User  @relation(fields: [userId], references: [id])
@@ -99,8 +134,10 @@ model PushSubscription {
 }
 
 enum StaffRole {
-  STAFF
-  ADMIN
+  STORE_STAFF
+  STORE_ADMIN
+  EVENT_STAFF
+  EVENT_ADMIN
 }
 
 model Staff {

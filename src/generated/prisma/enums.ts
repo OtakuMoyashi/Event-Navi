@@ -9,6 +9,14 @@
 * 🟢 You can import this file directly.
 */
 
+export const StoreType = {
+  ATTRACTION: 'ATTRACTION',
+  FOOD: 'FOOD'
+} as const
+
+export type StoreType = (typeof StoreType)[keyof typeof StoreType]
+
+
 export const TicketStatus = {
   ISSUED: 'ISSUED',
   CALLED: 'CALLED',
@@ -20,8 +28,10 @@ export type TicketStatus = (typeof TicketStatus)[keyof typeof TicketStatus]
 
 
 export const StaffRole = {
-  STAFF: 'STAFF',
-  ADMIN: 'ADMIN'
+  STORE_STAFF: 'STORE_STAFF',
+  STORE_ADMIN: 'STORE_ADMIN',
+  EVENT_STAFF: 'EVENT_STAFF',
+  EVENT_ADMIN: 'EVENT_ADMIN'
 } as const
 
 export type StaffRole = (typeof StaffRole)[keyof typeof StaffRole]

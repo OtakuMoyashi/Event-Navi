@@ -32,6 +32,7 @@ export type StoreMinAggregateOutputType = {
   startedAt: Date | null
   finishedAt: Date | null
   description: string | null
+  storeType: $Enums.StoreType | null
   eventId: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -45,6 +46,7 @@ export type StoreMaxAggregateOutputType = {
   startedAt: Date | null
   finishedAt: Date | null
   description: string | null
+  storeType: $Enums.StoreType | null
   eventId: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -58,6 +60,7 @@ export type StoreCountAggregateOutputType = {
   startedAt: number
   finishedAt: number
   description: number
+  storeType: number
   eventId: number
   createdAt: number
   updatedAt: number
@@ -73,6 +76,7 @@ export type StoreMinAggregateInputType = {
   startedAt?: true
   finishedAt?: true
   description?: true
+  storeType?: true
   eventId?: true
   createdAt?: true
   updatedAt?: true
@@ -86,6 +90,7 @@ export type StoreMaxAggregateInputType = {
   startedAt?: true
   finishedAt?: true
   description?: true
+  storeType?: true
   eventId?: true
   createdAt?: true
   updatedAt?: true
@@ -99,6 +104,7 @@ export type StoreCountAggregateInputType = {
   startedAt?: true
   finishedAt?: true
   description?: true
+  storeType?: true
   eventId?: true
   createdAt?: true
   updatedAt?: true
@@ -185,6 +191,7 @@ export type StoreGroupByOutputType = {
   startedAt: Date
   finishedAt: Date
   description: string | null
+  storeType: $Enums.StoreType
   eventId: string | null
   createdAt: Date
   updatedAt: Date
@@ -219,11 +226,13 @@ export type StoreWhereInput = {
   startedAt?: Prisma.DateTimeFilter<"Store"> | Date | string
   finishedAt?: Prisma.DateTimeFilter<"Store"> | Date | string
   description?: Prisma.StringNullableFilter<"Store"> | string | null
+  storeType?: Prisma.EnumStoreTypeFilter<"Store"> | $Enums.StoreType
   eventId?: Prisma.StringNullableFilter<"Store"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Store"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Store"> | Date | string
+  attraction?: Prisma.XOR<Prisma.AttractionNullableScalarRelationFilter, Prisma.AttractionWhereInput> | null
+  food?: Prisma.XOR<Prisma.FoodNullableScalarRelationFilter, Prisma.FoodWhereInput> | null
   event?: Prisma.XOR<Prisma.EventNullableScalarRelationFilter, Prisma.EventWhereInput> | null
-  tickets?: Prisma.TicketListRelationFilter
   staffs?: Prisma.StaffListRelationFilter
 }
 
@@ -235,11 +244,13 @@ export type StoreOrderByWithRelationInput = {
   startedAt?: Prisma.SortOrder
   finishedAt?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
+  storeType?: Prisma.SortOrder
   eventId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  attraction?: Prisma.AttractionOrderByWithRelationInput
+  food?: Prisma.FoodOrderByWithRelationInput
   event?: Prisma.EventOrderByWithRelationInput
-  tickets?: Prisma.TicketOrderByRelationAggregateInput
   staffs?: Prisma.StaffOrderByRelationAggregateInput
 }
 
@@ -254,11 +265,13 @@ export type StoreWhereUniqueInput = Prisma.AtLeast<{
   startedAt?: Prisma.DateTimeFilter<"Store"> | Date | string
   finishedAt?: Prisma.DateTimeFilter<"Store"> | Date | string
   description?: Prisma.StringNullableFilter<"Store"> | string | null
+  storeType?: Prisma.EnumStoreTypeFilter<"Store"> | $Enums.StoreType
   eventId?: Prisma.StringNullableFilter<"Store"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Store"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Store"> | Date | string
+  attraction?: Prisma.XOR<Prisma.AttractionNullableScalarRelationFilter, Prisma.AttractionWhereInput> | null
+  food?: Prisma.XOR<Prisma.FoodNullableScalarRelationFilter, Prisma.FoodWhereInput> | null
   event?: Prisma.XOR<Prisma.EventNullableScalarRelationFilter, Prisma.EventWhereInput> | null
-  tickets?: Prisma.TicketListRelationFilter
   staffs?: Prisma.StaffListRelationFilter
 }, "id" | "slug">
 
@@ -270,6 +283,7 @@ export type StoreOrderByWithAggregationInput = {
   startedAt?: Prisma.SortOrder
   finishedAt?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
+  storeType?: Prisma.SortOrder
   eventId?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -289,6 +303,7 @@ export type StoreScalarWhereWithAggregatesInput = {
   startedAt?: Prisma.DateTimeWithAggregatesFilter<"Store"> | Date | string
   finishedAt?: Prisma.DateTimeWithAggregatesFilter<"Store"> | Date | string
   description?: Prisma.StringNullableWithAggregatesFilter<"Store"> | string | null
+  storeType?: Prisma.EnumStoreTypeWithAggregatesFilter<"Store"> | $Enums.StoreType
   eventId?: Prisma.StringNullableWithAggregatesFilter<"Store"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Store"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Store"> | Date | string
@@ -302,10 +317,12 @@ export type StoreCreateInput = {
   startedAt: Date | string
   finishedAt: Date | string
   description?: string | null
+  storeType: $Enums.StoreType
   createdAt?: Date | string
   updatedAt?: Date | string
+  attraction?: Prisma.AttractionCreateNestedOneWithoutStoreInput
+  food?: Prisma.FoodCreateNestedOneWithoutStoreInput
   event?: Prisma.EventCreateNestedOneWithoutStoresInput
-  tickets?: Prisma.TicketCreateNestedManyWithoutStoreInput
   staffs?: Prisma.StaffCreateNestedManyWithoutStoreInput
 }
 
@@ -317,10 +334,12 @@ export type StoreUncheckedCreateInput = {
   startedAt: Date | string
   finishedAt: Date | string
   description?: string | null
+  storeType: $Enums.StoreType
   eventId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  tickets?: Prisma.TicketUncheckedCreateNestedManyWithoutStoreInput
+  attraction?: Prisma.AttractionUncheckedCreateNestedOneWithoutStoreInput
+  food?: Prisma.FoodUncheckedCreateNestedOneWithoutStoreInput
   staffs?: Prisma.StaffUncheckedCreateNestedManyWithoutStoreInput
 }
 
@@ -332,10 +351,12 @@ export type StoreUpdateInput = {
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   finishedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeType?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  attraction?: Prisma.AttractionUpdateOneWithoutStoreNestedInput
+  food?: Prisma.FoodUpdateOneWithoutStoreNestedInput
   event?: Prisma.EventUpdateOneWithoutStoresNestedInput
-  tickets?: Prisma.TicketUpdateManyWithoutStoreNestedInput
   staffs?: Prisma.StaffUpdateManyWithoutStoreNestedInput
 }
 
@@ -347,10 +368,12 @@ export type StoreUncheckedUpdateInput = {
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   finishedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeType?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
   eventId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tickets?: Prisma.TicketUncheckedUpdateManyWithoutStoreNestedInput
+  attraction?: Prisma.AttractionUncheckedUpdateOneWithoutStoreNestedInput
+  food?: Prisma.FoodUncheckedUpdateOneWithoutStoreNestedInput
   staffs?: Prisma.StaffUncheckedUpdateManyWithoutStoreNestedInput
 }
 
@@ -362,6 +385,7 @@ export type StoreCreateManyInput = {
   startedAt: Date | string
   finishedAt: Date | string
   description?: string | null
+  storeType: $Enums.StoreType
   eventId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -375,6 +399,7 @@ export type StoreUpdateManyMutationInput = {
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   finishedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeType?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -387,6 +412,7 @@ export type StoreUncheckedUpdateManyInput = {
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   finishedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeType?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
   eventId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -410,6 +436,7 @@ export type StoreCountOrderByAggregateInput = {
   startedAt?: Prisma.SortOrder
   finishedAt?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  storeType?: Prisma.SortOrder
   eventId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -423,6 +450,7 @@ export type StoreMaxOrderByAggregateInput = {
   startedAt?: Prisma.SortOrder
   finishedAt?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  storeType?: Prisma.SortOrder
   eventId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -436,6 +464,7 @@ export type StoreMinOrderByAggregateInput = {
   startedAt?: Prisma.SortOrder
   finishedAt?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  storeType?: Prisma.SortOrder
   eventId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -493,18 +522,36 @@ export type StoreUncheckedUpdateManyWithoutEventNestedInput = {
   deleteMany?: Prisma.StoreScalarWhereInput | Prisma.StoreScalarWhereInput[]
 }
 
-export type StoreCreateNestedOneWithoutTicketsInput = {
-  create?: Prisma.XOR<Prisma.StoreCreateWithoutTicketsInput, Prisma.StoreUncheckedCreateWithoutTicketsInput>
-  connectOrCreate?: Prisma.StoreCreateOrConnectWithoutTicketsInput
+export type EnumStoreTypeFieldUpdateOperationsInput = {
+  set?: $Enums.StoreType
+}
+
+export type StoreCreateNestedOneWithoutAttractionInput = {
+  create?: Prisma.XOR<Prisma.StoreCreateWithoutAttractionInput, Prisma.StoreUncheckedCreateWithoutAttractionInput>
+  connectOrCreate?: Prisma.StoreCreateOrConnectWithoutAttractionInput
   connect?: Prisma.StoreWhereUniqueInput
 }
 
-export type StoreUpdateOneRequiredWithoutTicketsNestedInput = {
-  create?: Prisma.XOR<Prisma.StoreCreateWithoutTicketsInput, Prisma.StoreUncheckedCreateWithoutTicketsInput>
-  connectOrCreate?: Prisma.StoreCreateOrConnectWithoutTicketsInput
-  upsert?: Prisma.StoreUpsertWithoutTicketsInput
+export type StoreUpdateOneRequiredWithoutAttractionNestedInput = {
+  create?: Prisma.XOR<Prisma.StoreCreateWithoutAttractionInput, Prisma.StoreUncheckedCreateWithoutAttractionInput>
+  connectOrCreate?: Prisma.StoreCreateOrConnectWithoutAttractionInput
+  upsert?: Prisma.StoreUpsertWithoutAttractionInput
   connect?: Prisma.StoreWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.StoreUpdateToOneWithWhereWithoutTicketsInput, Prisma.StoreUpdateWithoutTicketsInput>, Prisma.StoreUncheckedUpdateWithoutTicketsInput>
+  update?: Prisma.XOR<Prisma.XOR<Prisma.StoreUpdateToOneWithWhereWithoutAttractionInput, Prisma.StoreUpdateWithoutAttractionInput>, Prisma.StoreUncheckedUpdateWithoutAttractionInput>
+}
+
+export type StoreCreateNestedOneWithoutFoodInput = {
+  create?: Prisma.XOR<Prisma.StoreCreateWithoutFoodInput, Prisma.StoreUncheckedCreateWithoutFoodInput>
+  connectOrCreate?: Prisma.StoreCreateOrConnectWithoutFoodInput
+  connect?: Prisma.StoreWhereUniqueInput
+}
+
+export type StoreUpdateOneRequiredWithoutFoodNestedInput = {
+  create?: Prisma.XOR<Prisma.StoreCreateWithoutFoodInput, Prisma.StoreUncheckedCreateWithoutFoodInput>
+  connectOrCreate?: Prisma.StoreCreateOrConnectWithoutFoodInput
+  upsert?: Prisma.StoreUpsertWithoutFoodInput
+  connect?: Prisma.StoreWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.StoreUpdateToOneWithWhereWithoutFoodInput, Prisma.StoreUpdateWithoutFoodInput>, Prisma.StoreUncheckedUpdateWithoutFoodInput>
 }
 
 export type StoreCreateNestedOneWithoutStaffsInput = {
@@ -531,9 +578,11 @@ export type StoreCreateWithoutEventInput = {
   startedAt: Date | string
   finishedAt: Date | string
   description?: string | null
+  storeType: $Enums.StoreType
   createdAt?: Date | string
   updatedAt?: Date | string
-  tickets?: Prisma.TicketCreateNestedManyWithoutStoreInput
+  attraction?: Prisma.AttractionCreateNestedOneWithoutStoreInput
+  food?: Prisma.FoodCreateNestedOneWithoutStoreInput
   staffs?: Prisma.StaffCreateNestedManyWithoutStoreInput
 }
 
@@ -545,9 +594,11 @@ export type StoreUncheckedCreateWithoutEventInput = {
   startedAt: Date | string
   finishedAt: Date | string
   description?: string | null
+  storeType: $Enums.StoreType
   createdAt?: Date | string
   updatedAt?: Date | string
-  tickets?: Prisma.TicketUncheckedCreateNestedManyWithoutStoreInput
+  attraction?: Prisma.AttractionUncheckedCreateNestedOneWithoutStoreInput
+  food?: Prisma.FoodUncheckedCreateNestedOneWithoutStoreInput
   staffs?: Prisma.StaffUncheckedCreateNestedManyWithoutStoreInput
 }
 
@@ -588,12 +639,13 @@ export type StoreScalarWhereInput = {
   startedAt?: Prisma.DateTimeFilter<"Store"> | Date | string
   finishedAt?: Prisma.DateTimeFilter<"Store"> | Date | string
   description?: Prisma.StringNullableFilter<"Store"> | string | null
+  storeType?: Prisma.EnumStoreTypeFilter<"Store"> | $Enums.StoreType
   eventId?: Prisma.StringNullableFilter<"Store"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Store"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Store"> | Date | string
 }
 
-export type StoreCreateWithoutTicketsInput = {
+export type StoreCreateWithoutAttractionInput = {
   id?: string
   slug: string
   name: string
@@ -601,13 +653,15 @@ export type StoreCreateWithoutTicketsInput = {
   startedAt: Date | string
   finishedAt: Date | string
   description?: string | null
+  storeType: $Enums.StoreType
   createdAt?: Date | string
   updatedAt?: Date | string
+  food?: Prisma.FoodCreateNestedOneWithoutStoreInput
   event?: Prisma.EventCreateNestedOneWithoutStoresInput
   staffs?: Prisma.StaffCreateNestedManyWithoutStoreInput
 }
 
-export type StoreUncheckedCreateWithoutTicketsInput = {
+export type StoreUncheckedCreateWithoutAttractionInput = {
   id?: string
   slug: string
   name: string
@@ -615,29 +669,31 @@ export type StoreUncheckedCreateWithoutTicketsInput = {
   startedAt: Date | string
   finishedAt: Date | string
   description?: string | null
+  storeType: $Enums.StoreType
   eventId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  food?: Prisma.FoodUncheckedCreateNestedOneWithoutStoreInput
   staffs?: Prisma.StaffUncheckedCreateNestedManyWithoutStoreInput
 }
 
-export type StoreCreateOrConnectWithoutTicketsInput = {
+export type StoreCreateOrConnectWithoutAttractionInput = {
   where: Prisma.StoreWhereUniqueInput
-  create: Prisma.XOR<Prisma.StoreCreateWithoutTicketsInput, Prisma.StoreUncheckedCreateWithoutTicketsInput>
+  create: Prisma.XOR<Prisma.StoreCreateWithoutAttractionInput, Prisma.StoreUncheckedCreateWithoutAttractionInput>
 }
 
-export type StoreUpsertWithoutTicketsInput = {
-  update: Prisma.XOR<Prisma.StoreUpdateWithoutTicketsInput, Prisma.StoreUncheckedUpdateWithoutTicketsInput>
-  create: Prisma.XOR<Prisma.StoreCreateWithoutTicketsInput, Prisma.StoreUncheckedCreateWithoutTicketsInput>
+export type StoreUpsertWithoutAttractionInput = {
+  update: Prisma.XOR<Prisma.StoreUpdateWithoutAttractionInput, Prisma.StoreUncheckedUpdateWithoutAttractionInput>
+  create: Prisma.XOR<Prisma.StoreCreateWithoutAttractionInput, Prisma.StoreUncheckedCreateWithoutAttractionInput>
   where?: Prisma.StoreWhereInput
 }
 
-export type StoreUpdateToOneWithWhereWithoutTicketsInput = {
+export type StoreUpdateToOneWithWhereWithoutAttractionInput = {
   where?: Prisma.StoreWhereInput
-  data: Prisma.XOR<Prisma.StoreUpdateWithoutTicketsInput, Prisma.StoreUncheckedUpdateWithoutTicketsInput>
+  data: Prisma.XOR<Prisma.StoreUpdateWithoutAttractionInput, Prisma.StoreUncheckedUpdateWithoutAttractionInput>
 }
 
-export type StoreUpdateWithoutTicketsInput = {
+export type StoreUpdateWithoutAttractionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -645,13 +701,15 @@ export type StoreUpdateWithoutTicketsInput = {
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   finishedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeType?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  food?: Prisma.FoodUpdateOneWithoutStoreNestedInput
   event?: Prisma.EventUpdateOneWithoutStoresNestedInput
   staffs?: Prisma.StaffUpdateManyWithoutStoreNestedInput
 }
 
-export type StoreUncheckedUpdateWithoutTicketsInput = {
+export type StoreUncheckedUpdateWithoutAttractionInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
@@ -659,9 +717,91 @@ export type StoreUncheckedUpdateWithoutTicketsInput = {
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   finishedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeType?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
   eventId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  food?: Prisma.FoodUncheckedUpdateOneWithoutStoreNestedInput
+  staffs?: Prisma.StaffUncheckedUpdateManyWithoutStoreNestedInput
+}
+
+export type StoreCreateWithoutFoodInput = {
+  id?: string
+  slug: string
+  name: string
+  isActive?: boolean
+  startedAt: Date | string
+  finishedAt: Date | string
+  description?: string | null
+  storeType: $Enums.StoreType
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  attraction?: Prisma.AttractionCreateNestedOneWithoutStoreInput
+  event?: Prisma.EventCreateNestedOneWithoutStoresInput
+  staffs?: Prisma.StaffCreateNestedManyWithoutStoreInput
+}
+
+export type StoreUncheckedCreateWithoutFoodInput = {
+  id?: string
+  slug: string
+  name: string
+  isActive?: boolean
+  startedAt: Date | string
+  finishedAt: Date | string
+  description?: string | null
+  storeType: $Enums.StoreType
+  eventId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  attraction?: Prisma.AttractionUncheckedCreateNestedOneWithoutStoreInput
+  staffs?: Prisma.StaffUncheckedCreateNestedManyWithoutStoreInput
+}
+
+export type StoreCreateOrConnectWithoutFoodInput = {
+  where: Prisma.StoreWhereUniqueInput
+  create: Prisma.XOR<Prisma.StoreCreateWithoutFoodInput, Prisma.StoreUncheckedCreateWithoutFoodInput>
+}
+
+export type StoreUpsertWithoutFoodInput = {
+  update: Prisma.XOR<Prisma.StoreUpdateWithoutFoodInput, Prisma.StoreUncheckedUpdateWithoutFoodInput>
+  create: Prisma.XOR<Prisma.StoreCreateWithoutFoodInput, Prisma.StoreUncheckedCreateWithoutFoodInput>
+  where?: Prisma.StoreWhereInput
+}
+
+export type StoreUpdateToOneWithWhereWithoutFoodInput = {
+  where?: Prisma.StoreWhereInput
+  data: Prisma.XOR<Prisma.StoreUpdateWithoutFoodInput, Prisma.StoreUncheckedUpdateWithoutFoodInput>
+}
+
+export type StoreUpdateWithoutFoodInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  finishedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeType?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  attraction?: Prisma.AttractionUpdateOneWithoutStoreNestedInput
+  event?: Prisma.EventUpdateOneWithoutStoresNestedInput
+  staffs?: Prisma.StaffUpdateManyWithoutStoreNestedInput
+}
+
+export type StoreUncheckedUpdateWithoutFoodInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  finishedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeType?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
+  eventId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  attraction?: Prisma.AttractionUncheckedUpdateOneWithoutStoreNestedInput
   staffs?: Prisma.StaffUncheckedUpdateManyWithoutStoreNestedInput
 }
 
@@ -673,10 +813,12 @@ export type StoreCreateWithoutStaffsInput = {
   startedAt: Date | string
   finishedAt: Date | string
   description?: string | null
+  storeType: $Enums.StoreType
   createdAt?: Date | string
   updatedAt?: Date | string
+  attraction?: Prisma.AttractionCreateNestedOneWithoutStoreInput
+  food?: Prisma.FoodCreateNestedOneWithoutStoreInput
   event?: Prisma.EventCreateNestedOneWithoutStoresInput
-  tickets?: Prisma.TicketCreateNestedManyWithoutStoreInput
 }
 
 export type StoreUncheckedCreateWithoutStaffsInput = {
@@ -687,10 +829,12 @@ export type StoreUncheckedCreateWithoutStaffsInput = {
   startedAt: Date | string
   finishedAt: Date | string
   description?: string | null
+  storeType: $Enums.StoreType
   eventId?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  tickets?: Prisma.TicketUncheckedCreateNestedManyWithoutStoreInput
+  attraction?: Prisma.AttractionUncheckedCreateNestedOneWithoutStoreInput
+  food?: Prisma.FoodUncheckedCreateNestedOneWithoutStoreInput
 }
 
 export type StoreCreateOrConnectWithoutStaffsInput = {
@@ -717,10 +861,12 @@ export type StoreUpdateWithoutStaffsInput = {
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   finishedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeType?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  attraction?: Prisma.AttractionUpdateOneWithoutStoreNestedInput
+  food?: Prisma.FoodUpdateOneWithoutStoreNestedInput
   event?: Prisma.EventUpdateOneWithoutStoresNestedInput
-  tickets?: Prisma.TicketUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreUncheckedUpdateWithoutStaffsInput = {
@@ -731,10 +877,12 @@ export type StoreUncheckedUpdateWithoutStaffsInput = {
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   finishedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeType?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
   eventId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tickets?: Prisma.TicketUncheckedUpdateManyWithoutStoreNestedInput
+  attraction?: Prisma.AttractionUncheckedUpdateOneWithoutStoreNestedInput
+  food?: Prisma.FoodUncheckedUpdateOneWithoutStoreNestedInput
 }
 
 export type StoreCreateManyEventInput = {
@@ -745,6 +893,7 @@ export type StoreCreateManyEventInput = {
   startedAt: Date | string
   finishedAt: Date | string
   description?: string | null
+  storeType: $Enums.StoreType
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -757,9 +906,11 @@ export type StoreUpdateWithoutEventInput = {
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   finishedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeType?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tickets?: Prisma.TicketUpdateManyWithoutStoreNestedInput
+  attraction?: Prisma.AttractionUpdateOneWithoutStoreNestedInput
+  food?: Prisma.FoodUpdateOneWithoutStoreNestedInput
   staffs?: Prisma.StaffUpdateManyWithoutStoreNestedInput
 }
 
@@ -771,9 +922,11 @@ export type StoreUncheckedUpdateWithoutEventInput = {
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   finishedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeType?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  tickets?: Prisma.TicketUncheckedUpdateManyWithoutStoreNestedInput
+  attraction?: Prisma.AttractionUncheckedUpdateOneWithoutStoreNestedInput
+  food?: Prisma.FoodUncheckedUpdateOneWithoutStoreNestedInput
   staffs?: Prisma.StaffUncheckedUpdateManyWithoutStoreNestedInput
 }
 
@@ -785,6 +938,7 @@ export type StoreUncheckedUpdateManyWithoutEventInput = {
   startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   finishedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeType?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -795,12 +949,10 @@ export type StoreUncheckedUpdateManyWithoutEventInput = {
  */
 
 export type StoreCountOutputType = {
-  tickets: number
   staffs: number
 }
 
 export type StoreCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  tickets?: boolean | StoreCountOutputTypeCountTicketsArgs
   staffs?: boolean | StoreCountOutputTypeCountStaffsArgs
 }
 
@@ -812,13 +964,6 @@ export type StoreCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extens
    * Select specific fields to fetch from the StoreCountOutputType
    */
   select?: Prisma.StoreCountOutputTypeSelect<ExtArgs> | null
-}
-
-/**
- * StoreCountOutputType without action
- */
-export type StoreCountOutputTypeCountTicketsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  where?: Prisma.TicketWhereInput
 }
 
 /**
@@ -837,11 +982,13 @@ export type StoreSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   startedAt?: boolean
   finishedAt?: boolean
   description?: boolean
+  storeType?: boolean
   eventId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  attraction?: boolean | Prisma.Store$attractionArgs<ExtArgs>
+  food?: boolean | Prisma.Store$foodArgs<ExtArgs>
   event?: boolean | Prisma.Store$eventArgs<ExtArgs>
-  tickets?: boolean | Prisma.Store$ticketsArgs<ExtArgs>
   staffs?: boolean | Prisma.Store$staffsArgs<ExtArgs>
   _count?: boolean | Prisma.StoreCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["store"]>
@@ -854,6 +1001,7 @@ export type StoreSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   startedAt?: boolean
   finishedAt?: boolean
   description?: boolean
+  storeType?: boolean
   eventId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -868,6 +1016,7 @@ export type StoreSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   startedAt?: boolean
   finishedAt?: boolean
   description?: boolean
+  storeType?: boolean
   eventId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -882,15 +1031,17 @@ export type StoreSelectScalar = {
   startedAt?: boolean
   finishedAt?: boolean
   description?: boolean
+  storeType?: boolean
   eventId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type StoreOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "slug" | "name" | "isActive" | "startedAt" | "finishedAt" | "description" | "eventId" | "createdAt" | "updatedAt", ExtArgs["result"]["store"]>
+export type StoreOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "slug" | "name" | "isActive" | "startedAt" | "finishedAt" | "description" | "storeType" | "eventId" | "createdAt" | "updatedAt", ExtArgs["result"]["store"]>
 export type StoreInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  attraction?: boolean | Prisma.Store$attractionArgs<ExtArgs>
+  food?: boolean | Prisma.Store$foodArgs<ExtArgs>
   event?: boolean | Prisma.Store$eventArgs<ExtArgs>
-  tickets?: boolean | Prisma.Store$ticketsArgs<ExtArgs>
   staffs?: boolean | Prisma.Store$staffsArgs<ExtArgs>
   _count?: boolean | Prisma.StoreCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -904,8 +1055,9 @@ export type StoreIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
 export type $StorePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Store"
   objects: {
+    attraction: Prisma.$AttractionPayload<ExtArgs> | null
+    food: Prisma.$FoodPayload<ExtArgs> | null
     event: Prisma.$EventPayload<ExtArgs> | null
-    tickets: Prisma.$TicketPayload<ExtArgs>[]
     staffs: Prisma.$StaffPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -916,6 +1068,7 @@ export type $StorePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     startedAt: Date
     finishedAt: Date
     description: string | null
+    storeType: $Enums.StoreType
     eventId: string | null
     createdAt: Date
     updatedAt: Date
@@ -1313,8 +1466,9 @@ readonly fields: StoreFieldRefs;
  */
 export interface Prisma__StoreClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  attraction<T extends Prisma.Store$attractionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Store$attractionArgs<ExtArgs>>): Prisma.Prisma__AttractionClient<runtime.Types.Result.GetResult<Prisma.$AttractionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  food<T extends Prisma.Store$foodArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Store$foodArgs<ExtArgs>>): Prisma.Prisma__FoodClient<runtime.Types.Result.GetResult<Prisma.$FoodPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   event<T extends Prisma.Store$eventArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Store$eventArgs<ExtArgs>>): Prisma.Prisma__EventClient<runtime.Types.Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  tickets<T extends Prisma.Store$ticketsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Store$ticketsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TicketPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   staffs<T extends Prisma.Store$staffsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Store$staffsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StaffPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1352,6 +1506,7 @@ export interface StoreFieldRefs {
   readonly startedAt: Prisma.FieldRef<"Store", 'DateTime'>
   readonly finishedAt: Prisma.FieldRef<"Store", 'DateTime'>
   readonly description: Prisma.FieldRef<"Store", 'String'>
+  readonly storeType: Prisma.FieldRef<"Store", 'StoreType'>
   readonly eventId: Prisma.FieldRef<"Store", 'String'>
   readonly createdAt: Prisma.FieldRef<"Store", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Store", 'DateTime'>
@@ -1751,6 +1906,44 @@ export type StoreDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Interna
 }
 
 /**
+ * Store.attraction
+ */
+export type Store$attractionArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Attraction
+   */
+  select?: Prisma.AttractionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Attraction
+   */
+  omit?: Prisma.AttractionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AttractionInclude<ExtArgs> | null
+  where?: Prisma.AttractionWhereInput
+}
+
+/**
+ * Store.food
+ */
+export type Store$foodArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Food
+   */
+  select?: Prisma.FoodSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Food
+   */
+  omit?: Prisma.FoodOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.FoodInclude<ExtArgs> | null
+  where?: Prisma.FoodWhereInput
+}
+
+/**
  * Store.event
  */
 export type Store$eventArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1767,30 +1960,6 @@ export type Store$eventArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
    */
   include?: Prisma.EventInclude<ExtArgs> | null
   where?: Prisma.EventWhereInput
-}
-
-/**
- * Store.tickets
- */
-export type Store$ticketsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the Ticket
-   */
-  select?: Prisma.TicketSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the Ticket
-   */
-  omit?: Prisma.TicketOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.TicketInclude<ExtArgs> | null
-  where?: Prisma.TicketWhereInput
-  orderBy?: Prisma.TicketOrderByWithRelationInput | Prisma.TicketOrderByWithRelationInput[]
-  cursor?: Prisma.TicketWhereUniqueInput
-  take?: number
-  skip?: number
-  distinct?: Prisma.TicketScalarFieldEnum | Prisma.TicketScalarFieldEnum[]
 }
 
 /**

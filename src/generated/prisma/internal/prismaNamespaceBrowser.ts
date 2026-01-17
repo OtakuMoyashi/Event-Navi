@@ -53,6 +53,8 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   Event: 'Event',
   Store: 'Store',
+  Attraction: 'Attraction',
+  Food: 'Food',
   Ticket: 'Ticket',
   User: 'User',
   PushSubscription: 'PushSubscription',
@@ -98,6 +100,7 @@ export const StoreScalarFieldEnum = {
   startedAt: 'startedAt',
   finishedAt: 'finishedAt',
   description: 'description',
+  storeType: 'storeType',
   eventId: 'eventId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -106,12 +109,32 @@ export const StoreScalarFieldEnum = {
 export type StoreScalarFieldEnum = (typeof StoreScalarFieldEnum)[keyof typeof StoreScalarFieldEnum]
 
 
+export const AttractionScalarFieldEnum = {
+  id: 'id',
+  storeId: 'storeId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AttractionScalarFieldEnum = (typeof AttractionScalarFieldEnum)[keyof typeof AttractionScalarFieldEnum]
+
+
+export const FoodScalarFieldEnum = {
+  id: 'id',
+  storeId: 'storeId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type FoodScalarFieldEnum = (typeof FoodScalarFieldEnum)[keyof typeof FoodScalarFieldEnum]
+
+
 export const TicketScalarFieldEnum = {
   id: 'id',
   index: 'index',
   numberOfPeople: 'numberOfPeople',
   status: 'status',
-  storeId: 'storeId',
+  attractionId: 'attractionId',
   userId: 'userId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

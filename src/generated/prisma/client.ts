@@ -50,6 +50,16 @@ export type Event = Prisma.EventModel
  */
 export type Store = Prisma.StoreModel
 /**
+ * Model Attraction
+ * 
+ */
+export type Attraction = Prisma.AttractionModel
+/**
+ * Model Food
+ * 
+ */
+export type Food = Prisma.FoodModel
+/**
  * Model Ticket
  * 
  */
