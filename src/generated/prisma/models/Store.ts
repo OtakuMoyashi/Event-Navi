@@ -188,8 +188,8 @@ export type StoreGroupByOutputType = {
   slug: string
   name: string
   isActive: boolean
-  startedAt: Date
-  finishedAt: Date
+  startedAt: Date | null
+  finishedAt: Date | null
   description: string | null
   storeType: $Enums.StoreType
   eventId: string | null
@@ -223,8 +223,8 @@ export type StoreWhereInput = {
   slug?: Prisma.StringFilter<"Store"> | string
   name?: Prisma.StringFilter<"Store"> | string
   isActive?: Prisma.BoolFilter<"Store"> | boolean
-  startedAt?: Prisma.DateTimeFilter<"Store"> | Date | string
-  finishedAt?: Prisma.DateTimeFilter<"Store"> | Date | string
+  startedAt?: Prisma.DateTimeNullableFilter<"Store"> | Date | string | null
+  finishedAt?: Prisma.DateTimeNullableFilter<"Store"> | Date | string | null
   description?: Prisma.StringNullableFilter<"Store"> | string | null
   storeType?: Prisma.EnumStoreTypeFilter<"Store"> | $Enums.StoreType
   eventId?: Prisma.StringNullableFilter<"Store"> | string | null
@@ -242,8 +242,8 @@ export type StoreOrderByWithRelationInput = {
   slug?: Prisma.SortOrder
   name?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
-  startedAt?: Prisma.SortOrder
-  finishedAt?: Prisma.SortOrder
+  startedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  finishedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   storeType?: Prisma.SortOrder
   eventId?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -264,8 +264,8 @@ export type StoreWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.StoreWhereInput | Prisma.StoreWhereInput[]
   name?: Prisma.StringFilter<"Store"> | string
   isActive?: Prisma.BoolFilter<"Store"> | boolean
-  startedAt?: Prisma.DateTimeFilter<"Store"> | Date | string
-  finishedAt?: Prisma.DateTimeFilter<"Store"> | Date | string
+  startedAt?: Prisma.DateTimeNullableFilter<"Store"> | Date | string | null
+  finishedAt?: Prisma.DateTimeNullableFilter<"Store"> | Date | string | null
   description?: Prisma.StringNullableFilter<"Store"> | string | null
   storeType?: Prisma.EnumStoreTypeFilter<"Store"> | $Enums.StoreType
   eventId?: Prisma.StringNullableFilter<"Store"> | string | null
@@ -283,8 +283,8 @@ export type StoreOrderByWithAggregationInput = {
   slug?: Prisma.SortOrder
   name?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
-  startedAt?: Prisma.SortOrder
-  finishedAt?: Prisma.SortOrder
+  startedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  finishedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   storeType?: Prisma.SortOrder
   eventId?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -303,8 +303,8 @@ export type StoreScalarWhereWithAggregatesInput = {
   slug?: Prisma.StringWithAggregatesFilter<"Store"> | string
   name?: Prisma.StringWithAggregatesFilter<"Store"> | string
   isActive?: Prisma.BoolWithAggregatesFilter<"Store"> | boolean
-  startedAt?: Prisma.DateTimeWithAggregatesFilter<"Store"> | Date | string
-  finishedAt?: Prisma.DateTimeWithAggregatesFilter<"Store"> | Date | string
+  startedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Store"> | Date | string | null
+  finishedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Store"> | Date | string | null
   description?: Prisma.StringNullableWithAggregatesFilter<"Store"> | string | null
   storeType?: Prisma.EnumStoreTypeWithAggregatesFilter<"Store"> | $Enums.StoreType
   eventId?: Prisma.StringNullableWithAggregatesFilter<"Store"> | string | null
@@ -317,8 +317,8 @@ export type StoreCreateInput = {
   slug: string
   name: string
   isActive?: boolean
-  startedAt: Date | string
-  finishedAt: Date | string
+  startedAt?: Date | string | null
+  finishedAt?: Date | string | null
   description?: string | null
   storeType: $Enums.StoreType
   createdAt?: Date | string
@@ -335,8 +335,8 @@ export type StoreUncheckedCreateInput = {
   slug: string
   name: string
   isActive?: boolean
-  startedAt: Date | string
-  finishedAt: Date | string
+  startedAt?: Date | string | null
+  finishedAt?: Date | string | null
   description?: string | null
   storeType: $Enums.StoreType
   eventId?: string | null
@@ -353,8 +353,8 @@ export type StoreUpdateInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  finishedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  finishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeType?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -371,8 +371,8 @@ export type StoreUncheckedUpdateInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  finishedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  finishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeType?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
   eventId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -389,8 +389,8 @@ export type StoreCreateManyInput = {
   slug: string
   name: string
   isActive?: boolean
-  startedAt: Date | string
-  finishedAt: Date | string
+  startedAt?: Date | string | null
+  finishedAt?: Date | string | null
   description?: string | null
   storeType: $Enums.StoreType
   eventId?: string | null
@@ -403,8 +403,8 @@ export type StoreUpdateManyMutationInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  finishedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  finishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeType?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -416,8 +416,8 @@ export type StoreUncheckedUpdateManyInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  finishedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  finishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeType?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
   eventId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -529,6 +529,10 @@ export type StoreUncheckedUpdateManyWithoutEventNestedInput = {
   deleteMany?: Prisma.StoreScalarWhereInput | Prisma.StoreScalarWhereInput[]
 }
 
+export type NullableDateTimeFieldUpdateOperationsInput = {
+  set?: Date | string | null
+}
+
 export type EnumStoreTypeFieldUpdateOperationsInput = {
   set?: $Enums.StoreType
 }
@@ -596,8 +600,8 @@ export type StoreCreateWithoutEventInput = {
   slug: string
   name: string
   isActive?: boolean
-  startedAt: Date | string
-  finishedAt: Date | string
+  startedAt?: Date | string | null
+  finishedAt?: Date | string | null
   description?: string | null
   storeType: $Enums.StoreType
   createdAt?: Date | string
@@ -613,8 +617,8 @@ export type StoreUncheckedCreateWithoutEventInput = {
   slug: string
   name: string
   isActive?: boolean
-  startedAt: Date | string
-  finishedAt: Date | string
+  startedAt?: Date | string | null
+  finishedAt?: Date | string | null
   description?: string | null
   storeType: $Enums.StoreType
   createdAt?: Date | string
@@ -659,8 +663,8 @@ export type StoreScalarWhereInput = {
   slug?: Prisma.StringFilter<"Store"> | string
   name?: Prisma.StringFilter<"Store"> | string
   isActive?: Prisma.BoolFilter<"Store"> | boolean
-  startedAt?: Prisma.DateTimeFilter<"Store"> | Date | string
-  finishedAt?: Prisma.DateTimeFilter<"Store"> | Date | string
+  startedAt?: Prisma.DateTimeNullableFilter<"Store"> | Date | string | null
+  finishedAt?: Prisma.DateTimeNullableFilter<"Store"> | Date | string | null
   description?: Prisma.StringNullableFilter<"Store"> | string | null
   storeType?: Prisma.EnumStoreTypeFilter<"Store"> | $Enums.StoreType
   eventId?: Prisma.StringNullableFilter<"Store"> | string | null
@@ -673,8 +677,8 @@ export type StoreCreateWithoutAttractionInput = {
   slug: string
   name: string
   isActive?: boolean
-  startedAt: Date | string
-  finishedAt: Date | string
+  startedAt?: Date | string | null
+  finishedAt?: Date | string | null
   description?: string | null
   storeType: $Enums.StoreType
   createdAt?: Date | string
@@ -690,8 +694,8 @@ export type StoreUncheckedCreateWithoutAttractionInput = {
   slug: string
   name: string
   isActive?: boolean
-  startedAt: Date | string
-  finishedAt: Date | string
+  startedAt?: Date | string | null
+  finishedAt?: Date | string | null
   description?: string | null
   storeType: $Enums.StoreType
   eventId?: string | null
@@ -723,8 +727,8 @@ export type StoreUpdateWithoutAttractionInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  finishedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  finishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeType?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -740,8 +744,8 @@ export type StoreUncheckedUpdateWithoutAttractionInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  finishedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  finishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeType?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
   eventId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -757,8 +761,8 @@ export type StoreCreateWithoutFoodInput = {
   slug: string
   name: string
   isActive?: boolean
-  startedAt: Date | string
-  finishedAt: Date | string
+  startedAt?: Date | string | null
+  finishedAt?: Date | string | null
   description?: string | null
   storeType: $Enums.StoreType
   createdAt?: Date | string
@@ -774,8 +778,8 @@ export type StoreUncheckedCreateWithoutFoodInput = {
   slug: string
   name: string
   isActive?: boolean
-  startedAt: Date | string
-  finishedAt: Date | string
+  startedAt?: Date | string | null
+  finishedAt?: Date | string | null
   description?: string | null
   storeType: $Enums.StoreType
   eventId?: string | null
@@ -807,8 +811,8 @@ export type StoreUpdateWithoutFoodInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  finishedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  finishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeType?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -824,8 +828,8 @@ export type StoreUncheckedUpdateWithoutFoodInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  finishedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  finishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeType?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
   eventId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -841,8 +845,8 @@ export type StoreCreateWithoutAdminsInput = {
   slug: string
   name: string
   isActive?: boolean
-  startedAt: Date | string
-  finishedAt: Date | string
+  startedAt?: Date | string | null
+  finishedAt?: Date | string | null
   description?: string | null
   storeType: $Enums.StoreType
   createdAt?: Date | string
@@ -858,8 +862,8 @@ export type StoreUncheckedCreateWithoutAdminsInput = {
   slug: string
   name: string
   isActive?: boolean
-  startedAt: Date | string
-  finishedAt: Date | string
+  startedAt?: Date | string | null
+  finishedAt?: Date | string | null
   description?: string | null
   storeType: $Enums.StoreType
   eventId?: string | null
@@ -891,8 +895,8 @@ export type StoreUpdateWithoutAdminsInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  finishedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  finishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeType?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -908,8 +912,8 @@ export type StoreUncheckedUpdateWithoutAdminsInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  finishedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  finishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeType?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
   eventId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -925,8 +929,8 @@ export type StoreCreateWithoutStaffsInput = {
   slug: string
   name: string
   isActive?: boolean
-  startedAt: Date | string
-  finishedAt: Date | string
+  startedAt?: Date | string | null
+  finishedAt?: Date | string | null
   description?: string | null
   storeType: $Enums.StoreType
   createdAt?: Date | string
@@ -942,8 +946,8 @@ export type StoreUncheckedCreateWithoutStaffsInput = {
   slug: string
   name: string
   isActive?: boolean
-  startedAt: Date | string
-  finishedAt: Date | string
+  startedAt?: Date | string | null
+  finishedAt?: Date | string | null
   description?: string | null
   storeType: $Enums.StoreType
   eventId?: string | null
@@ -975,8 +979,8 @@ export type StoreUpdateWithoutStaffsInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  finishedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  finishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeType?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -992,8 +996,8 @@ export type StoreUncheckedUpdateWithoutStaffsInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  finishedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  finishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeType?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
   eventId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -1009,8 +1013,8 @@ export type StoreCreateManyEventInput = {
   slug: string
   name: string
   isActive?: boolean
-  startedAt: Date | string
-  finishedAt: Date | string
+  startedAt?: Date | string | null
+  finishedAt?: Date | string | null
   description?: string | null
   storeType: $Enums.StoreType
   createdAt?: Date | string
@@ -1022,8 +1026,8 @@ export type StoreUpdateWithoutEventInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  finishedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  finishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeType?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1039,8 +1043,8 @@ export type StoreUncheckedUpdateWithoutEventInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  finishedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  finishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeType?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1056,8 +1060,8 @@ export type StoreUncheckedUpdateManyWithoutEventInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  finishedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  finishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeType?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1198,8 +1202,8 @@ export type $StorePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     slug: string
     name: string
     isActive: boolean
-    startedAt: Date
-    finishedAt: Date
+    startedAt: Date | null
+    finishedAt: Date | null
     description: string | null
     storeType: $Enums.StoreType
     eventId: string | null

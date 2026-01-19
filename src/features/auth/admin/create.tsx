@@ -1,6 +1,6 @@
-import { createAdmin } from "../../../features/auth/admin/action";
+import { createAdmin } from "./action";
 
-export default function AdminSignUpForm() {
+export default function CreateAdminForm() {
   return (
     <form action={createAdmin}>
       <div>
@@ -10,7 +10,9 @@ export default function AdminSignUpForm() {
       <div>
         <label>パスワード</label>
         <input name="password" type="password" required></input>
-        <button type="submit">登録</button>
+        <div>
+          <button type="submit">登録</button>
+        </div>
       </div>
     </form>
   );
