@@ -53,6 +53,11 @@ export type User = Prisma.UserModel
  */
 export type PushSubscription = Prisma.PushSubscriptionModel
 /**
+ * Model Admin
+ * 
+ */
+export type Admin = Prisma.AdminModel
+/**
  * Model Staff
  * 
  */

@@ -233,6 +233,7 @@ export type StoreWhereInput = {
   attraction?: Prisma.XOR<Prisma.AttractionNullableScalarRelationFilter, Prisma.AttractionWhereInput> | null
   food?: Prisma.XOR<Prisma.FoodNullableScalarRelationFilter, Prisma.FoodWhereInput> | null
   event?: Prisma.XOR<Prisma.EventNullableScalarRelationFilter, Prisma.EventWhereInput> | null
+  admins?: Prisma.AdminListRelationFilter
   staffs?: Prisma.StaffListRelationFilter
 }
 
@@ -251,6 +252,7 @@ export type StoreOrderByWithRelationInput = {
   attraction?: Prisma.AttractionOrderByWithRelationInput
   food?: Prisma.FoodOrderByWithRelationInput
   event?: Prisma.EventOrderByWithRelationInput
+  admins?: Prisma.AdminOrderByRelationAggregateInput
   staffs?: Prisma.StaffOrderByRelationAggregateInput
 }
 
@@ -272,6 +274,7 @@ export type StoreWhereUniqueInput = Prisma.AtLeast<{
   attraction?: Prisma.XOR<Prisma.AttractionNullableScalarRelationFilter, Prisma.AttractionWhereInput> | null
   food?: Prisma.XOR<Prisma.FoodNullableScalarRelationFilter, Prisma.FoodWhereInput> | null
   event?: Prisma.XOR<Prisma.EventNullableScalarRelationFilter, Prisma.EventWhereInput> | null
+  admins?: Prisma.AdminListRelationFilter
   staffs?: Prisma.StaffListRelationFilter
 }, "id" | "slug">
 
@@ -323,6 +326,7 @@ export type StoreCreateInput = {
   attraction?: Prisma.AttractionCreateNestedOneWithoutStoreInput
   food?: Prisma.FoodCreateNestedOneWithoutStoreInput
   event?: Prisma.EventCreateNestedOneWithoutStoresInput
+  admins?: Prisma.AdminCreateNestedManyWithoutStoreInput
   staffs?: Prisma.StaffCreateNestedManyWithoutStoreInput
 }
 
@@ -340,6 +344,7 @@ export type StoreUncheckedCreateInput = {
   updatedAt?: Date | string
   attraction?: Prisma.AttractionUncheckedCreateNestedOneWithoutStoreInput
   food?: Prisma.FoodUncheckedCreateNestedOneWithoutStoreInput
+  admins?: Prisma.AdminUncheckedCreateNestedManyWithoutStoreInput
   staffs?: Prisma.StaffUncheckedCreateNestedManyWithoutStoreInput
 }
 
@@ -357,6 +362,7 @@ export type StoreUpdateInput = {
   attraction?: Prisma.AttractionUpdateOneWithoutStoreNestedInput
   food?: Prisma.FoodUpdateOneWithoutStoreNestedInput
   event?: Prisma.EventUpdateOneWithoutStoresNestedInput
+  admins?: Prisma.AdminUpdateManyWithoutStoreNestedInput
   staffs?: Prisma.StaffUpdateManyWithoutStoreNestedInput
 }
 
@@ -374,6 +380,7 @@ export type StoreUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attraction?: Prisma.AttractionUncheckedUpdateOneWithoutStoreNestedInput
   food?: Prisma.FoodUncheckedUpdateOneWithoutStoreNestedInput
+  admins?: Prisma.AdminUncheckedUpdateManyWithoutStoreNestedInput
   staffs?: Prisma.StaffUncheckedUpdateManyWithoutStoreNestedInput
 }
 
@@ -554,18 +561,32 @@ export type StoreUpdateOneRequiredWithoutFoodNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.StoreUpdateToOneWithWhereWithoutFoodInput, Prisma.StoreUpdateWithoutFoodInput>, Prisma.StoreUncheckedUpdateWithoutFoodInput>
 }
 
+export type StoreCreateNestedOneWithoutAdminsInput = {
+  create?: Prisma.XOR<Prisma.StoreCreateWithoutAdminsInput, Prisma.StoreUncheckedCreateWithoutAdminsInput>
+  connectOrCreate?: Prisma.StoreCreateOrConnectWithoutAdminsInput
+  connect?: Prisma.StoreWhereUniqueInput
+}
+
+export type StoreUpdateOneWithoutAdminsNestedInput = {
+  create?: Prisma.XOR<Prisma.StoreCreateWithoutAdminsInput, Prisma.StoreUncheckedCreateWithoutAdminsInput>
+  connectOrCreate?: Prisma.StoreCreateOrConnectWithoutAdminsInput
+  upsert?: Prisma.StoreUpsertWithoutAdminsInput
+  disconnect?: Prisma.StoreWhereInput | boolean
+  delete?: Prisma.StoreWhereInput | boolean
+  connect?: Prisma.StoreWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.StoreUpdateToOneWithWhereWithoutAdminsInput, Prisma.StoreUpdateWithoutAdminsInput>, Prisma.StoreUncheckedUpdateWithoutAdminsInput>
+}
+
 export type StoreCreateNestedOneWithoutStaffsInput = {
   create?: Prisma.XOR<Prisma.StoreCreateWithoutStaffsInput, Prisma.StoreUncheckedCreateWithoutStaffsInput>
   connectOrCreate?: Prisma.StoreCreateOrConnectWithoutStaffsInput
   connect?: Prisma.StoreWhereUniqueInput
 }
 
-export type StoreUpdateOneWithoutStaffsNestedInput = {
+export type StoreUpdateOneRequiredWithoutStaffsNestedInput = {
   create?: Prisma.XOR<Prisma.StoreCreateWithoutStaffsInput, Prisma.StoreUncheckedCreateWithoutStaffsInput>
   connectOrCreate?: Prisma.StoreCreateOrConnectWithoutStaffsInput
   upsert?: Prisma.StoreUpsertWithoutStaffsInput
-  disconnect?: Prisma.StoreWhereInput | boolean
-  delete?: Prisma.StoreWhereInput | boolean
   connect?: Prisma.StoreWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.StoreUpdateToOneWithWhereWithoutStaffsInput, Prisma.StoreUpdateWithoutStaffsInput>, Prisma.StoreUncheckedUpdateWithoutStaffsInput>
 }
@@ -583,6 +604,7 @@ export type StoreCreateWithoutEventInput = {
   updatedAt?: Date | string
   attraction?: Prisma.AttractionCreateNestedOneWithoutStoreInput
   food?: Prisma.FoodCreateNestedOneWithoutStoreInput
+  admins?: Prisma.AdminCreateNestedManyWithoutStoreInput
   staffs?: Prisma.StaffCreateNestedManyWithoutStoreInput
 }
 
@@ -599,6 +621,7 @@ export type StoreUncheckedCreateWithoutEventInput = {
   updatedAt?: Date | string
   attraction?: Prisma.AttractionUncheckedCreateNestedOneWithoutStoreInput
   food?: Prisma.FoodUncheckedCreateNestedOneWithoutStoreInput
+  admins?: Prisma.AdminUncheckedCreateNestedManyWithoutStoreInput
   staffs?: Prisma.StaffUncheckedCreateNestedManyWithoutStoreInput
 }
 
@@ -658,6 +681,7 @@ export type StoreCreateWithoutAttractionInput = {
   updatedAt?: Date | string
   food?: Prisma.FoodCreateNestedOneWithoutStoreInput
   event?: Prisma.EventCreateNestedOneWithoutStoresInput
+  admins?: Prisma.AdminCreateNestedManyWithoutStoreInput
   staffs?: Prisma.StaffCreateNestedManyWithoutStoreInput
 }
 
@@ -674,6 +698,7 @@ export type StoreUncheckedCreateWithoutAttractionInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   food?: Prisma.FoodUncheckedCreateNestedOneWithoutStoreInput
+  admins?: Prisma.AdminUncheckedCreateNestedManyWithoutStoreInput
   staffs?: Prisma.StaffUncheckedCreateNestedManyWithoutStoreInput
 }
 
@@ -706,6 +731,7 @@ export type StoreUpdateWithoutAttractionInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   food?: Prisma.FoodUpdateOneWithoutStoreNestedInput
   event?: Prisma.EventUpdateOneWithoutStoresNestedInput
+  admins?: Prisma.AdminUpdateManyWithoutStoreNestedInput
   staffs?: Prisma.StaffUpdateManyWithoutStoreNestedInput
 }
 
@@ -722,6 +748,7 @@ export type StoreUncheckedUpdateWithoutAttractionInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   food?: Prisma.FoodUncheckedUpdateOneWithoutStoreNestedInput
+  admins?: Prisma.AdminUncheckedUpdateManyWithoutStoreNestedInput
   staffs?: Prisma.StaffUncheckedUpdateManyWithoutStoreNestedInput
 }
 
@@ -738,6 +765,7 @@ export type StoreCreateWithoutFoodInput = {
   updatedAt?: Date | string
   attraction?: Prisma.AttractionCreateNestedOneWithoutStoreInput
   event?: Prisma.EventCreateNestedOneWithoutStoresInput
+  admins?: Prisma.AdminCreateNestedManyWithoutStoreInput
   staffs?: Prisma.StaffCreateNestedManyWithoutStoreInput
 }
 
@@ -754,6 +782,7 @@ export type StoreUncheckedCreateWithoutFoodInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   attraction?: Prisma.AttractionUncheckedCreateNestedOneWithoutStoreInput
+  admins?: Prisma.AdminUncheckedCreateNestedManyWithoutStoreInput
   staffs?: Prisma.StaffUncheckedCreateNestedManyWithoutStoreInput
 }
 
@@ -786,6 +815,7 @@ export type StoreUpdateWithoutFoodInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attraction?: Prisma.AttractionUpdateOneWithoutStoreNestedInput
   event?: Prisma.EventUpdateOneWithoutStoresNestedInput
+  admins?: Prisma.AdminUpdateManyWithoutStoreNestedInput
   staffs?: Prisma.StaffUpdateManyWithoutStoreNestedInput
 }
 
@@ -802,6 +832,91 @@ export type StoreUncheckedUpdateWithoutFoodInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attraction?: Prisma.AttractionUncheckedUpdateOneWithoutStoreNestedInput
+  admins?: Prisma.AdminUncheckedUpdateManyWithoutStoreNestedInput
+  staffs?: Prisma.StaffUncheckedUpdateManyWithoutStoreNestedInput
+}
+
+export type StoreCreateWithoutAdminsInput = {
+  id?: string
+  slug: string
+  name: string
+  isActive?: boolean
+  startedAt: Date | string
+  finishedAt: Date | string
+  description?: string | null
+  storeType: $Enums.StoreType
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  attraction?: Prisma.AttractionCreateNestedOneWithoutStoreInput
+  food?: Prisma.FoodCreateNestedOneWithoutStoreInput
+  event?: Prisma.EventCreateNestedOneWithoutStoresInput
+  staffs?: Prisma.StaffCreateNestedManyWithoutStoreInput
+}
+
+export type StoreUncheckedCreateWithoutAdminsInput = {
+  id?: string
+  slug: string
+  name: string
+  isActive?: boolean
+  startedAt: Date | string
+  finishedAt: Date | string
+  description?: string | null
+  storeType: $Enums.StoreType
+  eventId?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  attraction?: Prisma.AttractionUncheckedCreateNestedOneWithoutStoreInput
+  food?: Prisma.FoodUncheckedCreateNestedOneWithoutStoreInput
+  staffs?: Prisma.StaffUncheckedCreateNestedManyWithoutStoreInput
+}
+
+export type StoreCreateOrConnectWithoutAdminsInput = {
+  where: Prisma.StoreWhereUniqueInput
+  create: Prisma.XOR<Prisma.StoreCreateWithoutAdminsInput, Prisma.StoreUncheckedCreateWithoutAdminsInput>
+}
+
+export type StoreUpsertWithoutAdminsInput = {
+  update: Prisma.XOR<Prisma.StoreUpdateWithoutAdminsInput, Prisma.StoreUncheckedUpdateWithoutAdminsInput>
+  create: Prisma.XOR<Prisma.StoreCreateWithoutAdminsInput, Prisma.StoreUncheckedCreateWithoutAdminsInput>
+  where?: Prisma.StoreWhereInput
+}
+
+export type StoreUpdateToOneWithWhereWithoutAdminsInput = {
+  where?: Prisma.StoreWhereInput
+  data: Prisma.XOR<Prisma.StoreUpdateWithoutAdminsInput, Prisma.StoreUncheckedUpdateWithoutAdminsInput>
+}
+
+export type StoreUpdateWithoutAdminsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  finishedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeType?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  attraction?: Prisma.AttractionUpdateOneWithoutStoreNestedInput
+  food?: Prisma.FoodUpdateOneWithoutStoreNestedInput
+  event?: Prisma.EventUpdateOneWithoutStoresNestedInput
+  staffs?: Prisma.StaffUpdateManyWithoutStoreNestedInput
+}
+
+export type StoreUncheckedUpdateWithoutAdminsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  finishedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeType?: Prisma.EnumStoreTypeFieldUpdateOperationsInput | $Enums.StoreType
+  eventId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  attraction?: Prisma.AttractionUncheckedUpdateOneWithoutStoreNestedInput
+  food?: Prisma.FoodUncheckedUpdateOneWithoutStoreNestedInput
   staffs?: Prisma.StaffUncheckedUpdateManyWithoutStoreNestedInput
 }
 
@@ -819,6 +934,7 @@ export type StoreCreateWithoutStaffsInput = {
   attraction?: Prisma.AttractionCreateNestedOneWithoutStoreInput
   food?: Prisma.FoodCreateNestedOneWithoutStoreInput
   event?: Prisma.EventCreateNestedOneWithoutStoresInput
+  admins?: Prisma.AdminCreateNestedManyWithoutStoreInput
 }
 
 export type StoreUncheckedCreateWithoutStaffsInput = {
@@ -835,6 +951,7 @@ export type StoreUncheckedCreateWithoutStaffsInput = {
   updatedAt?: Date | string
   attraction?: Prisma.AttractionUncheckedCreateNestedOneWithoutStoreInput
   food?: Prisma.FoodUncheckedCreateNestedOneWithoutStoreInput
+  admins?: Prisma.AdminUncheckedCreateNestedManyWithoutStoreInput
 }
 
 export type StoreCreateOrConnectWithoutStaffsInput = {
@@ -867,6 +984,7 @@ export type StoreUpdateWithoutStaffsInput = {
   attraction?: Prisma.AttractionUpdateOneWithoutStoreNestedInput
   food?: Prisma.FoodUpdateOneWithoutStoreNestedInput
   event?: Prisma.EventUpdateOneWithoutStoresNestedInput
+  admins?: Prisma.AdminUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreUncheckedUpdateWithoutStaffsInput = {
@@ -883,6 +1001,7 @@ export type StoreUncheckedUpdateWithoutStaffsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attraction?: Prisma.AttractionUncheckedUpdateOneWithoutStoreNestedInput
   food?: Prisma.FoodUncheckedUpdateOneWithoutStoreNestedInput
+  admins?: Prisma.AdminUncheckedUpdateManyWithoutStoreNestedInput
 }
 
 export type StoreCreateManyEventInput = {
@@ -911,6 +1030,7 @@ export type StoreUpdateWithoutEventInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attraction?: Prisma.AttractionUpdateOneWithoutStoreNestedInput
   food?: Prisma.FoodUpdateOneWithoutStoreNestedInput
+  admins?: Prisma.AdminUpdateManyWithoutStoreNestedInput
   staffs?: Prisma.StaffUpdateManyWithoutStoreNestedInput
 }
 
@@ -927,6 +1047,7 @@ export type StoreUncheckedUpdateWithoutEventInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   attraction?: Prisma.AttractionUncheckedUpdateOneWithoutStoreNestedInput
   food?: Prisma.FoodUncheckedUpdateOneWithoutStoreNestedInput
+  admins?: Prisma.AdminUncheckedUpdateManyWithoutStoreNestedInput
   staffs?: Prisma.StaffUncheckedUpdateManyWithoutStoreNestedInput
 }
 
@@ -949,10 +1070,12 @@ export type StoreUncheckedUpdateManyWithoutEventInput = {
  */
 
 export type StoreCountOutputType = {
+  admins: number
   staffs: number
 }
 
 export type StoreCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  admins?: boolean | StoreCountOutputTypeCountAdminsArgs
   staffs?: boolean | StoreCountOutputTypeCountStaffsArgs
 }
 
@@ -964,6 +1087,13 @@ export type StoreCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extens
    * Select specific fields to fetch from the StoreCountOutputType
    */
   select?: Prisma.StoreCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * StoreCountOutputType without action
+ */
+export type StoreCountOutputTypeCountAdminsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AdminWhereInput
 }
 
 /**
@@ -989,6 +1119,7 @@ export type StoreSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   attraction?: boolean | Prisma.Store$attractionArgs<ExtArgs>
   food?: boolean | Prisma.Store$foodArgs<ExtArgs>
   event?: boolean | Prisma.Store$eventArgs<ExtArgs>
+  admins?: boolean | Prisma.Store$adminsArgs<ExtArgs>
   staffs?: boolean | Prisma.Store$staffsArgs<ExtArgs>
   _count?: boolean | Prisma.StoreCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["store"]>
@@ -1042,6 +1173,7 @@ export type StoreInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   attraction?: boolean | Prisma.Store$attractionArgs<ExtArgs>
   food?: boolean | Prisma.Store$foodArgs<ExtArgs>
   event?: boolean | Prisma.Store$eventArgs<ExtArgs>
+  admins?: boolean | Prisma.Store$adminsArgs<ExtArgs>
   staffs?: boolean | Prisma.Store$staffsArgs<ExtArgs>
   _count?: boolean | Prisma.StoreCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -1058,6 +1190,7 @@ export type $StorePayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     attraction: Prisma.$AttractionPayload<ExtArgs> | null
     food: Prisma.$FoodPayload<ExtArgs> | null
     event: Prisma.$EventPayload<ExtArgs> | null
+    admins: Prisma.$AdminPayload<ExtArgs>[]
     staffs: Prisma.$StaffPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1469,6 +1602,7 @@ export interface Prisma__StoreClient<T, Null = never, ExtArgs extends runtime.Ty
   attraction<T extends Prisma.Store$attractionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Store$attractionArgs<ExtArgs>>): Prisma.Prisma__AttractionClient<runtime.Types.Result.GetResult<Prisma.$AttractionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   food<T extends Prisma.Store$foodArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Store$foodArgs<ExtArgs>>): Prisma.Prisma__FoodClient<runtime.Types.Result.GetResult<Prisma.$FoodPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   event<T extends Prisma.Store$eventArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Store$eventArgs<ExtArgs>>): Prisma.Prisma__EventClient<runtime.Types.Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  admins<T extends Prisma.Store$adminsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Store$adminsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AdminPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   staffs<T extends Prisma.Store$staffsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Store$staffsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$StaffPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1960,6 +2094,30 @@ export type Store$eventArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
    */
   include?: Prisma.EventInclude<ExtArgs> | null
   where?: Prisma.EventWhereInput
+}
+
+/**
+ * Store.admins
+ */
+export type Store$adminsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Admin
+   */
+  select?: Prisma.AdminSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Admin
+   */
+  omit?: Prisma.AdminOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AdminInclude<ExtArgs> | null
+  where?: Prisma.AdminWhereInput
+  orderBy?: Prisma.AdminOrderByWithRelationInput | Prisma.AdminOrderByWithRelationInput[]
+  cursor?: Prisma.AdminWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AdminScalarFieldEnum | Prisma.AdminScalarFieldEnum[]
 }
 
 /**

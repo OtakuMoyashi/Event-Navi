@@ -27,11 +27,9 @@ export const TicketStatus = {
 export type TicketStatus = (typeof TicketStatus)[keyof typeof TicketStatus]
 
 
-export const StaffRole = {
-  STORE_STAFF: 'STORE_STAFF',
-  STORE_ADMIN: 'STORE_ADMIN',
-  EVENT_STAFF: 'EVENT_STAFF',
-  EVENT_ADMIN: 'EVENT_ADMIN'
+export const AdminRole = {
+  EVENT_ADMIN: 'EVENT_ADMIN',
+  STORE_ADMIN: 'STORE_ADMIN'
 } as const
 
-export type StaffRole = (typeof StaffRole)[keyof typeof StaffRole]
+export type AdminRole = (typeof AdminRole)[keyof typeof AdminRole]
