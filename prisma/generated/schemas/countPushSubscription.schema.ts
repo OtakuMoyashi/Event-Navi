@@ -1,0 +1,10 @@
+import type { Prisma } from '../../../src/generated/prisma/client';
+import * as z from 'zod';
+import { PushSubscriptionOrderByWithRelationInputObjectSchema as PushSubscriptionOrderByWithRelationInputObjectSchema } from './objects/PushSubscriptionOrderByWithRelationInput.schema';
+import { PushSubscriptionWhereInputObjectSchema as PushSubscriptionWhereInputObjectSchema } from './objects/PushSubscriptionWhereInput.schema';
+import { PushSubscriptionWhereUniqueInputObjectSchema as PushSubscriptionWhereUniqueInputObjectSchema } from './objects/PushSubscriptionWhereUniqueInput.schema';
+import { PushSubscriptionCountAggregateInputObjectSchema as PushSubscriptionCountAggregateInputObjectSchema } from './objects/PushSubscriptionCountAggregateInput.schema';
+
+export const PushSubscriptionCountSchema: z.ZodType<Prisma.PushSubscriptionCountArgs> = z.object({ orderBy: z.union([PushSubscriptionOrderByWithRelationInputObjectSchema, PushSubscriptionOrderByWithRelationInputObjectSchema.array()]).optional(), where: PushSubscriptionWhereInputObjectSchema.optional(), cursor: PushSubscriptionWhereUniqueInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), select: z.union([ z.literal(true), PushSubscriptionCountAggregateInputObjectSchema ]).optional() }).strict() as unknown as z.ZodType<Prisma.PushSubscriptionCountArgs>;
+
+export const PushSubscriptionCountZodSchema = z.object({ orderBy: z.union([PushSubscriptionOrderByWithRelationInputObjectSchema, PushSubscriptionOrderByWithRelationInputObjectSchema.array()]).optional(), where: PushSubscriptionWhereInputObjectSchema.optional(), cursor: PushSubscriptionWhereUniqueInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), select: z.union([ z.literal(true), PushSubscriptionCountAggregateInputObjectSchema ]).optional() }).strict();

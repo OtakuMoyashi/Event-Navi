@@ -1,0 +1,13 @@
+import type { Prisma } from '../../../src/generated/prisma/client';
+import * as z from 'zod';
+import { AttractionWhereInputObjectSchema as AttractionWhereInputObjectSchema } from './objects/AttractionWhereInput.schema';
+import { AttractionOrderByWithAggregationInputObjectSchema as AttractionOrderByWithAggregationInputObjectSchema } from './objects/AttractionOrderByWithAggregationInput.schema';
+import { AttractionScalarWhereWithAggregatesInputObjectSchema as AttractionScalarWhereWithAggregatesInputObjectSchema } from './objects/AttractionScalarWhereWithAggregatesInput.schema';
+import { AttractionScalarFieldEnumSchema } from './enums/AttractionScalarFieldEnum.schema';
+import { AttractionCountAggregateInputObjectSchema as AttractionCountAggregateInputObjectSchema } from './objects/AttractionCountAggregateInput.schema';
+import { AttractionMinAggregateInputObjectSchema as AttractionMinAggregateInputObjectSchema } from './objects/AttractionMinAggregateInput.schema';
+import { AttractionMaxAggregateInputObjectSchema as AttractionMaxAggregateInputObjectSchema } from './objects/AttractionMaxAggregateInput.schema';
+
+export const AttractionGroupBySchema: z.ZodType<Prisma.AttractionGroupByArgs> = z.object({ where: AttractionWhereInputObjectSchema.optional(), orderBy: z.union([AttractionOrderByWithAggregationInputObjectSchema, AttractionOrderByWithAggregationInputObjectSchema.array()]).optional(), having: AttractionScalarWhereWithAggregatesInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), by: z.array(AttractionScalarFieldEnumSchema), _count: z.union([ z.literal(true), AttractionCountAggregateInputObjectSchema ]).optional(), _min: AttractionMinAggregateInputObjectSchema.optional(), _max: AttractionMaxAggregateInputObjectSchema.optional() }).strict() as unknown as z.ZodType<Prisma.AttractionGroupByArgs>;
+
+export const AttractionGroupByZodSchema = z.object({ where: AttractionWhereInputObjectSchema.optional(), orderBy: z.union([AttractionOrderByWithAggregationInputObjectSchema, AttractionOrderByWithAggregationInputObjectSchema.array()]).optional(), having: AttractionScalarWhereWithAggregatesInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), by: z.array(AttractionScalarFieldEnumSchema), _count: z.union([ z.literal(true), AttractionCountAggregateInputObjectSchema ]).optional(), _min: AttractionMinAggregateInputObjectSchema.optional(), _max: AttractionMaxAggregateInputObjectSchema.optional() }).strict();

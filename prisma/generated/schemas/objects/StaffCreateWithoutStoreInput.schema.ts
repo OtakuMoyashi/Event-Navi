@@ -1,0 +1,13 @@
+import * as z from 'zod';
+import type { Prisma } from '../../../../src/generated/prisma/client';
+
+
+const makeSchema = () => z.object({
+  id: z.string().optional(),
+  supabaseUserId: z.string(),
+  email: z.string(),
+  createdAt: z.coerce.date().optional(),
+  updatedAt: z.coerce.date().optional()
+}).strict();
+export const StaffCreateWithoutStoreInputObjectSchema: z.ZodType<Prisma.StaffCreateWithoutStoreInput> = makeSchema() as unknown as z.ZodType<Prisma.StaffCreateWithoutStoreInput>;
+export const StaffCreateWithoutStoreInputObjectZodSchema = makeSchema();
