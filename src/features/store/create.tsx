@@ -1,22 +1,26 @@
+"use client";
+
+import { useActionState } from "react";
 import { StoreType } from "@/generated/prisma/enums";
 import { createStore } from "./action";
 
-export default async function CreateStoreForm() {
+export default function CreateStoreForm() {
+  const [state, formAction, isPending] = useActionState(createStore, null);
   const storeTypes = Object.values(StoreType);
 
   return (
-    <form action={createStore}>
+    <form action={formAction}>
       <div>
         <label>識別名</label>
-        <input name="slug" required />
+        <input name="slug" required disabled={isPending} />
       </div>
       <div>
         <label>店舗名</label>
-        <input name="name" required />
+        <input name="name" required disabled={isPending} />
       </div>
       <div>
         <label>区分</label>
-        <select name="storeType" required>
+        <select name="storeType" required disabled={isPending}>
           {storeTypes.map((type) => (
             <option key={type} value={type}>
               {type}
@@ -25,7 +29,9 @@ export default async function CreateStoreForm() {
         </select>
       </div>
       <div>
-        <button type="submit">店舗を作成</button>
+        <button type="submit" disabled={isPending}>
+          {isPending ? "作成中..." : "店舗を作成"}
+        </button>
       </div>
     </form>
   );

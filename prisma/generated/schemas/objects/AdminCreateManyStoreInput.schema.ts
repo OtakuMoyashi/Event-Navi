@@ -6,7 +6,7 @@ const makeSchema = () => z.object({
   id: z.string().optional(),
   supabaseUserId: z.string(),
   email: z.string(),
-  name: z.string().optional().nullable(),
+  name: z.string().max(20).optional().nullable(),
   role: AdminRoleSchema,
   eventId: z.string().optional().nullable(),
   createdAt: z.coerce.date().optional(),

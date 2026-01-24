@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
 import prisma from "@/lib/prisma";
@@ -7,14 +8,17 @@ import { StaffInputSchema } from "../../../../prisma/generated/schemas";
 import { passwordSchema } from "@/lib/schema/auth";
 
 const CreateStaffSchema = StaffInputSchema.omit({
+  id: true,
   supabaseUserId: true,
+  createdAt: true,
+  updatedAt: true,
 });
 
 const ResigterChema = CreateStaffSchema.extend({
   password: passwordSchema,
 });
 
-export async function createStaff(formData: FormData) {
+export async function createStaff(prevState: any, formData: FormData) {
   const supabase = await createClient();
 
   const domain = formData.get("domain") as string;

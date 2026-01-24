@@ -1,6 +1,7 @@
 import * as z from 'zod';
 import type { Prisma } from '../../../../src/generated/prisma/client';
 import { StringFilterObjectSchema as StringFilterObjectSchema } from './StringFilter.schema';
+import { StringNullableFilterObjectSchema as StringNullableFilterObjectSchema } from './StringNullableFilter.schema';
 import { DateTimeFilterObjectSchema as DateTimeFilterObjectSchema } from './DateTimeFilter.schema';
 import { StoreScalarRelationFilterObjectSchema as StoreScalarRelationFilterObjectSchema } from './StoreScalarRelationFilter.schema';
 import { StoreWhereInputObjectSchema as StoreWhereInputObjectSchema } from './StoreWhereInput.schema'
@@ -12,6 +13,7 @@ const staffwhereinputSchema = z.object({
   id: z.union([z.lazy(() => StringFilterObjectSchema), z.string()]).optional(),
   supabaseUserId: z.union([z.lazy(() => StringFilterObjectSchema), z.string()]).optional(),
   email: z.union([z.lazy(() => StringFilterObjectSchema), z.string()]).optional(),
+  name: z.union([z.lazy(() => StringNullableFilterObjectSchema), z.string().max(20)]).optional().nullable(),
   storeId: z.union([z.lazy(() => StringFilterObjectSchema), z.string()]).optional(),
   createdAt: z.union([z.lazy(() => DateTimeFilterObjectSchema), z.coerce.date()]).optional(),
   updatedAt: z.union([z.lazy(() => DateTimeFilterObjectSchema), z.coerce.date()]).optional(),

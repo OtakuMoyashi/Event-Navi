@@ -176,8 +176,8 @@ export type EventGroupByOutputType = {
   slug: string
   name: string
   isActive: boolean
-  startedAt: Date
-  finishedAt: Date
+  startedAt: Date | null
+  finishedAt: Date | null
   description: string | null
   createdAt: Date
   updatedAt: Date
@@ -209,8 +209,8 @@ export type EventWhereInput = {
   slug?: Prisma.StringFilter<"Event"> | string
   name?: Prisma.StringFilter<"Event"> | string
   isActive?: Prisma.BoolFilter<"Event"> | boolean
-  startedAt?: Prisma.DateTimeFilter<"Event"> | Date | string
-  finishedAt?: Prisma.DateTimeFilter<"Event"> | Date | string
+  startedAt?: Prisma.DateTimeNullableFilter<"Event"> | Date | string | null
+  finishedAt?: Prisma.DateTimeNullableFilter<"Event"> | Date | string | null
   description?: Prisma.StringNullableFilter<"Event"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Event"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Event"> | Date | string
@@ -223,8 +223,8 @@ export type EventOrderByWithRelationInput = {
   slug?: Prisma.SortOrder
   name?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
-  startedAt?: Prisma.SortOrder
-  finishedAt?: Prisma.SortOrder
+  startedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  finishedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -240,8 +240,8 @@ export type EventWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.EventWhereInput | Prisma.EventWhereInput[]
   name?: Prisma.StringFilter<"Event"> | string
   isActive?: Prisma.BoolFilter<"Event"> | boolean
-  startedAt?: Prisma.DateTimeFilter<"Event"> | Date | string
-  finishedAt?: Prisma.DateTimeFilter<"Event"> | Date | string
+  startedAt?: Prisma.DateTimeNullableFilter<"Event"> | Date | string | null
+  finishedAt?: Prisma.DateTimeNullableFilter<"Event"> | Date | string | null
   description?: Prisma.StringNullableFilter<"Event"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Event"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Event"> | Date | string
@@ -254,8 +254,8 @@ export type EventOrderByWithAggregationInput = {
   slug?: Prisma.SortOrder
   name?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
-  startedAt?: Prisma.SortOrder
-  finishedAt?: Prisma.SortOrder
+  startedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  finishedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -272,8 +272,8 @@ export type EventScalarWhereWithAggregatesInput = {
   slug?: Prisma.StringWithAggregatesFilter<"Event"> | string
   name?: Prisma.StringWithAggregatesFilter<"Event"> | string
   isActive?: Prisma.BoolWithAggregatesFilter<"Event"> | boolean
-  startedAt?: Prisma.DateTimeWithAggregatesFilter<"Event"> | Date | string
-  finishedAt?: Prisma.DateTimeWithAggregatesFilter<"Event"> | Date | string
+  startedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Event"> | Date | string | null
+  finishedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Event"> | Date | string | null
   description?: Prisma.StringNullableWithAggregatesFilter<"Event"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Event"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Event"> | Date | string
@@ -284,8 +284,8 @@ export type EventCreateInput = {
   slug: string
   name: string
   isActive?: boolean
-  startedAt: Date | string
-  finishedAt: Date | string
+  startedAt?: Date | string | null
+  finishedAt?: Date | string | null
   description?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -298,8 +298,8 @@ export type EventUncheckedCreateInput = {
   slug: string
   name: string
   isActive?: boolean
-  startedAt: Date | string
-  finishedAt: Date | string
+  startedAt?: Date | string | null
+  finishedAt?: Date | string | null
   description?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -312,8 +312,8 @@ export type EventUpdateInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  finishedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  finishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -326,8 +326,8 @@ export type EventUncheckedUpdateInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  finishedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  finishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -340,8 +340,8 @@ export type EventCreateManyInput = {
   slug: string
   name: string
   isActive?: boolean
-  startedAt: Date | string
-  finishedAt: Date | string
+  startedAt?: Date | string | null
+  finishedAt?: Date | string | null
   description?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -352,8 +352,8 @@ export type EventUpdateManyMutationInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  finishedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  finishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -364,8 +364,8 @@ export type EventUncheckedUpdateManyInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  finishedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  finishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -420,12 +420,16 @@ export type BoolFieldUpdateOperationsInput = {
   set?: boolean
 }
 
-export type DateTimeFieldUpdateOperationsInput = {
-  set?: Date | string
+export type NullableDateTimeFieldUpdateOperationsInput = {
+  set?: Date | string | null
 }
 
 export type NullableStringFieldUpdateOperationsInput = {
   set?: string | null
+}
+
+export type DateTimeFieldUpdateOperationsInput = {
+  set?: Date | string
 }
 
 export type EventCreateNestedOneWithoutStoresInput = {
@@ -465,8 +469,8 @@ export type EventCreateWithoutStoresInput = {
   slug: string
   name: string
   isActive?: boolean
-  startedAt: Date | string
-  finishedAt: Date | string
+  startedAt?: Date | string | null
+  finishedAt?: Date | string | null
   description?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -478,8 +482,8 @@ export type EventUncheckedCreateWithoutStoresInput = {
   slug: string
   name: string
   isActive?: boolean
-  startedAt: Date | string
-  finishedAt: Date | string
+  startedAt?: Date | string | null
+  finishedAt?: Date | string | null
   description?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -507,8 +511,8 @@ export type EventUpdateWithoutStoresInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  finishedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  finishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -520,8 +524,8 @@ export type EventUncheckedUpdateWithoutStoresInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  finishedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  finishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -533,8 +537,8 @@ export type EventCreateWithoutAdminsInput = {
   slug: string
   name: string
   isActive?: boolean
-  startedAt: Date | string
-  finishedAt: Date | string
+  startedAt?: Date | string | null
+  finishedAt?: Date | string | null
   description?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -546,8 +550,8 @@ export type EventUncheckedCreateWithoutAdminsInput = {
   slug: string
   name: string
   isActive?: boolean
-  startedAt: Date | string
-  finishedAt: Date | string
+  startedAt?: Date | string | null
+  finishedAt?: Date | string | null
   description?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -575,8 +579,8 @@ export type EventUpdateWithoutAdminsInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  finishedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  finishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -588,8 +592,8 @@ export type EventUncheckedUpdateWithoutAdminsInput = {
   slug?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  startedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  finishedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  startedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  finishedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -707,8 +711,8 @@ export type $EventPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     slug: string
     name: string
     isActive: boolean
-    startedAt: Date
-    finishedAt: Date
+    startedAt: Date | null
+    finishedAt: Date | null
     description: string | null
     createdAt: Date
     updatedAt: Date

@@ -6,6 +6,7 @@ const makeSchema = () => z.object({
   id: SortOrderSchema.optional(),
   supabaseUserId: SortOrderSchema.optional(),
   email: SortOrderSchema.optional(),
+  name: SortOrderSchema.optional(),
   storeId: SortOrderSchema.optional(),
   createdAt: SortOrderSchema.optional(),
   updatedAt: SortOrderSchema.optional()

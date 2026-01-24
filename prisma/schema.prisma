@@ -13,11 +13,11 @@ datasource db {
 model Event {
   id          String     @id @default(cuid())
   slug        String   @unique
-  name        String
+  name        String @db.VarChar(20)
   isActive    Boolean  @default(false)
-  startedAt   DateTime
-  finishedAt  DateTime
-  description String?
+  startedAt   DateTime?
+  finishedAt  DateTime?
+  description String? @db.Text
 
   stores  Store[]
   admins  Admin[]
@@ -35,12 +35,12 @@ enum StoreType {
 
 model Store {
   id          String     @id @default(cuid())
-  slug        String   @unique
-  name        String
+  slug        String   @unique @db.VarChar(20)
+  name        String @db.VarChar(20)
   isActive    Boolean  @default(false)
   startedAt   DateTime?
   finishedAt  DateTime?
-  description String?
+  description String? @db.Text
 
   storeType StoreType
 
@@ -143,7 +143,7 @@ model Admin {
   supabaseUserId String @unique
 
   email     String    @unique
-  name      String?
+  name      String? @db.VarChar(20)
   role      AdminRole
 
   eventId   String?   
@@ -168,8 +168,9 @@ model Staff {
   supabaseUserId String @unique
 
   email   String    @unique
-  
-  storeId   String
+  name String? @db.VarChar(20)
+
+  storeId   String 
   store     Store     @relation(fields: [storeId], references: [id], onDelete: Cascade)
 
   createdAt DateTime  @default(now())

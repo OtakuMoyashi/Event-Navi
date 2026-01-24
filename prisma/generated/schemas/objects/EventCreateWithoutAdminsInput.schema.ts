@@ -5,10 +5,10 @@ import { StoreCreateNestedManyWithoutEventInputObjectSchema as StoreCreateNested
 const makeSchema = () => z.object({
   id: z.string().optional(),
   slug: z.string(),
-  name: z.string(),
+  name: z.string().max(20),
   isActive: z.boolean().optional(),
-  startedAt: z.coerce.date(),
-  finishedAt: z.coerce.date(),
+  startedAt: z.coerce.date().optional().nullable(),
+  finishedAt: z.coerce.date().optional().nullable(),
   description: z.string().optional().nullable(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),

@@ -529,10 +529,6 @@ export type StoreUncheckedUpdateManyWithoutEventNestedInput = {
   deleteMany?: Prisma.StoreScalarWhereInput | Prisma.StoreScalarWhereInput[]
 }
 
-export type NullableDateTimeFieldUpdateOperationsInput = {
-  set?: Date | string | null
-}
-
 export type EnumStoreTypeFieldUpdateOperationsInput = {
   set?: $Enums.StoreType
 }
