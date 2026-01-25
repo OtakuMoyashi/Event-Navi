@@ -4,7 +4,7 @@ import { useActionState } from "react";
 import { createAdmin } from "./action";
 import { AdminRole } from "@/generated/prisma/enums";
 
-export default function CreateAdminForm() {
+export default function CreateAdmin() {
   const [state, formAction, isPending] = useActionState(createAdmin, null);
   const adminRoles = Object.values(AdminRole);
 
@@ -33,8 +33,7 @@ export default function CreateAdminForm() {
           {isPending ? "作成中..." : "管理者を作成"}
         </button>
       </div>
-
-      {state?.message && <p>{state.message}</p>}
+      <div>{state?.message && <p>{state.message}</p>}</div>
     </form>
   );
 }

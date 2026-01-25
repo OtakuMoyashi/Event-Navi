@@ -1,10 +1,10 @@
 import prisma from "@/lib/prisma";
-import { CreateStaffClient } from "./client";
+import { CreateStaffForm } from "./create-form";
 
-export default async function CreateStaffForm() {
+export default async function CreateStaff() {
   const stores = await prisma.store.findMany({
     orderBy: { createdAt: "desc" },
   });
 
-  return <CreateStaffClient stores={stores} />;
+  return <CreateStaffForm stores={stores} />;
 }

@@ -42,13 +42,25 @@ export async function createAdmin(prevState: any, formData: FormData) {
 
   if (authError) throw authError;
   if (authData.user) {
-    await prisma.admin.create({
-      data: {
-        supabaseUserId: authData.user.id,
-        email: email,
-        role: role,
-      },
-    });
+    try {
+      await prisma.admin.create({
+        data: {
+          supabaseUserId: authData.user.id,
+          email: email,
+          role: role,
+        },
+      });
+      return {
+        success: true,
+        message: "操作が完了しました。",
+      };
+    } catch (error) {
+      console.log(error);
+      return {
+        success: false,
+        message: "サーバーエラーが発生しました。",
+      };
+    }
   }
   return { success: true };
 }

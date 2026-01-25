@@ -4,7 +4,7 @@ import { useActionState } from "react";
 import { StoreType } from "@/generated/prisma/enums";
 import { createStore } from "./action";
 
-export default function CreateStoreForm() {
+export default function CreateStore() {
   const [state, formAction, isPending] = useActionState(createStore, null);
   const storeTypes = Object.values(StoreType);
 
@@ -33,6 +33,7 @@ export default function CreateStoreForm() {
           {isPending ? "作成中..." : "店舗を作成"}
         </button>
       </div>
+      <div>{state?.message && <p>{state.message}</p>}</div>
     </form>
   );
 }

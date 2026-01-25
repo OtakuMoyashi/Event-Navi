@@ -4,7 +4,7 @@ import { useActionState } from "react";
 import { createAttraction } from "./action";
 import { Store } from "@/generated/prisma/client";
 
-export function CreateAttractionClient({ stores }: { stores: Store[] }) {
+export function CreateAttractionForm({ stores }: { stores: Store[] }) {
   const [state, formAction, isPending] = useActionState(createAttraction, null);
 
   return (
@@ -24,6 +24,7 @@ export function CreateAttractionClient({ stores }: { stores: Store[] }) {
           {isPending ? "作成中..." : "企画を作成"}
         </button>
       </div>
+      <div>{state?.message && <p>{state.message}</p>}</div>
     </form>
   );
 }

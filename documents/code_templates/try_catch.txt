@@ -1,0 +1,12 @@
+try {
+  return {
+    success: true,
+    message: "操作が完了しました。",
+  };
+} catch (error) {
+  console.log(error);
+  return {
+    success: false,
+    message: "サーバーエラーが発生しました。",
+  };
+}

@@ -31,27 +31,40 @@ export async function createStaff(prevState: any, formData: FormData) {
 
   if (!validationResult.success) {
     return {
+      success: false,
+      message: "入力形式が正しくありません。",
       error: validationResult.error,
-      message: "入力形式が正しくありません",
     };
   }
 
   const { email, password, storeId } = validationResult.data;
 
-  const { data: authData, error: authError } = await supabase.auth.signUp({
-    email: email,
-    password: password,
-  });
-
-  if (authError) throw authError;
-  if (authData.user) {
-    await prisma.staff.create({
-      data: {
-        supabaseUserId: authData.user.id,
-        email: email,
-        storeId: storeId,
-      },
+  try {
+    const { data: authData, error: authError } = await supabase.auth.signUp({
+      email: email,
+      password: password,
     });
+    if (authError) {
+      return {
+        success: false,
+        message: "Supabase Authにユーザーが存在しません。",
+      };
+    }
+    if (authData.user) {
+      await prisma.staff.create({
+        data: {
+          supabaseUserId: authData.user.id,
+          email: email,
+          storeId: storeId,
+        },
+      });
+      redirect("/");
+    }
+  } catch (error) {
+    console.log(error);
+    return {
+      success: false,
+      message: "サーバーエラーが発生しました。",
+    };
   }
-  redirect("/");
 }

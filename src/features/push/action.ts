@@ -3,14 +3,14 @@
 import { User } from "@/generated/prisma/client";
 import prisma from "@/lib/prisma";
 import webpush from "web-push";
-import { getCurrentUser } from "../user/action";
+import { getCurrentUser } from "../auth/user/action";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { create } from "domain";
 
 webpush.setVapidDetails(
   "mailto:your-name@example.com",
   process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY!,
-  process.env.VAPID_PRIVATE_KEY!
+  process.env.VAPID_PRIVATE_KEY!,
 );
 
 export type PushSubscriptionJSONInput = {
@@ -19,65 +19,55 @@ export type PushSubscriptionJSONInput = {
   expirationTime?: number | null;
 };
 
-export async function subscribeUser(
-  sub: PushSubscriptionJSONInput
-): Promise<{ success: boolean }> {
-  const fetchedUser: User | null = await getCurrentUser();
+export async function subscribeUser(sub: PushSubscriptionJSONInput) {
+  const fetchedUser: User = await getCurrentUser();
 
-  if (!fetchedUser) return { success: false };
-
-  const createdSub = await prisma.pushSubscription.upsert({
-    where: { endpoint: sub.endpoint },
-    update: {
-      p256dh: sub.keys.p256dh,
-      auth: sub.keys.auth,
-      userId: fetchedUser.id,
-    },
-    create: {
-      endpoint: sub.endpoint,
-      p256dh: sub.keys.p256dh,
-      auth: sub.keys.auth,
-      userId: fetchedUser.id,
-    },
-  });
-
-  if (!createdSub) return { success: false };
-
-  return { success: true };
-}
-
-export async function unsubscribeUser(): Promise<{ success: boolean }> {
-  const fetchedUser: User | null = await getCurrentUser();
-
-  if (!fetchedUser) return { success: false };
-
-  await prisma.pushSubscription.deleteMany({
-    where: {
-      userId: fetchedUser.id,
-    },
-  });
-
-  return { success: true };
-}
-
-/*　
-export async function sendNotification(message: string) {
-  if (!subscription) {
-    throw new Error('No subscription available')
-  }
- 
   try {
-    await webpush.sendNotification(
-      subscription,
-      JSON.stringify({
-        title: 'Test Notification',
-        body: message,
-        icon: '/icon.png',
-      })
-    )
-    return { success: true }
+    await prisma.pushSubscription.upsert({
+      where: { endpoint: sub.endpoint },
+      update: {
+        p256dh: sub.keys.p256dh,
+        auth: sub.keys.auth,
+        userId: fetchedUser.id,
+      },
+      create: {
+        endpoint: sub.endpoint,
+        p256dh: sub.keys.p256dh,
+        auth: sub.keys.auth,
+        userId: fetchedUser.id,
+      },
+    });
+    return {
+      success: true,
+      message: "操作が完了しました。",
+    };
   } catch (error) {
-    console.error('Error sending push notification:', error)
-    return { success: false, error: 'Failed to send notification' }
+    console.log(error);
+    return {
+      success: false,
+      message: "サーバーエラーが発生しました。",
+    };
   }
-}*/
+}
+
+export async function unsubscribeUser() {
+  const fetchedUser: User = await getCurrentUser();
+
+  try {
+    await prisma.pushSubscription.deleteMany({
+      where: {
+        userId: fetchedUser.id,
+      },
+    });
+    return {
+      success: true,
+      message: "操作が完了しました。",
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      success: false,
+      message: "サーバーエラーが発生しました。",
+    };
+  }
+}

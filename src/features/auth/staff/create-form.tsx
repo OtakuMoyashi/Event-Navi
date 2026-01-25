@@ -4,7 +4,7 @@ import { useActionState } from "react";
 import { createStaff } from "./action";
 import { Store } from "@/generated/prisma/client";
 
-export function CreateStaffClient({ stores }: { stores: Store[] }) {
+export function CreateStaffForm({ stores }: { stores: Store[] }) {
   const [state, formAction, isPending] = useActionState(createStaff, null);
 
   return (
@@ -35,6 +35,7 @@ export function CreateStaffClient({ stores }: { stores: Store[] }) {
           {isPending ? "作成中..." : "スタッフを作成"}
         </button>
       </div>
+      <div>{state?.message && <p>{state.message}</p>}</div>
     </form>
   );
 }
