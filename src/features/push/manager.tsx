@@ -20,8 +20,9 @@ function urlBase64ToUint8Array(base64String: string) {
 export function PushNotificationManager() {
   const [isSupported, setIsSupported] = useState(false);
   const [subscription, setSubscription] = useState<PushSubscription | null>(
-    null
+    null,
   );
+  const [isLoading, setIsLoading] = useState(false);
 
   async function registerServiceWorker() {
     const registration = await navigator.serviceWorker.register("/sw.js", {
@@ -39,45 +40,79 @@ export function PushNotificationManager() {
     }
   }, []);
 
-  //プッシュ通知の購読登録
   async function subscribeToPush() {
-    const registration = await navigator.serviceWorker.ready;
-    const sub = await registration.pushManager.subscribe({
-      userVisibleOnly: true,
-      applicationServerKey: urlBase64ToUint8Array(
-        process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY!
-      ),
-    });
-    setSubscription(sub);
-    const serializedSub = JSON.parse(JSON.stringify(sub));
-    await subscribeUser(serializedSub);
+    setIsLoading(true);
+    try {
+      const registration = await navigator.serviceWorker.ready;
+      const sub = await registration.pushManager.subscribe({
+        userVisibleOnly: true,
+        applicationServerKey: urlBase64ToUint8Array(
+          process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY!,
+        ),
+      });
+      setSubscription(sub);
+      const serializedSub = JSON.parse(JSON.stringify(sub));
+      await subscribeUser(serializedSub);
+    } catch (error) {
+      console.error("購読エラー:", error);
+    } finally {
+      setIsLoading(false);
+    }
   }
 
-  //プッシュ通知の購読解除
   async function unsubscribeFromPush() {
-    await subscription?.unsubscribe();
-    setSubscription(null);
-    await unsubscribeUser();
+    setIsLoading(true);
+    try {
+      await subscription?.unsubscribe();
+      setSubscription(null);
+      await unsubscribeUser();
+    } catch (error) {
+      console.error("解除エラー:", error);
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   if (!isSupported) {
-    return <p>お使いのブラウザはプッシュ通知をサポートしていません。</p>;
+    return (
+      <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
+        <p className="text-sm text-red-600">
+          お使いのブラウザはプッシュ通知をサポートしていません。
+        </p>
+      </div>
+    );
   }
 
   return (
     <div>
       <h3>プッシュ通知の購読設定</h3>
-      {subscription ? (
-        <>
-          <p>プッシュ通知を購読しています。</p>
-          <button onClick={unsubscribeFromPush}>通知の購読を解除する</button>
-        </>
-      ) : (
-        <>
-          <p>プッシュ通知を購読していません。</p>
-          <button onClick={subscribeToPush}>通知を購読する</button>
-        </>
-      )}
+      <div className="space-y-4">
+        {subscription ? (
+          <>
+            <p>プッシュ通知を購読しています。</p>
+            <button
+              className="bg-indigo-200 rounded"
+              onClick={unsubscribeFromPush}
+              disabled={isLoading}
+            >
+              {isLoading ? "処理中..." : "通知の購読を解除する"}
+            </button>
+          </>
+        ) : (
+          <>
+            <p className="text-sm text-gray-500">
+              プッシュ通知を購読していません。
+            </p>
+            <button
+              className="bg-indigo-200 rounded"
+              onClick={subscribeToPush}
+              disabled={isLoading}
+            >
+              {isLoading ? "処理中..." : "通知を購読する"}
+            </button>
+          </>
+        )}
+      </div>
     </div>
   );
 }

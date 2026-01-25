@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Noto_Sans_JP } from "next/font/google";
 import "./globals.css";
+import Link from "next/link";
 
 const notoSansJp = Noto_Sans_JP({
   variable: "--font-noto-sans-jp",
@@ -19,14 +20,32 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ja">
+    <html lang="ja" className={notoSansJp.variable}>
       <head>
         <link rel="manifest" href="/manifest.json" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <link rel="apple-touch-icon" href="/icon-192x192.png" />
       </head>
-      <body className={notoSansJp.variable}>{children}</body>
+      <body>
+        <header>
+          <div className="flex justify-center items-center gap-4 bg-amber-100 h-10">
+            <Link href="/">
+              <p>Home</p>
+            </Link>
+            <Link href="/createTest">
+              <p>テストページ</p>
+            </Link>
+            <Link href="/ticket/issue">
+              <p>整理券発行</p>
+            </Link>
+            <Link href="/ticket/list">
+              <p>整理券一覧</p>
+            </Link>
+          </div>
+        </header>
+        <div className="p-8">{children}</div>
+      </body>
     </html>
   );
 }

@@ -15,9 +15,13 @@ export default function ErrorPage({
 
   return (
     <div>
-      <h2>Something went wrong!</h2>
-      <button type="button" onClick={() => reset()}>
-        Try again
+      <h2>エラーが発生しました</h2>
+      <button
+        type="button"
+        className="bg-indigo-200 rounded"
+        onClick={() => reset()}
+      >
+        やり直す
       </button>
     </div>
   );

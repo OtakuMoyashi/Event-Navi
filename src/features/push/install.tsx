@@ -28,9 +28,7 @@ export function InstallPrompt() {
   return (
     <div className="p-4 border rounded-lg bg-card text-card-foreground">
       <h3 className="font-bold">アプリのインストール</h3>
-      <button className="mt-2 px-4 py-2 bg-primary text-primary-foreground rounded">
-        ホーム画面に追加
-      </button>
+      <button className="bg-indigo-200 rounded">ホーム画面に追加</button>
       {isIOS && (
         <p className="mt-2 text-sm">
           お使いのデバイスにアプリをインストールするには、

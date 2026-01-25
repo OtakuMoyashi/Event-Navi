@@ -9,6 +9,7 @@ import prisma from "@/lib/prisma";
 const TicketCreateSchema = TicketInputSchema.omit({
   id: true,
   status: true,
+  index: true,
   userId: true,
   attractionId: true,
   createdAt: true,
@@ -23,7 +24,6 @@ const RegisterSchema = TicketCreateSchema.extend({
 
 export async function createTicket(prevState: any, formData: FormData) {
   const validationResult = RegisterSchema.safeParse({
-    index: formData.get("index"),
     numberOfPeople: formData.get("numberOfPeople"),
     storeId: formData.get("storeId"),
   });
@@ -36,7 +36,7 @@ export async function createTicket(prevState: any, formData: FormData) {
     };
   }
 
-  const { index, numberOfPeople, storeId } = validationResult.data;
+  const { numberOfPeople, storeId } = validationResult.data;
 
   try {
     const user = await getCurrentUser();
@@ -64,14 +64,24 @@ export async function createTicket(prevState: any, formData: FormData) {
       };
     }
 
-    await prisma.ticket.create({
-      data: {
-        index: index,
-        numberOfPeople: numberOfPeople,
-        status: "ISSUED",
-        attractionId: attraction.id,
-        userId: user.id,
-      },
+    await prisma.$transaction(async (tx) => {
+      const ticketCount: number = await tx.ticket.count({
+        where: {
+          attractionId: attraction.id,
+        },
+      });
+
+      const nextIndex: number = ticketCount + 1;
+
+      await tx.ticket.create({
+        data: {
+          index: nextIndex,
+          numberOfPeople: numberOfPeople,
+          status: "ISSUED",
+          attractionId: attraction.id,
+          userId: user.id,
+        },
+      });
     });
 
     return {
