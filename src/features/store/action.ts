@@ -7,8 +7,10 @@ import { StoreInputSchema } from "../../../prisma/generated/schemas";
 const RegisterSchema = StoreInputSchema.omit({
   id: true,
   isActive: true,
+  staffs: true,
+  admins: true,
   createdAt: true,
-  finishedAt: true,
+  updatedAt: true,
 });
 
 export async function createStore(prevState: any, formData: FormData) {
@@ -19,6 +21,7 @@ export async function createStore(prevState: any, formData: FormData) {
   });
 
   if (!validationResult.success) {
+    console.log(validationResult.error);
     return {
       success: false,
       message: "入力形式が正しくありません。",

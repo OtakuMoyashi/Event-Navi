@@ -10,7 +10,15 @@ export default function Home() {
       <UserInfo />
       <PushNotificationManager />
       <InstallPrompt />
-      <Link href="/createTest">テストページ</Link>
+      <Link href="/createTest">
+        <p>テストページ</p>
+      </Link>
+      <Link href="/ticket/issue">
+        <p>整理券発行</p>
+      </Link>
+      <Link href="/ticket/list">
+        <p>整理券一覧</p>
+      </Link>
     </div>
   );
 }

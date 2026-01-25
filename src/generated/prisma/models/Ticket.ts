@@ -791,7 +791,13 @@ export type $TicketPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
+    /**
+     * @zod.coerce.number()
+     */
     index: number
+    /**
+     * @zod.coerce.number()
+     */
     numberOfPeople: number
     status: $Enums.TicketStatus
     attractionId: string

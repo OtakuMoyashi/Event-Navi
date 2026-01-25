@@ -3,7 +3,6 @@
 
 import prisma from "@/lib/prisma";
 import { createClient } from "@/lib/supabase/server";
-import { redirect } from "next/navigation";
 import { StaffInputSchema } from "../../../../prisma/generated/schemas";
 import { passwordSchema } from "@/lib/schema/auth";
 
@@ -30,6 +29,7 @@ export async function createStaff(prevState: any, formData: FormData) {
   });
 
   if (!validationResult.success) {
+    console.log(validationResult.error);
     return {
       success: false,
       message: "入力形式が正しくありません。",
@@ -45,6 +45,7 @@ export async function createStaff(prevState: any, formData: FormData) {
       password: password,
     });
     if (authError) {
+      console.log(authError);
       return {
         success: false,
         message: "Supabase Authにユーザーが存在しません。",
@@ -58,7 +59,6 @@ export async function createStaff(prevState: any, formData: FormData) {
           storeId: storeId,
         },
       });
-      redirect("/");
     }
   } catch (error) {
     console.log(error);

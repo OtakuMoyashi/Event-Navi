@@ -16,6 +16,8 @@ const TicketCreateSchema = TicketInputSchema.omit({
 });
 
 const RegisterSchema = TicketCreateSchema.extend({
+  index: z.coerce.number(),
+  numberOfPeople: z.coerce.number(),
   storeId: z.string(),
 });
 
@@ -27,6 +29,7 @@ export async function createTicket(prevState: any, formData: FormData) {
   });
 
   if (!validationResult.success) {
+    console.log(validationResult.error);
     return {
       error: validationResult.error,
       message: "入力形式が正しくありません",

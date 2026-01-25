@@ -95,7 +95,9 @@ enum TicketStatus {
 model Ticket {
   id   String    @id @default(cuid())
 
+  /// @zod.coerce.number()
   index          Int
+  /// @zod.coerce.number()
   numberOfPeople Int
   status         TicketStatus @default(ISSUED)
 
