@@ -389,6 +389,8 @@ export const ModelName = {
   Attraction: 'Attraction',
   Food: 'Food',
   Ticket: 'Ticket',
+  Item: 'Item',
+  StockLog: 'StockLog',
   User: 'User',
   PushSubscription: 'PushSubscription',
   Admin: 'Admin',
@@ -408,7 +410,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "event" | "store" | "attraction" | "food" | "ticket" | "user" | "pushSubscription" | "admin" | "staff"
+    modelProps: "event" | "store" | "attraction" | "food" | "ticket" | "item" | "stockLog" | "user" | "pushSubscription" | "admin" | "staff"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -779,6 +781,154 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.TicketCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.TicketCountAggregateOutputType> | number
+        }
+      }
+    }
+    Item: {
+      payload: Prisma.$ItemPayload<ExtArgs>
+      fields: Prisma.ItemFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ItemFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ItemPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ItemFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ItemPayload>
+        }
+        findFirst: {
+          args: Prisma.ItemFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ItemPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ItemFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ItemPayload>
+        }
+        findMany: {
+          args: Prisma.ItemFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ItemPayload>[]
+        }
+        create: {
+          args: Prisma.ItemCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ItemPayload>
+        }
+        createMany: {
+          args: Prisma.ItemCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ItemCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ItemPayload>[]
+        }
+        delete: {
+          args: Prisma.ItemDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ItemPayload>
+        }
+        update: {
+          args: Prisma.ItemUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ItemPayload>
+        }
+        deleteMany: {
+          args: Prisma.ItemDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ItemUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ItemUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ItemPayload>[]
+        }
+        upsert: {
+          args: Prisma.ItemUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ItemPayload>
+        }
+        aggregate: {
+          args: Prisma.ItemAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateItem>
+        }
+        groupBy: {
+          args: Prisma.ItemGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ItemGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ItemCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ItemCountAggregateOutputType> | number
+        }
+      }
+    }
+    StockLog: {
+      payload: Prisma.$StockLogPayload<ExtArgs>
+      fields: Prisma.StockLogFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.StockLogFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StockLogPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.StockLogFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StockLogPayload>
+        }
+        findFirst: {
+          args: Prisma.StockLogFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StockLogPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.StockLogFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StockLogPayload>
+        }
+        findMany: {
+          args: Prisma.StockLogFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StockLogPayload>[]
+        }
+        create: {
+          args: Prisma.StockLogCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StockLogPayload>
+        }
+        createMany: {
+          args: Prisma.StockLogCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.StockLogCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StockLogPayload>[]
+        }
+        delete: {
+          args: Prisma.StockLogDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StockLogPayload>
+        }
+        update: {
+          args: Prisma.StockLogUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StockLogPayload>
+        }
+        deleteMany: {
+          args: Prisma.StockLogDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.StockLogUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.StockLogUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StockLogPayload>[]
+        }
+        upsert: {
+          args: Prisma.StockLogUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$StockLogPayload>
+        }
+        aggregate: {
+          args: Prisma.StockLogAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateStockLog>
+        }
+        groupBy: {
+          args: Prisma.StockLogGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.StockLogGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.StockLogCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.StockLogCountAggregateOutputType> | number
         }
       }
     }
@@ -1183,6 +1333,31 @@ export const TicketScalarFieldEnum = {
 export type TicketScalarFieldEnum = (typeof TicketScalarFieldEnum)[keyof typeof TicketScalarFieldEnum]
 
 
+export const ItemScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  price: 'price',
+  stock: 'stock',
+  foodId: 'foodId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ItemScalarFieldEnum = (typeof ItemScalarFieldEnum)[keyof typeof ItemScalarFieldEnum]
+
+
+export const StockLogScalarFieldEnum = {
+  id: 'id',
+  itemId: 'itemId',
+  change: 'change',
+  reason: 'reason',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type StockLogScalarFieldEnum = (typeof StockLogScalarFieldEnum)[keyof typeof StockLogScalarFieldEnum]
+
+
 export const UserScalarFieldEnum = {
   id: 'id',
   createdAt: 'createdAt',
@@ -1341,6 +1516,20 @@ export type ListEnumTicketStatusFieldRefInput<$PrismaModel> = FieldRefInputType<
 
 
 /**
+ * Reference to a field of type 'StockChangedReason'
+ */
+export type EnumStockChangedReasonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'StockChangedReason'>
+    
+
+
+/**
+ * Reference to a field of type 'StockChangedReason[]'
+ */
+export type ListEnumStockChangedReasonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'StockChangedReason[]'>
+    
+
+
+/**
  * Reference to a field of type 'AdminRole'
  */
 export type EnumAdminRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AdminRole'>
@@ -1467,6 +1656,8 @@ export type GlobalOmitConfig = {
   attraction?: Prisma.AttractionOmit
   food?: Prisma.FoodOmit
   ticket?: Prisma.TicketOmit
+  item?: Prisma.ItemOmit
+  stockLog?: Prisma.StockLogOmit
   user?: Prisma.UserOmit
   pushSubscription?: Prisma.PushSubscriptionOmit
   admin?: Prisma.AdminOmit

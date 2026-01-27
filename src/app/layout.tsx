@@ -29,7 +29,7 @@ export default function RootLayout({
       </head>
       <body>
         <header>
-          <div className="flex justify-center items-center gap-4 bg-amber-100 h-10">
+          <div className="flex justify-center items-center gap-4 bg-main h-10">
             <Link href="/">
               <p>Home</p>
             </Link>

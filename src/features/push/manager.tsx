@@ -91,7 +91,7 @@ export function PushNotificationManager() {
           <>
             <p>プッシュ通知を購読しています。</p>
             <button
-              className="bg-indigo-200 rounded"
+              className="bg-sub rounded"
               onClick={unsubscribeFromPush}
               disabled={isLoading}
             >
@@ -104,7 +104,7 @@ export function PushNotificationManager() {
               プッシュ通知を購読していません。
             </p>
             <button
-              className="bg-indigo-200 rounded"
+              className="bg-sub rounded"
               onClick={subscribeToPush}
               disabled={isLoading}
             >

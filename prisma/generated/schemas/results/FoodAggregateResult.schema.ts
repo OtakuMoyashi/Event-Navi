@@ -3,6 +3,7 @@ export const FoodAggregateResultSchema = z.object({  _count: z.object({
     id: z.number(),
     storeId: z.number(),
     store: z.number(),
+    item: z.number(),
     createdAt: z.number(),
     updatedAt: z.number()
   }).optional(),

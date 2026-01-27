@@ -9,7 +9,7 @@ export function CreateStaffForm({ stores }: { stores: Store[] }) {
 
   return (
     <div className="space-y-2">
-      <h1>スタッフ作成</h1>
+      <h1>スタッフを作成</h1>
       <form action={formAction}>
         <div>
           <label>仮想ドメイン</label>
@@ -17,7 +17,7 @@ export function CreateStaffForm({ stores }: { stores: Store[] }) {
             name="domain"
             required
             disabled={isPending}
-            className="border border-gray-300"
+            className="border border-text-01-light"
           />
         </div>
         <div>
@@ -26,7 +26,7 @@ export function CreateStaffForm({ stores }: { stores: Store[] }) {
             name="loginID"
             required
             disabled={isPending}
-            className="border border-gray-300"
+            className="border border-text-01-light"
           />
         </div>
         <div>
@@ -36,7 +36,7 @@ export function CreateStaffForm({ stores }: { stores: Store[] }) {
             type="password"
             required
             disabled={isPending}
-            className="border border-gray-300"
+            className="border border-text-01-light"
           />
         </div>
         <div>
@@ -49,11 +49,7 @@ export function CreateStaffForm({ stores }: { stores: Store[] }) {
           </select>
         </div>
         <div>
-          <button
-            type="submit"
-            className="bg-indigo-200 rounded"
-            disabled={isPending}
-          >
+          <button type="submit" className="bg-sub rounded" disabled={isPending}>
             {isPending ? "作成中..." : "スタッフを作成"}
           </button>
         </div>

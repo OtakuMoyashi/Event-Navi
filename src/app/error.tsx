@@ -16,11 +16,7 @@ export default function ErrorPage({
   return (
     <div>
       <h2>エラーが発生しました</h2>
-      <button
-        type="button"
-        className="bg-indigo-200 rounded"
-        onClick={() => reset()}
-      >
+      <button type="button" className="bg-sub rounded" onClick={() => reset()}>
         やり直す
       </button>
     </div>

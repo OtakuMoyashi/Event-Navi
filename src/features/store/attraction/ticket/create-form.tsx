@@ -18,7 +18,7 @@ export function CreateTicketForm({ stores }: { stores: Store[] }) {
             type="number"
             required
             disabled={isPending}
-            className="border border-gray-300"
+            className="border border-text-01-light"
           />
         </div>
         <div>
@@ -34,7 +34,7 @@ export function CreateTicketForm({ stores }: { stores: Store[] }) {
 
         <div>
           <button
-            className="bg-indigo-200 rounded "
+            className="bg-sub rounded "
             type="submit"
             disabled={isPending}
           >

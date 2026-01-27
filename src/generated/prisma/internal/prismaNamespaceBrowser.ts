@@ -56,6 +56,8 @@ export const ModelName = {
   Attraction: 'Attraction',
   Food: 'Food',
   Ticket: 'Ticket',
+  Item: 'Item',
+  StockLog: 'StockLog',
   User: 'User',
   PushSubscription: 'PushSubscription',
   Admin: 'Admin',
@@ -142,6 +144,31 @@ export const TicketScalarFieldEnum = {
 } as const
 
 export type TicketScalarFieldEnum = (typeof TicketScalarFieldEnum)[keyof typeof TicketScalarFieldEnum]
+
+
+export const ItemScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  price: 'price',
+  stock: 'stock',
+  foodId: 'foodId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ItemScalarFieldEnum = (typeof ItemScalarFieldEnum)[keyof typeof ItemScalarFieldEnum]
+
+
+export const StockLogScalarFieldEnum = {
+  id: 'id',
+  itemId: 'itemId',
+  change: 'change',
+  reason: 'reason',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type StockLogScalarFieldEnum = (typeof StockLogScalarFieldEnum)[keyof typeof StockLogScalarFieldEnum]
 
 
 export const UserScalarFieldEnum = {

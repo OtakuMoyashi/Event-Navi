@@ -1,0 +1,15 @@
+import type { Prisma } from '../../../src/generated/prisma/client';
+import * as z from 'zod';
+import { StockLogWhereInputObjectSchema as StockLogWhereInputObjectSchema } from './objects/StockLogWhereInput.schema';
+import { StockLogOrderByWithAggregationInputObjectSchema as StockLogOrderByWithAggregationInputObjectSchema } from './objects/StockLogOrderByWithAggregationInput.schema';
+import { StockLogScalarWhereWithAggregatesInputObjectSchema as StockLogScalarWhereWithAggregatesInputObjectSchema } from './objects/StockLogScalarWhereWithAggregatesInput.schema';
+import { StockLogScalarFieldEnumSchema } from './enums/StockLogScalarFieldEnum.schema';
+import { StockLogCountAggregateInputObjectSchema as StockLogCountAggregateInputObjectSchema } from './objects/StockLogCountAggregateInput.schema';
+import { StockLogMinAggregateInputObjectSchema as StockLogMinAggregateInputObjectSchema } from './objects/StockLogMinAggregateInput.schema';
+import { StockLogMaxAggregateInputObjectSchema as StockLogMaxAggregateInputObjectSchema } from './objects/StockLogMaxAggregateInput.schema';
+import { StockLogAvgAggregateInputObjectSchema as StockLogAvgAggregateInputObjectSchema } from './objects/StockLogAvgAggregateInput.schema';
+import { StockLogSumAggregateInputObjectSchema as StockLogSumAggregateInputObjectSchema } from './objects/StockLogSumAggregateInput.schema';
+
+export const StockLogGroupBySchema: z.ZodType<Prisma.StockLogGroupByArgs> = z.object({ where: StockLogWhereInputObjectSchema.optional(), orderBy: z.union([StockLogOrderByWithAggregationInputObjectSchema, StockLogOrderByWithAggregationInputObjectSchema.array()]).optional(), having: StockLogScalarWhereWithAggregatesInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), by: z.array(StockLogScalarFieldEnumSchema), _count: z.union([ z.literal(true), StockLogCountAggregateInputObjectSchema ]).optional(), _min: StockLogMinAggregateInputObjectSchema.optional(), _max: StockLogMaxAggregateInputObjectSchema.optional(), _avg: StockLogAvgAggregateInputObjectSchema.optional(), _sum: StockLogSumAggregateInputObjectSchema.optional() }).strict() as unknown as z.ZodType<Prisma.StockLogGroupByArgs>;
+
+export const StockLogGroupByZodSchema = z.object({ where: StockLogWhereInputObjectSchema.optional(), orderBy: z.union([StockLogOrderByWithAggregationInputObjectSchema, StockLogOrderByWithAggregationInputObjectSchema.array()]).optional(), having: StockLogScalarWhereWithAggregatesInputObjectSchema.optional(), take: z.number().optional(), skip: z.number().optional(), by: z.array(StockLogScalarFieldEnumSchema), _count: z.union([ z.literal(true), StockLogCountAggregateInputObjectSchema ]).optional(), _min: StockLogMinAggregateInputObjectSchema.optional(), _max: StockLogMaxAggregateInputObjectSchema.optional(), _avg: StockLogAvgAggregateInputObjectSchema.optional(), _sum: StockLogSumAggregateInputObjectSchema.optional() }).strict();

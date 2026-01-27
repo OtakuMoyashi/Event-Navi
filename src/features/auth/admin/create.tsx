@@ -19,7 +19,7 @@ export default function CreateAdmin() {
             type="email"
             required
             disabled={isPending}
-            className="border border-gray-300"
+            className="border border-text-01-light"
           />
         </div>
         <div>
@@ -29,7 +29,7 @@ export default function CreateAdmin() {
             type="password"
             required
             disabled={isPending}
-            className="border border-gray-300"
+            className="border border-text-01-light"
           />
         </div>
         <div>
@@ -43,11 +43,7 @@ export default function CreateAdmin() {
           </select>
         </div>
         <div>
-          <button
-            type="submit"
-            className="bg-indigo-200 rounded"
-            disabled={isPending}
-          >
+          <button type="submit" className="bg-sub rounded" disabled={isPending}>
             {isPending ? "作成中..." : "管理者を作成"}
           </button>
         </div>

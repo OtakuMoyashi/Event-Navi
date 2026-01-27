@@ -9,7 +9,7 @@ export function CreateAttractionForm({ stores }: { stores: Store[] }) {
 
   return (
     <div className="space-y-2">
-      <h1>店舗を作成</h1>
+      <h1>企画を作成</h1>
       <form action={formAction}>
         <div>
           <label>区分</label>
@@ -22,11 +22,7 @@ export function CreateAttractionForm({ stores }: { stores: Store[] }) {
           </select>
         </div>
         <div>
-          <button
-            className="bg-indigo-200 rounded"
-            type="submit"
-            disabled={isPending}
-          >
+          <button className="bg-sub rounded" type="submit" disabled={isPending}>
             {isPending ? "作成中..." : "企画を作成"}
           </button>
         </div>

@@ -18,7 +18,7 @@ export default function CreateStore() {
             name="slug"
             required
             disabled={isPending}
-            className="border border-gray-300"
+            className="border border-text-01-light"
           />
         </div>
         <div>
@@ -27,7 +27,7 @@ export default function CreateStore() {
             name="name"
             required
             disabled={isPending}
-            className="border border-gray-300"
+            className="border border-text-01-light"
           />
         </div>
         <div>
@@ -41,11 +41,7 @@ export default function CreateStore() {
           </select>
         </div>
         <div>
-          <button
-            className="bg-indigo-200 rounded"
-            type="submit"
-            disabled={isPending}
-          >
+          <button className="bg-sub rounded" type="submit" disabled={isPending}>
             {isPending ? "作成中..." : "店舗を作成"}
           </button>
         </div>

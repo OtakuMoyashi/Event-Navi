@@ -27,6 +27,13 @@ export const TicketStatus = {
 export type TicketStatus = (typeof TicketStatus)[keyof typeof TicketStatus]
 
 
+export const StockChangedReason = {
+  SELLING: 'SELLING'
+} as const
+
+export type StockChangedReason = (typeof StockChangedReason)[keyof typeof StockChangedReason]
+
+
 export const AdminRole = {
   EVENT_ADMIN: 'EVENT_ADMIN',
   STORE_ADMIN: 'STORE_ADMIN'

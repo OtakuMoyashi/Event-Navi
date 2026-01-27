@@ -43,6 +43,16 @@ export type Food = Prisma.FoodModel
  */
 export type Ticket = Prisma.TicketModel
 /**
+ * Model Item
+ * 
+ */
+export type Item = Prisma.ItemModel
+/**
+ * Model StockLog
+ * 
+ */
+export type StockLog = Prisma.StockLogModel
+/**
  * Model User
  * 
  */

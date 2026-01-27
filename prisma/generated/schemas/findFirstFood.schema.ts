@@ -13,6 +13,7 @@ export const FoodFindFirstSelectSchema: z.ZodType<Prisma.FoodSelect> = z.object(
     id: z.boolean().optional(),
     storeId: z.boolean().optional(),
     store: z.boolean().optional(),
+    item: z.boolean().optional(),
     createdAt: z.boolean().optional(),
     updatedAt: z.boolean().optional()
   }).strict() as unknown as z.ZodType<Prisma.FoodSelect>;
@@ -21,6 +22,7 @@ export const FoodFindFirstSelectZodSchema = z.object({
     id: z.boolean().optional(),
     storeId: z.boolean().optional(),
     store: z.boolean().optional(),
+    item: z.boolean().optional(),
     createdAt: z.boolean().optional(),
     updatedAt: z.boolean().optional()
   }).strict();

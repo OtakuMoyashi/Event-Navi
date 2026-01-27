@@ -79,6 +79,8 @@ model Food {
   storeId String @unique
   store Store @relation(fields: [storeId], references: [id], onDelete: Cascade)
 
+  item  Item?
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -94,11 +96,8 @@ enum TicketStatus {
 
 model Ticket {
   id   String    @id @default(cuid())
-
-  /// @zod.coerce.number()
-  index          Int
-  /// @zod.coerce.number()
-  numberOfPeople Int
+  index          Int  /// @zod.coerce.number()
+  numberOfPeople Int  /// @zod.coerce.number()
   status         TicketStatus @default(ISSUED)
 
   attractionId String
@@ -111,6 +110,42 @@ model Ticket {
   updatedAt DateTime @updatedAt
 
   @@map("tickets")
+}
+
+//TODO  カラムは要検討
+model Item {
+  id  String  @id @default(cuid())
+  name  String
+  price Int? /// @zod.coerce.number()
+  stock Int?  @default(0)/// @zod.coerce.number()
+
+  stocklog  StockLog?
+
+  foodId  String @unique
+  food  Food  @relation(fields: [foodId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@map("items")
+}
+
+enum StockChangedReason {
+  SELLING
+}
+
+//TODO  カラムは要検討
+model StockLog  {
+  id  String  @id @default(cuid())
+  
+  itemId  String @unique
+  item  Item  @relation(fields: [itemId], references: [id])
+
+  change  Int
+  reason  StockChangedReason
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 }
 
 model User {

@@ -8,6 +8,8 @@ export { StoreResultSchema } from './Store.result';
 export { AttractionResultSchema } from './Attraction.result';
 export { FoodResultSchema } from './Food.result';
 export { TicketResultSchema } from './Ticket.result';
+export { ItemResultSchema } from './Item.result';
+export { StockLogResultSchema } from './StockLog.result';
 export { UserResultSchema } from './User.result';
 export { PushSubscriptionResultSchema } from './PushSubscription.result';
 export { AdminResultSchema } from './Admin.result';
