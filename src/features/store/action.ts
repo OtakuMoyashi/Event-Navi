@@ -32,13 +32,30 @@ export async function createStore(prevState: any, formData: FormData) {
   const { slug, name, storeType } = validationResult.data;
 
   try {
-    await prisma.store.create({
-      data: {
-        slug: slug,
-        name: name,
-        storeType: storeType,
-      },
+    await prisma.$transaction(async (tx) => {
+      const createdStore = await tx.store.create({
+        data: {
+          slug: slug,
+          name: name,
+          storeType: storeType,
+        },
+      });
+      switch (createdStore.storeType) {
+        case "ATTRACTION":
+          await tx.attraction.create({
+            data: {
+              storeId: createdStore.id,
+            },
+          });
+        case "FOOD":
+          await tx.food.create({
+            data: {
+              storeId: createdStore.id,
+            },
+          });
+      }
     });
+
     return {
       success: true,
       message: "操作が完了しました。",

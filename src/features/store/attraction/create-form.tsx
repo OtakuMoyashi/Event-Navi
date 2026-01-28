@@ -1,11 +1,14 @@
 "use client";
 
 import { useActionState } from "react";
-import { createAttraction } from "./action";
+import { createAttractionWithFrom } from "./action";
 import { Store } from "@/generated/prisma/client";
 
 export function CreateAttractionForm({ stores }: { stores: Store[] }) {
-  const [state, formAction, isPending] = useActionState(createAttraction, null);
+  const [state, formAction, isPending] = useActionState(
+    createAttractionWithFrom,
+    null,
+  );
 
   return (
     <div className="space-y-2">

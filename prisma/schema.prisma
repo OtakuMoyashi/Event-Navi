@@ -197,6 +197,7 @@ model Admin {
 }
 
 enum AdminRole {
+  SYSTEM_ADMIN
   EVENT_ADMIN
   STORE_ADMIN
 }

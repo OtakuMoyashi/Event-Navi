@@ -1,11 +1,14 @@
 "use client";
 
 import { useActionState } from "react";
-import { createFood } from "./action";
+import { createFoodWithForm } from "./action";
 import { Store } from "@/generated/prisma/client";
 
 export function CreateFoodForm({ stores }: { stores: Store[] }) {
-  const [state, formAction, isPending] = useActionState(createFood, null);
+  const [state, formAction, isPending] = useActionState(
+    createFoodWithForm,
+    null,
+  );
 
   return (
     <div className="space-y-2">
