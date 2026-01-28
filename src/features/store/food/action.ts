@@ -4,11 +4,11 @@
 import prisma from "@/lib/prisma";
 
 //TODO 店舗作成に組み込む
-export async function createAttraction(prevState: any, formData: FormData) {
+export async function createFood(prevState: any, formData: FormData) {
   const storeId = formData.get("storeId") as string;
 
   try {
-    await prisma.attraction.create({
+    await prisma.food.create({
       data: {
         storeId: storeId,
       },

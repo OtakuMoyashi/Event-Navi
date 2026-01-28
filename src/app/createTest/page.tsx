@@ -3,6 +3,7 @@ import CreateStaff from "@/features/auth/staff/create";
 import CreateStore from "@/features/store/create";
 import CreateAttraction from "@/features/store/attraction/create";
 
+//TODO 認可ごとにページ分ける
 export default function TestPage() {
   return (
     <div className="space-y-4 divide-y">
