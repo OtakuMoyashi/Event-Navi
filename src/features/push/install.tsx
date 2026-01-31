@@ -2,6 +2,7 @@
 /* eslint-disable react-hooks/set-state-in-effect */
 "use client";
 
+import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 
 export function InstallPrompt() {
@@ -28,7 +29,7 @@ export function InstallPrompt() {
   return (
     <div className="p-4 border rounded-lg bg-card text-card-foreground">
       <h3 className="font-bold">アプリのインストール</h3>
-      <button className="bg-sub rounded">ホーム画面に追加</button>
+      <Button>ホーム画面に追加する</Button>
       {isIOS && (
         <p className="mt-2 text-sm">
           お使いのデバイスにアプリをインストールするには、

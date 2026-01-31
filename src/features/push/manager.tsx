@@ -3,6 +3,8 @@
 
 import { useState, useEffect } from "react";
 import { subscribeUser, unsubscribeUser } from "./action";
+import { Button } from "@/components/ui/button";
+import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card";
 
 function urlBase64ToUint8Array(base64String: string) {
   const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
@@ -84,35 +86,33 @@ export function PushNotificationManager() {
   }
 
   return (
-    <div>
-      <h3>プッシュ通知の購読設定</h3>
-      <div className="space-y-4">
+    <Card>
+      <CardHeader>
+        <CardTitle>プッシュ通知の購読設定</CardTitle>
+      </CardHeader>
+      <CardContent>
         {subscription ? (
           <>
             <p>プッシュ通知を購読しています。</p>
-            <button
-              className="bg-sub rounded"
+            <Button
+              variant="warn"
               onClick={unsubscribeFromPush}
               disabled={isLoading}
             >
               {isLoading ? "処理中..." : "通知の購読を解除する"}
-            </button>
+            </Button>
           </>
         ) : (
           <>
             <p className="text-sm text-gray-500">
               プッシュ通知を購読していません。
             </p>
-            <button
-              className="bg-sub rounded"
-              onClick={subscribeToPush}
-              disabled={isLoading}
-            >
+            <Button onClick={subscribeToPush} disabled={isLoading}>
               {isLoading ? "処理中..." : "通知を購読する"}
-            </button>
+            </Button>
           </>
         )}
-      </div>
-    </div>
+      </CardContent>
+    </Card>
   );
 }
