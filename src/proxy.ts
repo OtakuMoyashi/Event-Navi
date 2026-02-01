@@ -68,7 +68,7 @@ export async function proxy(request: NextRequest) {
     return response;
   }
 
-  if (url.pathname.startsWith("/admin/store/")) {
+  if (url.pathname.startsWith("/staff/store/")) {
     if (!authUser) {
       return NextResponse.redirect(new URL("/login", request.url));
     }

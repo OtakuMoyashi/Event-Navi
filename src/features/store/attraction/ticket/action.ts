@@ -95,3 +95,55 @@ export async function createTicket(prevState: any, formData: FormData) {
     };
   }
 }
+
+export async function callTicket(ticketId: string) {
+  try {
+    await prisma.$transaction(async (tx) => {
+      const fetchedTicket = await tx.ticket.findUnique({
+        where: { id: ticketId },
+      });
+
+      if (!fetchedTicket) {
+        return {
+          success: false,
+          message: "整理券が存在しません",
+        };
+      }
+
+      if (fetchedTicket.status != "CALLED") {
+        return {
+          success: false,
+          message: "整理券は呼び出されていません",
+        };
+      }
+      await tx.ticket.update({
+        where: { id: ticketId },
+        data: { status: "COMPLETED" },
+      });
+
+      await tx.ticket.updateMany({
+        where: {
+          attractionId: fetchedTicket.attractionId,
+          status: "ISSUED",
+          index: {
+            gt: fetchedTicket.index,
+            lte: fetchedTicket.index + 3,
+          },
+        },
+        data: {
+          status: "CALLED",
+        },
+      });
+    });
+    return {
+      success: true,
+      message: "操作が完了しました。",
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      success: false,
+      message: "サーバーエラーが発生しました。",
+    };
+  }
+}
