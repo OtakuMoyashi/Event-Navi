@@ -8,16 +8,17 @@ import Link from "next/link";
 import {
   NavigationMenu,
   NavigationMenuList,
-  NavigationMenuLink,
   NavigationMenuItem,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default async function Home() {
   const events = await prisma.event.findMany({
     select: {
       id: true,
       name: true,
+      slug: true,
     },
   });
   return (
@@ -52,18 +53,30 @@ export default async function Home() {
           <PushNotificationManager />
           <InstallPrompt />
         </Suspense>
-        {events.length > 0 ? (
-          events.map((event) => (
-            <div key={event.id}>
-              <p>{event.name}</p>
-              <Button asChild>
-                <Link href={`/event/${event.id}`}>イベントページ</Link>
-              </Button>
-            </div>
-          ))
-        ) : (
-          <p>イベントはまだありません。</p>
-        )}
+        <Card className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <CardHeader>
+            <CardTitle>イベント一覧</CardTitle>
+          </CardHeader>
+          <CardContent>
+            {events.length > 0 ? (
+              events.map((event) => (
+                <Card key={event.id}>
+                  <CardHeader>
+                    <CardTitle>{event.name}</CardTitle>
+                  </CardHeader>
+                  <CardContent className="space-y-4">
+                    <p>イベント名：{event.name}</p>
+                    <Button>
+                      <Link href={`/event/${event.id}`}>イベントページ</Link>
+                    </Button>
+                  </CardContent>
+                </Card>
+              ))
+            ) : (
+              <p>イベントはまだありません。</p>
+            )}
+          </CardContent>
+        </Card>
       </div>
     </div>
   );

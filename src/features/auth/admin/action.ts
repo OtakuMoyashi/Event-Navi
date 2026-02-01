@@ -50,6 +50,11 @@ export async function signUpAdmin(prevState: any, formData: FormData) {
   const { data: authData, error: authError } = await supabase.auth.signUp({
     email: email,
     password: password,
+    options: {
+      data: {
+        role: role,
+      },
+    },
   });
 
   if (authError) throw authError;
@@ -70,7 +75,7 @@ export async function signUpAdmin(prevState: any, formData: FormData) {
       };
     }
   }
-  redirect("/login/admin");
+  redirect("/login");
 }
 
 const SignInAdminSchema = AdminInputSchema.omit({

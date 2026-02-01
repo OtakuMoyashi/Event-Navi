@@ -43,6 +43,11 @@ export async function createStaff(prevState: any, formData: FormData) {
     const { data: authData, error: authError } = await supabase.auth.signUp({
       email: email,
       password: password,
+      options: {
+        data: {
+          role: "STORE_STAFF",
+        },
+      },
     });
     if (authError) {
       console.log(authError);

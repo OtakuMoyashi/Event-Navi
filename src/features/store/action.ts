@@ -3,6 +3,7 @@
 
 import prisma from "@/lib/prisma";
 import { StoreInputSchema } from "../../../prisma/generated/schemas";
+import { redirect } from "next/navigation";
 
 const RegisterSchema = StoreInputSchema.omit({
   id: true,
@@ -67,4 +68,23 @@ export async function createStore(prevState: any, formData: FormData) {
       message: "サーバーエラーが発生しました。",
     };
   }
+}
+
+export async function updateStoreEventId(
+  storeId: string,
+  prevState: any,
+  formData: FormData,
+) {
+  const eventId = formData.get("eventId") as string;
+
+  try {
+    await prisma.store.update({
+      where: { id: storeId },
+      data: { eventId },
+    });
+  } catch (error) {
+    return { message: "データベースの更新に失敗しました" };
+  }
+
+  redirect(`/admin/store/${storeId}`);
 }

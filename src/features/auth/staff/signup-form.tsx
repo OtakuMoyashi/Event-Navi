@@ -24,7 +24,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Message } from "@/components/ui/message";
 
-export function CreateStaffForm({ stores }: { stores: Store[] }) {
+export function SignUpStaffForm({ stores }: { stores: Store[] }) {
   const [state, formAction, isPending] = useActionState(createStaff, null);
 
   return (

@@ -1,6 +1,7 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 import { createId } from "@paralleldrive/cuid2";
+import prisma from "./lib/prisma";
 
 export async function proxy(request: NextRequest) {
   let response = NextResponse.next({
@@ -46,11 +47,50 @@ export async function proxy(request: NextRequest) {
   );
 
   const {
-    data: { user: admin },
+    data: { user: authUser },
   } = await supabase.auth.getUser();
   const url = new URL(request.url);
-  if (url.pathname.startsWith("/admin") && !admin) {
-    return NextResponse.redirect(new URL("/login/admin", request.url));
+
+  if (url.pathname.startsWith("/admin") && !authUser) {
+    return NextResponse.redirect(new URL("/login", request.url));
+  }
+
+  if (url.pathname.startsWith("/admin/system/")) {
+    if (!authUser) {
+      return NextResponse.redirect(new URL("/login", request.url));
+    }
+
+    const role = authUser.user_metadata?.role;
+
+    if (role !== "SYSTEM_ADMIN") {
+      return NextResponse.redirect(new URL("/login", request.url));
+    }
+    return response;
+  }
+
+  if (url.pathname.startsWith("/admin/store/")) {
+    if (!authUser) {
+      return NextResponse.redirect(new URL("/login", request.url));
+    }
+
+    const role = authUser.user_metadata?.role;
+
+    if (role === "SYSTEM_ADMIN") {
+      return response;
+    }
+
+    const urlStoreId = url.pathname.split("/")[2];
+
+    if (role === "STORE_STAFF" || role === "STORE_ADMIN") {
+      const staffRecord = await prisma.staff.findUnique({
+        where: { supabaseUserId: authUser.id },
+        select: { storeId: true },
+      });
+
+      if (!staffRecord || staffRecord.storeId !== urlStoreId) {
+        return NextResponse.redirect(new URL("/", request.url));
+      }
+    }
   }
 
   return response;

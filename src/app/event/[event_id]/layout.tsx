@@ -20,6 +20,7 @@ export default async function EventLayout({ children, params }: Props) {
     select: {
       id: true,
       name: true,
+      slug: true,
     },
   });
 
@@ -41,11 +42,27 @@ export default async function EventLayout({ children, params }: Props) {
                   {event.name}
                 </Link>
               </NavigationMenuItem>
+              <NavigationMenuItem>
+                <Link
+                  href={`/event/${event.id}/issue-ticket`}
+                  className={`${navigationMenuTriggerStyle()} bg-transparent`}
+                >
+                  整理券を発行する
+                </Link>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <Link
+                  href="/user"
+                  className={`${navigationMenuTriggerStyle()} bg-transparent`}
+                >
+                  ユーザー情報
+                </Link>
+              </NavigationMenuItem>
             </NavigationMenuList>
           </NavigationMenu>
         </div>
       </header>
-      {children}
+      <main className="p-4 md:p-8">{children}</main>
     </div>
   );
 }

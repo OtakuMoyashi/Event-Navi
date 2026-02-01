@@ -17,7 +17,6 @@ const TicketCreateSchema = TicketInputSchema.omit({
 });
 
 const RegisterSchema = TicketCreateSchema.extend({
-  index: z.coerce.number(),
   numberOfPeople: z.coerce.number(),
   storeId: z.string(),
 });
