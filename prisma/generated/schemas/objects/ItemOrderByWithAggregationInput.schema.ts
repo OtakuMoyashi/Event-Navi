@@ -11,9 +11,9 @@ import { ItemSumOrderByAggregateInputObjectSchema as ItemSumOrderByAggregateInpu
 const makeSchema = () => z.object({
   id: SortOrderSchema.optional(),
   name: SortOrderSchema.optional(),
-  price: z.union([SortOrderSchema, z.lazy(() => SortOrderInputObjectSchema)]).optional(),
-  stock: z.union([SortOrderSchema, z.lazy(() => SortOrderInputObjectSchema)]).optional(),
+  stock: SortOrderSchema.optional(),
   foodId: SortOrderSchema.optional(),
+  price: z.union([SortOrderSchema, z.lazy(() => SortOrderInputObjectSchema)]).optional(),
   createdAt: SortOrderSchema.optional(),
   updatedAt: SortOrderSchema.optional(),
   _count: z.lazy(() => ItemCountOrderByAggregateInputObjectSchema).optional(),

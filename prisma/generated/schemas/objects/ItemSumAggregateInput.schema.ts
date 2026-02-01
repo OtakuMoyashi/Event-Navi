@@ -3,8 +3,8 @@ import type { Prisma } from '../../../../src/generated/prisma/client';
 
 
 const makeSchema = () => z.object({
-  price: z.literal(true).optional(),
-  stock: z.literal(true).optional()
+  stock: z.literal(true).optional(),
+  price: z.literal(true).optional()
 }).strict();
 export const ItemSumAggregateInputObjectSchema: z.ZodType<Prisma.ItemSumAggregateInputType> = makeSchema() as unknown as z.ZodType<Prisma.ItemSumAggregateInputType>;
 export const ItemSumAggregateInputObjectZodSchema = makeSchema();

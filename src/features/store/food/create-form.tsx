@@ -3,6 +3,25 @@
 import { useActionState } from "react";
 import { createFoodWithForm } from "./action";
 import { Store } from "@/generated/prisma/client";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import {
+  Field,
+  FieldGroup,
+  FieldLabel,
+  FieldSeparator,
+  FieldSet,
+} from "@/components/ui/field";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { CircleCheck } from "lucide-react";
+import {
+  Select,
+  SelectTrigger,
+  SelectContent,
+  SelectItem,
+  SelectGroup,
+  SelectValue,
+} from "@/components/ui/select";
 
 export function CreateFoodForm({ stores }: { stores: Store[] }) {
   const [state, formAction, isPending] = useActionState(
@@ -11,26 +30,48 @@ export function CreateFoodForm({ stores }: { stores: Store[] }) {
   );
 
   return (
-    <div className="space-y-2">
-      <h1>企画を作成</h1>
-      <form action={formAction}>
-        <div>
-          <label>区分</label>
-          <select name="storeId" required disabled={isPending}>
-            {stores.map((store) => (
-              <option key={store.id} value={store.id}>
-                {store.name}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div>
-          <button className="bg-sub rounded" type="submit" disabled={isPending}>
-            {isPending ? "作成中..." : "企画を作成"}
-          </button>
-        </div>
-        <div>{state?.message && <p>{state.message}</p>}</div>
-      </form>
-    </div>
+    <Card>
+      <CardHeader>
+        <CardTitle>模擬店を作成</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <form action={formAction}>
+          <FieldGroup>
+            <FieldSet>
+              <Field>
+                <FieldLabel>店舗の種類</FieldLabel>
+                <Select name="storeId" required disabled={isPending}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="店舗を選択" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      {stores.map((store) => (
+                        <SelectItem key={store.id} value={store.id}>
+                          {store.name}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </Field>
+            </FieldSet>
+            <FieldSeparator />
+            <Field>
+              <Button type="submit" disabled={isPending}>
+                {isPending ? "作成中..." : "模擬店を作成"}
+              </Button>
+            </Field>
+          </FieldGroup>
+        </form>
+        {state?.message && (
+          <Alert>
+            <CircleCheck />
+            <AlertTitle>Info</AlertTitle>
+            <AlertDescription>{state.message}</AlertDescription>
+          </Alert>
+        )}
+      </CardContent>
+    </Card>
   );
 }

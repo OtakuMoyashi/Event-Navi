@@ -9,9 +9,13 @@ export default async function EventTopPage(props: {
     where: { id: event_id },
   });
 
+  if (!event) {
+    return <p>イベントが存在しません</p>;
+  }
+
   return (
-    <>
-      <p>イベントトップ（ID:{event_id}）</p>
-    </>
+    <div>
+      <p>イベントトップ（ID:{event.id}）</p>
+    </div>
   );
 }

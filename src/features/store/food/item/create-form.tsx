@@ -3,56 +3,85 @@
 import { useActionState } from "react";
 import { createItem } from "./action";
 import { Store } from "@/generated/prisma/client";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import {
+  Field,
+  FieldGroup,
+  FieldLabel,
+  FieldSeparator,
+  FieldSet,
+} from "@/components/ui/field";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { CircleCheck } from "lucide-react";
+import {
+  Select,
+  SelectTrigger,
+  SelectContent,
+  SelectItem,
+  SelectGroup,
+  SelectValue,
+} from "@/components/ui/select";
+import { Input } from "@/components/ui/input";
 
 export function CreateItemForm({ stores }: { stores: Store[] }) {
   const [state, formAction, isPending] = useActionState(createItem, null);
   return (
-    <div className="space-y-2">
-      <h1>商品を登録</h1>
-      <form action={formAction}>
-        <div>
-          <label>模擬店を選択</label>
-          <select name="storeId" required disabled={isPending}>
-            {stores.map((store) => (
-              <option key={store.id} value={store.id}>
-                {store.name}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        <div>
-          <label>商品名</label>
-          <input
-            name="name"
-            type="text"
-            required
-            disabled={isPending}
-            className="border border-text-01-light"
-          />
-        </div>
-        <div>
-          <label>在庫数</label>
-          <input
-            name="stock"
-            type="number"
-            required
-            disabled={isPending}
-            className="border border-text-01-light"
-          />
-        </div>
-
-        <div>
-          <button
-            className="bg-sub rounded "
-            type="submit"
-            disabled={isPending}
-          >
-            {isPending ? "登録中..." : "商品を登録"}
-          </button>
-        </div>
-        <div>{state?.message && <p>{state.message}</p>}</div>
-      </form>
-    </div>
+    <Card>
+      <CardHeader>
+        <CardTitle>商品を登録</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <form action={formAction}>
+          <FieldGroup>
+            <FieldSet>
+              <Field>
+                <FieldLabel>模擬店</FieldLabel>
+                <Select name="storeId" required disabled={isPending}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="模擬店を選択" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      {stores.map((store) => (
+                        <SelectItem key={store.id} value={store.id}>
+                          {store.name}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+                <Field>
+                  <FieldLabel>商品名</FieldLabel>
+                  <Input name="name" required disabled={isPending} />
+                </Field>
+                <Field>
+                  <FieldLabel>在庫数</FieldLabel>
+                  <Input
+                    name="stock"
+                    type="number"
+                    required
+                    disabled={isPending}
+                  />
+                </Field>
+              </Field>
+            </FieldSet>
+            <FieldSeparator />
+            <Field>
+              <Button type="submit" disabled={isPending}>
+                {isPending ? "登録中..." : "商品を登録"}
+              </Button>
+            </Field>
+          </FieldGroup>
+        </form>
+        {state?.message && (
+          <Alert>
+            <CircleCheck />
+            <AlertTitle>Info</AlertTitle>
+            <AlertDescription>{state.message}</AlertDescription>
+          </Alert>
+        )}
+      </CardContent>
+    </Card>
   );
 }

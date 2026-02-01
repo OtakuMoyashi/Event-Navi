@@ -1,7 +1,8 @@
 import {
   NavigationMenu,
   NavigationMenuList,
-  NavigationMenuLink,
+  NavigationMenuItem,
+  navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import prisma from "@/lib/prisma";
 import Link from "next/link";
@@ -25,16 +26,26 @@ export default async function EventLayout({ children, params }: Props) {
   if (!event) {
     return <p>イベントが存在しません。</p>;
   }
+
   return (
-    <>
-      <NavigationMenu>
-        <NavigationMenuList>
-          <NavigationMenuLink>
-            <Link href={`/event/${event.id}`}>{event.name}</Link>
-          </NavigationMenuLink>
-        </NavigationMenuList>
-      </NavigationMenu>
+    <div>
+      <header className="bg-main">
+        <div className="mx-auto flex h-16 max-w-7xl items-center gap-8 px-4 sm:px-6 lg:px-8">
+          <NavigationMenu>
+            <NavigationMenuList>
+              <NavigationMenuItem>
+                <Link
+                  href={`/event/${event.id}`}
+                  className={`${navigationMenuTriggerStyle()} bg-transparent`}
+                >
+                  {event.name}
+                </Link>
+              </NavigationMenuItem>
+            </NavigationMenuList>
+          </NavigationMenu>
+        </div>
+      </header>
       {children}
-    </>
+    </div>
   );
 }

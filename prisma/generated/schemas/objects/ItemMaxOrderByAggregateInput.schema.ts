@@ -5,9 +5,9 @@ import { SortOrderSchema } from '../enums/SortOrder.schema'
 const makeSchema = () => z.object({
   id: SortOrderSchema.optional(),
   name: SortOrderSchema.optional(),
-  price: SortOrderSchema.optional(),
   stock: SortOrderSchema.optional(),
   foodId: SortOrderSchema.optional(),
+  price: SortOrderSchema.optional(),
   createdAt: SortOrderSchema.optional(),
   updatedAt: SortOrderSchema.optional()
 }).strict();

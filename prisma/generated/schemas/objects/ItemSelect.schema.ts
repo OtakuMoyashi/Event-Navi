@@ -6,11 +6,11 @@ import { FoodArgsObjectSchema as FoodArgsObjectSchema } from './FoodArgs.schema'
 const makeSchema = () => z.object({
   id: z.boolean().optional(),
   name: z.boolean().optional(),
-  price: z.boolean().optional(),
   stock: z.boolean().optional(),
   stocklog: z.union([z.boolean(), z.lazy(() => StockLogArgsObjectSchema)]).optional(),
   foodId: z.boolean().optional(),
   food: z.union([z.boolean(), z.lazy(() => FoodArgsObjectSchema)]).optional(),
+  price: z.boolean().optional(),
   createdAt: z.boolean().optional(),
   updatedAt: z.boolean().optional()
 }).strict();

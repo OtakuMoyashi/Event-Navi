@@ -6,8 +6,8 @@ import { FoodCreateNestedOneWithoutItemInputObjectSchema as FoodCreateNestedOneW
 const makeSchema = () => z.object({
   id: z.string().optional(),
   name: z.string(),
+  stock: z.number().int(),
   price: z.number().int().optional().nullable(),
-  stock: z.number().int().optional().nullable(),
   createdAt: z.coerce.date().optional(),
   stocklog: z.lazy(() => StockLogCreateNestedOneWithoutItemInputObjectSchema).optional(),
   food: z.lazy(() => FoodCreateNestedOneWithoutItemInputObjectSchema)

@@ -1,13 +1,12 @@
 "use client";
 
 import { useActionState } from "react";
-import { createStaff } from "./action";
+import { createTicket } from "./action";
 import { Store } from "@/generated/prisma/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
   Field,
-  FieldDescription,
   FieldGroup,
   FieldLabel,
   FieldSeparator,
@@ -25,13 +24,13 @@ import { Input } from "@/components/ui/input";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { CircleCheck } from "lucide-react";
 
-export function CreateStaffForm({ stores }: { stores: Store[] }) {
-  const [state, formAction, isPending] = useActionState(createStaff, null);
+export function IssueTicketForm({ stores }: { stores: Store[] }) {
+  const [state, formAction, isPending] = useActionState(createTicket, null);
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>スタッフを作成</CardTitle>
+        <CardTitle>整理券を発行</CardTitle>
       </CardHeader>
       <CardContent>
         <form action={formAction}>
@@ -39,30 +38,10 @@ export function CreateStaffForm({ stores }: { stores: Store[] }) {
             <FieldSet>
               <FieldGroup>
                 <Field>
-                  <FieldLabel>仮想ドメイン</FieldLabel>
-                  <Input name="domain" required disabled={isPending} />
-                </Field>
-                <Field>
-                  <FieldLabel>ログインID</FieldLabel>
-                  <Input name="loginId" required disabled={isPending} />
-                </Field>
-                <Field>
-                  <FieldLabel>パスワード</FieldLabel>
-                  <FieldDescription>
-                    英数字のみで、8文字以上で設定して下さい。
-                  </FieldDescription>
-                  <Input
-                    name="password"
-                    type="password"
-                    required
-                    disabled={isPending}
-                  />
-                </Field>
-                <Field>
-                  <FieldLabel>作成先の店舗</FieldLabel>
+                  <FieldLabel>発行する企画</FieldLabel>
                   <Select name="storeId" required disabled={isPending}>
                     <SelectTrigger>
-                      <SelectValue placeholder="店舗を選択" />
+                      <SelectValue placeholder="企画を選択" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectGroup>
@@ -75,12 +54,21 @@ export function CreateStaffForm({ stores }: { stores: Store[] }) {
                     </SelectContent>
                   </Select>
                 </Field>
+                <Field>
+                  <FieldLabel>人数</FieldLabel>
+                  <Input
+                    name="numberOfPeople"
+                    type="number"
+                    required
+                    disabled={isPending}
+                  />
+                </Field>
               </FieldGroup>
             </FieldSet>
             <FieldSeparator />
             <Field>
               <Button type="submit" disabled={isPending}>
-                {isPending ? "作成中..." : "スタッフを作成"}
+                {isPending ? "作成中..." : "イベントを作成"}
               </Button>
             </Field>
           </FieldGroup>

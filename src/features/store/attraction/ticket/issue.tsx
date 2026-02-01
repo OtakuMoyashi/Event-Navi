@@ -1,8 +1,8 @@
 import { Store } from "@/generated/prisma/client";
 import prisma from "@/lib/prisma";
-import { CreateTicketForm } from "./create-form";
+import { IssueTicketForm } from "./issue-form";
 
-export default async function CreateTicket() {
+export default async function IssueTicket() {
   const stores: Store[] = await prisma.store.findMany({
     where: { storeType: "ATTRACTION" },
   });
@@ -11,5 +11,5 @@ export default async function CreateTicket() {
     return <p>企画が存在しません</p>;
   }
 
-  return <CreateTicketForm stores={stores} />;
+  return <IssueTicketForm stores={stores} />;
 }

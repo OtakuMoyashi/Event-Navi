@@ -1,6 +1,7 @@
 import * as z from 'zod';
 import type { Prisma } from '../../../../src/generated/prisma/client';
 import { StringFilterObjectSchema as StringFilterObjectSchema } from './StringFilter.schema';
+import { IntFilterObjectSchema as IntFilterObjectSchema } from './IntFilter.schema';
 import { IntNullableFilterObjectSchema as IntNullableFilterObjectSchema } from './IntNullableFilter.schema';
 import { DateTimeFilterObjectSchema as DateTimeFilterObjectSchema } from './DateTimeFilter.schema';
 import { StockLogNullableScalarRelationFilterObjectSchema as StockLogNullableScalarRelationFilterObjectSchema } from './StockLogNullableScalarRelationFilter.schema';
@@ -14,9 +15,9 @@ const itemwhereinputSchema = z.object({
   NOT: z.union([z.lazy(() => ItemWhereInputObjectSchema), z.lazy(() => ItemWhereInputObjectSchema).array()]).optional(),
   id: z.union([z.lazy(() => StringFilterObjectSchema), z.string()]).optional(),
   name: z.union([z.lazy(() => StringFilterObjectSchema), z.string()]).optional(),
-  price: z.union([z.lazy(() => IntNullableFilterObjectSchema), z.number().int()]).optional().nullable(),
-  stock: z.union([z.lazy(() => IntNullableFilterObjectSchema), z.number().int()]).optional().nullable(),
+  stock: z.union([z.lazy(() => IntFilterObjectSchema), z.number().int()]).optional(),
   foodId: z.union([z.lazy(() => StringFilterObjectSchema), z.string()]).optional(),
+  price: z.union([z.lazy(() => IntNullableFilterObjectSchema), z.number().int()]).optional().nullable(),
   createdAt: z.union([z.lazy(() => DateTimeFilterObjectSchema), z.coerce.date()]).optional(),
   updatedAt: z.union([z.lazy(() => DateTimeFilterObjectSchema), z.coerce.date()]).optional(),
   stocklog: z.union([z.lazy(() => StockLogNullableScalarRelationFilterObjectSchema), z.lazy(() => StockLogWhereInputObjectSchema)]).optional(),

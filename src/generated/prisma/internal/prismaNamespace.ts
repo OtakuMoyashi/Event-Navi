@@ -1336,9 +1336,9 @@ export type TicketScalarFieldEnum = (typeof TicketScalarFieldEnum)[keyof typeof 
 export const ItemScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  price: 'price',
   stock: 'stock',
   foodId: 'foodId',
+  price: 'price',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

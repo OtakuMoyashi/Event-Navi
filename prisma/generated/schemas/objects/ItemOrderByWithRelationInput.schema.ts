@@ -8,9 +8,9 @@ import { FoodOrderByWithRelationInputObjectSchema as FoodOrderByWithRelationInpu
 const makeSchema = () => z.object({
   id: SortOrderSchema.optional(),
   name: SortOrderSchema.optional(),
-  price: z.union([SortOrderSchema, z.lazy(() => SortOrderInputObjectSchema)]).optional(),
-  stock: z.union([SortOrderSchema, z.lazy(() => SortOrderInputObjectSchema)]).optional(),
+  stock: SortOrderSchema.optional(),
   foodId: SortOrderSchema.optional(),
+  price: z.union([SortOrderSchema, z.lazy(() => SortOrderInputObjectSchema)]).optional(),
   createdAt: SortOrderSchema.optional(),
   updatedAt: SortOrderSchema.optional(),
   stocklog: z.lazy(() => StockLogOrderByWithRelationInputObjectSchema).optional(),

@@ -5,8 +5,8 @@ import { StockLogUncheckedCreateNestedOneWithoutItemInputObjectSchema as StockLo
 const makeSchema = () => z.object({
   id: z.string().optional(),
   name: z.string(),
+  stock: z.number().int(),
   price: z.number().int().optional().nullable(),
-  stock: z.number().int().optional().nullable(),
   createdAt: z.coerce.date().optional(),
   updatedAt: z.coerce.date().optional(),
   stocklog: z.lazy(() => StockLogUncheckedCreateNestedOneWithoutItemInputObjectSchema).optional()

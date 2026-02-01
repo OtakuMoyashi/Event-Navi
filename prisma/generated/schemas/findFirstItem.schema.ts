@@ -12,11 +12,11 @@ import { ItemScalarFieldEnumSchema } from './enums/ItemScalarFieldEnum.schema';
 export const ItemFindFirstSelectSchema: z.ZodType<Prisma.ItemSelect> = z.object({
     id: z.boolean().optional(),
     name: z.boolean().optional(),
-    price: z.boolean().optional(),
     stock: z.boolean().optional(),
     stocklog: z.boolean().optional(),
     foodId: z.boolean().optional(),
     food: z.boolean().optional(),
+    price: z.boolean().optional(),
     createdAt: z.boolean().optional(),
     updatedAt: z.boolean().optional()
   }).strict() as unknown as z.ZodType<Prisma.ItemSelect>;
@@ -24,11 +24,11 @@ export const ItemFindFirstSelectSchema: z.ZodType<Prisma.ItemSelect> = z.object(
 export const ItemFindFirstSelectZodSchema = z.object({
     id: z.boolean().optional(),
     name: z.boolean().optional(),
-    price: z.boolean().optional(),
     stock: z.boolean().optional(),
     stocklog: z.boolean().optional(),
     foodId: z.boolean().optional(),
     food: z.boolean().optional(),
+    price: z.boolean().optional(),
     createdAt: z.boolean().optional(),
     updatedAt: z.boolean().optional()
   }).strict();

@@ -27,21 +27,21 @@ export type AggregateItem = {
 }
 
 export type ItemAvgAggregateOutputType = {
-  price: number | null
   stock: number | null
+  price: number | null
 }
 
 export type ItemSumAggregateOutputType = {
-  price: number | null
   stock: number | null
+  price: number | null
 }
 
 export type ItemMinAggregateOutputType = {
   id: string | null
   name: string | null
-  price: number | null
   stock: number | null
   foodId: string | null
+  price: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -49,9 +49,9 @@ export type ItemMinAggregateOutputType = {
 export type ItemMaxAggregateOutputType = {
   id: string | null
   name: string | null
-  price: number | null
   stock: number | null
   foodId: string | null
+  price: number | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -59,9 +59,9 @@ export type ItemMaxAggregateOutputType = {
 export type ItemCountAggregateOutputType = {
   id: number
   name: number
-  price: number
   stock: number
   foodId: number
+  price: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -69,21 +69,21 @@ export type ItemCountAggregateOutputType = {
 
 
 export type ItemAvgAggregateInputType = {
-  price?: true
   stock?: true
+  price?: true
 }
 
 export type ItemSumAggregateInputType = {
-  price?: true
   stock?: true
+  price?: true
 }
 
 export type ItemMinAggregateInputType = {
   id?: true
   name?: true
-  price?: true
   stock?: true
   foodId?: true
+  price?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -91,9 +91,9 @@ export type ItemMinAggregateInputType = {
 export type ItemMaxAggregateInputType = {
   id?: true
   name?: true
-  price?: true
   stock?: true
   foodId?: true
+  price?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -101,9 +101,9 @@ export type ItemMaxAggregateInputType = {
 export type ItemCountAggregateInputType = {
   id?: true
   name?: true
-  price?: true
   stock?: true
   foodId?: true
+  price?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -198,9 +198,9 @@ export type ItemGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
 export type ItemGroupByOutputType = {
   id: string
   name: string
-  price: number | null
-  stock: number | null
+  stock: number
   foodId: string
+  price: number | null
   createdAt: Date
   updatedAt: Date
   _count: ItemCountAggregateOutputType | null
@@ -231,9 +231,9 @@ export type ItemWhereInput = {
   NOT?: Prisma.ItemWhereInput | Prisma.ItemWhereInput[]
   id?: Prisma.StringFilter<"Item"> | string
   name?: Prisma.StringFilter<"Item"> | string
-  price?: Prisma.IntNullableFilter<"Item"> | number | null
-  stock?: Prisma.IntNullableFilter<"Item"> | number | null
+  stock?: Prisma.IntFilter<"Item"> | number
   foodId?: Prisma.StringFilter<"Item"> | string
+  price?: Prisma.IntNullableFilter<"Item"> | number | null
   createdAt?: Prisma.DateTimeFilter<"Item"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Item"> | Date | string
   stocklog?: Prisma.XOR<Prisma.StockLogNullableScalarRelationFilter, Prisma.StockLogWhereInput> | null
@@ -243,9 +243,9 @@ export type ItemWhereInput = {
 export type ItemOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  price?: Prisma.SortOrderInput | Prisma.SortOrder
-  stock?: Prisma.SortOrderInput | Prisma.SortOrder
+  stock?: Prisma.SortOrder
   foodId?: Prisma.SortOrder
+  price?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   stocklog?: Prisma.StockLogOrderByWithRelationInput
@@ -259,8 +259,8 @@ export type ItemWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.ItemWhereInput[]
   NOT?: Prisma.ItemWhereInput | Prisma.ItemWhereInput[]
   name?: Prisma.StringFilter<"Item"> | string
+  stock?: Prisma.IntFilter<"Item"> | number
   price?: Prisma.IntNullableFilter<"Item"> | number | null
-  stock?: Prisma.IntNullableFilter<"Item"> | number | null
   createdAt?: Prisma.DateTimeFilter<"Item"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Item"> | Date | string
   stocklog?: Prisma.XOR<Prisma.StockLogNullableScalarRelationFilter, Prisma.StockLogWhereInput> | null
@@ -270,9 +270,9 @@ export type ItemWhereUniqueInput = Prisma.AtLeast<{
 export type ItemOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  price?: Prisma.SortOrderInput | Prisma.SortOrder
-  stock?: Prisma.SortOrderInput | Prisma.SortOrder
+  stock?: Prisma.SortOrder
   foodId?: Prisma.SortOrder
+  price?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.ItemCountOrderByAggregateInput
@@ -288,9 +288,9 @@ export type ItemScalarWhereWithAggregatesInput = {
   NOT?: Prisma.ItemScalarWhereWithAggregatesInput | Prisma.ItemScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Item"> | string
   name?: Prisma.StringWithAggregatesFilter<"Item"> | string
-  price?: Prisma.IntNullableWithAggregatesFilter<"Item"> | number | null
-  stock?: Prisma.IntNullableWithAggregatesFilter<"Item"> | number | null
+  stock?: Prisma.IntWithAggregatesFilter<"Item"> | number
   foodId?: Prisma.StringWithAggregatesFilter<"Item"> | string
+  price?: Prisma.IntNullableWithAggregatesFilter<"Item"> | number | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Item"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Item"> | Date | string
 }
@@ -298,8 +298,8 @@ export type ItemScalarWhereWithAggregatesInput = {
 export type ItemCreateInput = {
   id?: string
   name: string
+  stock: number
   price?: number | null
-  stock?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   stocklog?: Prisma.StockLogCreateNestedOneWithoutItemInput
@@ -309,9 +309,9 @@ export type ItemCreateInput = {
 export type ItemUncheckedCreateInput = {
   id?: string
   name: string
-  price?: number | null
-  stock?: number | null
+  stock: number
   foodId: string
+  price?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   stocklog?: Prisma.StockLogUncheckedCreateNestedOneWithoutItemInput
@@ -320,8 +320,8 @@ export type ItemUncheckedCreateInput = {
 export type ItemUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  stock?: Prisma.IntFieldUpdateOperationsInput | number
   price?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  stock?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stocklog?: Prisma.StockLogUpdateOneWithoutItemNestedInput
@@ -331,9 +331,9 @@ export type ItemUpdateInput = {
 export type ItemUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  price?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  stock?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  stock?: Prisma.IntFieldUpdateOperationsInput | number
   foodId?: Prisma.StringFieldUpdateOperationsInput | string
+  price?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stocklog?: Prisma.StockLogUncheckedUpdateOneWithoutItemNestedInput
@@ -342,9 +342,9 @@ export type ItemUncheckedUpdateInput = {
 export type ItemCreateManyInput = {
   id?: string
   name: string
-  price?: number | null
-  stock?: number | null
+  stock: number
   foodId: string
+  price?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -352,8 +352,8 @@ export type ItemCreateManyInput = {
 export type ItemUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  stock?: Prisma.IntFieldUpdateOperationsInput | number
   price?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  stock?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -361,9 +361,9 @@ export type ItemUpdateManyMutationInput = {
 export type ItemUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  price?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  stock?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  stock?: Prisma.IntFieldUpdateOperationsInput | number
   foodId?: Prisma.StringFieldUpdateOperationsInput | string
+  price?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -376,24 +376,24 @@ export type ItemNullableScalarRelationFilter = {
 export type ItemCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  price?: Prisma.SortOrder
   stock?: Prisma.SortOrder
   foodId?: Prisma.SortOrder
+  price?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type ItemAvgOrderByAggregateInput = {
-  price?: Prisma.SortOrder
   stock?: Prisma.SortOrder
+  price?: Prisma.SortOrder
 }
 
 export type ItemMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  price?: Prisma.SortOrder
   stock?: Prisma.SortOrder
   foodId?: Prisma.SortOrder
+  price?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -401,16 +401,16 @@ export type ItemMaxOrderByAggregateInput = {
 export type ItemMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  price?: Prisma.SortOrder
   stock?: Prisma.SortOrder
   foodId?: Prisma.SortOrder
+  price?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
 export type ItemSumOrderByAggregateInput = {
-  price?: Prisma.SortOrder
   stock?: Prisma.SortOrder
+  price?: Prisma.SortOrder
 }
 
 export type ItemScalarRelationFilter = {
@@ -475,8 +475,8 @@ export type ItemUpdateOneRequiredWithoutStocklogNestedInput = {
 export type ItemCreateWithoutFoodInput = {
   id?: string
   name: string
+  stock: number
   price?: number | null
-  stock?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   stocklog?: Prisma.StockLogCreateNestedOneWithoutItemInput
@@ -485,8 +485,8 @@ export type ItemCreateWithoutFoodInput = {
 export type ItemUncheckedCreateWithoutFoodInput = {
   id?: string
   name: string
+  stock: number
   price?: number | null
-  stock?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   stocklog?: Prisma.StockLogUncheckedCreateNestedOneWithoutItemInput
@@ -511,8 +511,8 @@ export type ItemUpdateToOneWithWhereWithoutFoodInput = {
 export type ItemUpdateWithoutFoodInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  stock?: Prisma.IntFieldUpdateOperationsInput | number
   price?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  stock?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stocklog?: Prisma.StockLogUpdateOneWithoutItemNestedInput
@@ -521,8 +521,8 @@ export type ItemUpdateWithoutFoodInput = {
 export type ItemUncheckedUpdateWithoutFoodInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  stock?: Prisma.IntFieldUpdateOperationsInput | number
   price?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  stock?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   stocklog?: Prisma.StockLogUncheckedUpdateOneWithoutItemNestedInput
@@ -531,8 +531,8 @@ export type ItemUncheckedUpdateWithoutFoodInput = {
 export type ItemCreateWithoutStocklogInput = {
   id?: string
   name: string
+  stock: number
   price?: number | null
-  stock?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
   food: Prisma.FoodCreateNestedOneWithoutItemInput
@@ -541,9 +541,9 @@ export type ItemCreateWithoutStocklogInput = {
 export type ItemUncheckedCreateWithoutStocklogInput = {
   id?: string
   name: string
-  price?: number | null
-  stock?: number | null
+  stock: number
   foodId: string
+  price?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -567,8 +567,8 @@ export type ItemUpdateToOneWithWhereWithoutStocklogInput = {
 export type ItemUpdateWithoutStocklogInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
+  stock?: Prisma.IntFieldUpdateOperationsInput | number
   price?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  stock?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   food?: Prisma.FoodUpdateOneRequiredWithoutItemNestedInput
@@ -577,9 +577,9 @@ export type ItemUpdateWithoutStocklogInput = {
 export type ItemUncheckedUpdateWithoutStocklogInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  price?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
-  stock?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  stock?: Prisma.IntFieldUpdateOperationsInput | number
   foodId?: Prisma.StringFieldUpdateOperationsInput | string
+  price?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -589,9 +589,9 @@ export type ItemUncheckedUpdateWithoutStocklogInput = {
 export type ItemSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
-  price?: boolean
   stock?: boolean
   foodId?: boolean
+  price?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   stocklog?: boolean | Prisma.Item$stocklogArgs<ExtArgs>
@@ -601,9 +601,9 @@ export type ItemSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
 export type ItemSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
-  price?: boolean
   stock?: boolean
   foodId?: boolean
+  price?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   food?: boolean | Prisma.FoodDefaultArgs<ExtArgs>
@@ -612,9 +612,9 @@ export type ItemSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
 export type ItemSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
-  price?: boolean
   stock?: boolean
   foodId?: boolean
+  price?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   food?: boolean | Prisma.FoodDefaultArgs<ExtArgs>
@@ -623,14 +623,14 @@ export type ItemSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
 export type ItemSelectScalar = {
   id?: boolean
   name?: boolean
-  price?: boolean
   stock?: boolean
   foodId?: boolean
+  price?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "price" | "stock" | "foodId" | "createdAt" | "updatedAt", ExtArgs["result"]["item"]>
+export type ItemOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "stock" | "foodId" | "price" | "createdAt" | "updatedAt", ExtArgs["result"]["item"]>
 export type ItemInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   stocklog?: boolean | Prisma.Item$stocklogArgs<ExtArgs>
   food?: boolean | Prisma.FoodDefaultArgs<ExtArgs>
@@ -651,15 +651,12 @@ export type $ItemPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     name: string
+    stock: number
+    foodId: string
     /**
      * @zod.coerce.number()
      */
     price: number | null
-    /**
-     * @zod.coerce.number()
-     */
-    stock: number | null
-    foodId: string
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["item"]>
@@ -1089,9 +1086,9 @@ export interface Prisma__ItemClient<T, Null = never, ExtArgs extends runtime.Typ
 export interface ItemFieldRefs {
   readonly id: Prisma.FieldRef<"Item", 'String'>
   readonly name: Prisma.FieldRef<"Item", 'String'>
-  readonly price: Prisma.FieldRef<"Item", 'Int'>
   readonly stock: Prisma.FieldRef<"Item", 'Int'>
   readonly foodId: Prisma.FieldRef<"Item", 'String'>
+  readonly price: Prisma.FieldRef<"Item", 'Int'>
   readonly createdAt: Prisma.FieldRef<"Item", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Item", 'DateTime'>
 }

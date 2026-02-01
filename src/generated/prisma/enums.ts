@@ -35,6 +35,7 @@ export type StockChangedReason = (typeof StockChangedReason)[keyof typeof StockC
 
 
 export const AdminRole = {
+  SYSTEM_ADMIN: 'SYSTEM_ADMIN',
   EVENT_ADMIN: 'EVENT_ADMIN',
   STORE_ADMIN: 'STORE_ADMIN'
 } as const
