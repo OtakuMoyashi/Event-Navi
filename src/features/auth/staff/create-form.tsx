@@ -22,8 +22,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { CircleCheck } from "lucide-react";
+import { Message } from "@/components/ui/message";
 
 export function CreateStaffForm({ stores }: { stores: Store[] }) {
   const [state, formAction, isPending] = useActionState(createStaff, null);
@@ -85,13 +84,7 @@ export function CreateStaffForm({ stores }: { stores: Store[] }) {
             </Field>
           </FieldGroup>
         </form>
-        {state?.message && (
-          <Alert>
-            <CircleCheck />
-            <AlertTitle>Info</AlertTitle>
-            <AlertDescription>{state.message}</AlertDescription>
-          </Alert>
-        )}
+        {state?.message && <Message message={state.message} />}
       </CardContent>
     </Card>
   );

@@ -12,8 +12,6 @@ import {
   FieldSeparator,
   FieldSet,
 } from "@/components/ui/field";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { CircleCheck } from "lucide-react";
 import {
   Select,
   SelectTrigger,
@@ -23,6 +21,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
+import { Message } from "@/components/ui/message";
 
 export function CreateItemForm({ stores }: { stores: Store[] }) {
   const [state, formAction, isPending] = useActionState(createItem, null);
@@ -74,13 +73,7 @@ export function CreateItemForm({ stores }: { stores: Store[] }) {
             </Field>
           </FieldGroup>
         </form>
-        {state?.message && (
-          <Alert>
-            <CircleCheck />
-            <AlertTitle>Info</AlertTitle>
-            <AlertDescription>{state.message}</AlertDescription>
-          </Alert>
-        )}
+        {state?.message && <Message message={state.message} />}
       </CardContent>
     </Card>
   );

@@ -3,7 +3,6 @@
 
 import prisma from "@/lib/prisma";
 
-//TODO 店舗作成に組み込む
 export async function createFoodWithForm(prevState: any, formData: FormData) {
   const storeId = formData.get("storeId") as string;
 

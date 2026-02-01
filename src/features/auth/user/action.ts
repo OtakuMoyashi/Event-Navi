@@ -15,10 +15,10 @@ export async function createUser(userCuid: string): Promise<User> {
 
 export async function getCurrentUser(): Promise<User> {
   const cookieStore = await cookies();
-  const userCuid = cookieStore.get("user_cuid")?.value;
+  const userCuid = cookieStore.get("guest_user_id")?.value;
 
   if (!userCuid) {
-    throw new Error("cookieにuser_cuidが存在しません。");
+    throw new Error("cookieにguest_user_idが存在しません。");
   }
 
   let user = await prisma.user.findUnique({

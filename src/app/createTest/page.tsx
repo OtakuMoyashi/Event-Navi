@@ -1,4 +1,4 @@
-import CreateAdmin from "@/features/auth/admin/create";
+import CreateAdmin from "@/features/auth/admin/signup";
 import CreateStaff from "@/features/auth/staff/create";
 import CreateStore from "@/features/store/create";
 import CreateAttraction from "@/features/store/attraction/create";

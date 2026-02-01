@@ -21,8 +21,7 @@ import {
   SelectValue,
 } from "@radix-ui/react-select";
 import { Button } from "@/components/ui/button";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { CircleCheck } from "lucide-react";
+import { Message } from "@/components/ui/message";
 
 export default function CreateStore() {
   const [state, formAction, isPending] = useActionState(createStore, null);
@@ -73,13 +72,7 @@ export default function CreateStore() {
             </Field>
           </FieldGroup>
         </form>
-        {state?.message && (
-          <Alert>
-            <CircleCheck />
-            <AlertTitle>Info</AlertTitle>
-            <AlertDescription>{state.message}</AlertDescription>
-          </Alert>
-        )}
+        {state?.message && <Message message={state.message} />}
       </CardContent>
     </Card>
   );

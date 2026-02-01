@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
-import { createAdmin } from "./action";
+import { signUpAdmin } from "./action";
 import { AdminRole } from "@/generated/prisma/enums";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -22,11 +22,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { CircleCheck } from "lucide-react";
+import { Message } from "@/components/ui/message";
 
-export default function CreateAdmin() {
-  const [state, formAction, isPending] = useActionState(createAdmin, null);
+export default function SignUpAdmin() {
+  const [state, formAction, isPending] = useActionState(signUpAdmin, null);
   const adminRoles = Object.values(AdminRole);
 
   return (
@@ -61,6 +60,10 @@ export default function CreateAdmin() {
                   />
                 </Field>
                 <Field>
+                  <FieldLabel>招待コード</FieldLabel>
+                  <Input name="inviteCode" required disabled={isPending} />
+                </Field>
+                <Field>
                   <FieldLabel>管理者の種類</FieldLabel>
                   <Select name="role" required disabled={isPending}>
                     <SelectTrigger>
@@ -87,13 +90,7 @@ export default function CreateAdmin() {
             </Field>
           </FieldGroup>
         </form>
-        {state?.message && (
-          <Alert>
-            <CircleCheck />
-            <AlertTitle>Info</AlertTitle>
-            <AlertDescription>{state.message}</AlertDescription>
-          </Alert>
-        )}
+        {state?.message && <Message message={state.message} />}
       </CardContent>
     </Card>
   );
