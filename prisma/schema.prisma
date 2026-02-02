@@ -1,0 +1,219 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+generator zod {
+  provider = "prisma-zod-generator"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Event {
+  id          String     @id @default(cuid())
+  slug        String   @unique
+  name        String @db.VarChar(20)
+  isActive    Boolean  @default(false)
+  startedAt   DateTime?
+  finishedAt  DateTime?
+  description String? @db.Text
+
+  stores  Store[]
+  admins  Admin[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("events")
+}
+
+enum StoreType {
+  ATTRACTION
+  FOOD
+}
+
+model Store {
+  id          String     @id @default(cuid())
+  slug        String   @unique @db.VarChar(20)
+  name        String @db.VarChar(20)
+  isActive    Boolean  @default(false)
+  startedAt   DateTime?
+  finishedAt  DateTime?
+  description String? @db.Text
+
+  storeType StoreType
+
+  attraction Attraction?
+  food Food?
+
+  event   Event?   @relation(fields: [eventId], references: [id])
+  eventId String?
+
+  admins Admin[]
+  staffs  Staff[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("stores")
+}
+
+model Attraction {
+  id String @id @default(cuid())
+
+  storeId String @unique
+  store Store @relation(fields: [storeId], references: [id], onDelete: Cascade)
+
+  tickets Ticket[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("attracions")
+}
+
+model Food {
+  id String @id @default(cuid())
+
+  storeId String @unique
+  store Store @relation(fields: [storeId], references: [id], onDelete: Cascade)
+
+  item  Item?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("foods")
+}
+
+enum TicketStatus {
+  ISSUED
+  CALLED
+  COMPLETED
+  CANCELLED
+}
+
+model Ticket {
+  id   String    @id @default(cuid())
+  index          Int  /// @zod.coerce.number()
+  numberOfPeople Int  /// @zod.coerce.number()
+  status         TicketStatus @default(ISSUED)
+
+  attractionId String
+  attraction   Attraction @relation(fields: [attractionId], references: [id])
+
+  userId  String
+  user    User  @relation(fields: [userId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("tickets")
+}
+
+//TODO  カラムは要検討
+model Item {
+  id  String  @id @default(cuid())
+  name  String
+  stock Int  // @zod.coerce.number()
+
+  stocklog  StockLog?
+
+  foodId  String @unique
+  food  Food  @relation(fields: [foodId], references: [id], onDelete: Cascade)
+
+  price Int? /// @zod.coerce.number()
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@map("items")
+}
+
+enum StockChangedReason {
+  SELLING
+}
+
+//TODO  カラムは要検討
+model StockLog  {
+  id  String  @id @default(cuid())
+  
+  itemId  String @unique
+  item  Item  @relation(fields: [itemId], references: [id])
+
+  change  Int
+  reason  StockChangedReason
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model User {
+  id   String    @id @default(cuid())
+
+  tickets           Ticket[]
+  pushSubscriptions PushSubscription[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+model PushSubscription {
+  id       String    @id @default(cuid())
+  endpoint String @unique
+  p256dh   String
+  auth     String
+
+  userId String
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("push_subscriptions")
+}
+
+model Admin {
+  id        String    @id @default(cuid())
+  supabaseUserId String @unique
+
+  email     String    @unique
+  name      String? @db.VarChar(20)
+  role      AdminRole
+
+  eventId   String?   
+  event     Event?    @relation(fields: [eventId], references: [id])
+  
+  storeId   String?   
+  store     Store?    @relation(fields: [storeId], references: [id])
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@map("admins")
+}
+
+enum AdminRole {
+  SYSTEM_ADMIN
+  EVENT_ADMIN
+  STORE_ADMIN
+}
+
+model Staff {
+  id        String    @id @default(cuid())
+  supabaseUserId String @unique
+
+  email   String    @unique
+  name String? @db.VarChar(20)
+
+  storeId   String 
+  store     Store     @relation(fields: [storeId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@map("staffs")
+}
