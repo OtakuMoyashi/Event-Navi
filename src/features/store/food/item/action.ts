@@ -1,23 +1,16 @@
 "use server";
 
 import z from "zod";
-import { ItemInputSchema } from "../../../../../prisma/generated/schemas";
 import prisma from "@/lib/prisma";
 
-const ItemCreateSchema = ItemInputSchema.omit({
-  id: true,
-  createdAt: true,
-  updatedAt: true,
-});
-
-const RegisterSchema = ItemCreateSchema.extend({
-  storeId: z.string(),
+const RegisterSchema = z.object({
+  name: z.string(),
+  stock: z.coerce.number(),
 });
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function createItem(prevState: any, formData: FormData) {
   const validationResult = RegisterSchema.safeParse({
-    storeId: formData.get("storeId"),
     name: formData.get("name"),
     stock: formData.get("stock"),
   });
@@ -30,7 +23,8 @@ export async function createItem(prevState: any, formData: FormData) {
     };
   }
 
-  const { storeId, name, stock } = validationResult.data;
+  const { name, stock } = validationResult.data;
+  const storeId = formData.get("storeId") as string;
 
   try {
     const food = await prisma.food.findUnique({

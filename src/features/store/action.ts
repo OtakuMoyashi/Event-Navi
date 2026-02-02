@@ -2,23 +2,19 @@
 "use server";
 
 import prisma from "@/lib/prisma";
-import { StoreInputSchema } from "../../../prisma/generated/schemas";
 import { redirect } from "next/navigation";
+import z from "zod";
+import { StoreType } from "@/generated/prisma/enums";
 
-const RegisterSchema = StoreInputSchema.omit({
-  id: true,
-  isActive: true,
-  staffs: true,
-  admins: true,
-  createdAt: true,
-  updatedAt: true,
+const RegisterSchema = z.object({
+  slug: z.string(),
+  name: z.string(),
 });
 
 export async function createStore(prevState: any, formData: FormData) {
   const validationResult = RegisterSchema.safeParse({
     slug: formData.get("slug"),
     name: formData.get("name"),
-    storeType: formData.get("storeType"),
   });
 
   if (!validationResult.success) {
@@ -30,7 +26,8 @@ export async function createStore(prevState: any, formData: FormData) {
     };
   }
 
-  const { slug, name, storeType } = validationResult.data;
+  const { slug, name } = validationResult.data;
+  const storeType = formData.get("storeType") as StoreType;
 
   try {
     await prisma.$transaction(async (tx) => {
