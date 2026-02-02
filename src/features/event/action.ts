@@ -2,19 +2,11 @@
 "use server";
 
 import prisma from "@/lib/prisma";
-import { EventInputSchema } from "../../../prisma/generated/schemas";
+import z from "zod";
 
-const CreateEventSchema = EventInputSchema.omit({
-  id: true,
-  isActive: true,
-  startedAt: true,
-  finishedAt: true,
-  description: true,
-  createdAt: true,
-  updatedAt: true,
-  //TODO 紐づけ実装とAdminのSignInから情報取得
-  admins: true,
-  stores: true,
+const CreateEventSchema = z.object({
+  slug: z.string(),
+  name: z.string(),
 });
 
 export async function createEvent(prevState: any, formData: FormData) {

@@ -3,19 +3,13 @@
 
 import prisma from "@/lib/prisma";
 import { createClient } from "@/lib/supabase/server";
-import { AdminInputSchema } from "../../../../prisma/generated/schemas";
 import { passwordSchema } from "@/lib/schema/auth";
 import z from "zod";
 import { redirect } from "next/navigation";
+import { AdminRole } from "@/generated/prisma/enums";
 
-const CreateAdminSchema = AdminInputSchema.omit({
-  id: true,
-  supabaseUserId: true,
-  createdAt: true,
-  updatedAt: true,
-});
-
-const ResigterChema = CreateAdminSchema.extend({
+const ResigterChema = z.object({
+  email: z.email(),
   password: passwordSchema,
   inviteCode: z.string(),
 });
@@ -25,7 +19,6 @@ export async function signUpAdmin(prevState: any, formData: FormData) {
   const validationResult = ResigterChema.safeParse({
     email: formData.get("email"),
     password: formData.get("password"),
-    role: formData.get("role"),
     inviteCode: formData.get("inviteCode"),
   });
 
@@ -45,7 +38,8 @@ export async function signUpAdmin(prevState: any, formData: FormData) {
     };
   }
 
-  const { email, role, password } = validationResult.data;
+  const { email, password } = validationResult.data;
+  const role = formData.get("role") as AdminRole;
 
   const { data: authData, error: authError } = await supabase.auth.signUp({
     email: email,
@@ -78,15 +72,8 @@ export async function signUpAdmin(prevState: any, formData: FormData) {
   redirect("/login");
 }
 
-const SignInAdminSchema = AdminInputSchema.omit({
-  id: true,
-  supabaseUserId: true,
-  role: true,
-  createdAt: true,
-  updatedAt: true,
-});
-
-const SignInSchema = SignInAdminSchema.extend({
+const SignInSchema = z.object({
+  email: z.email(),
   password: passwordSchema,
 });
 

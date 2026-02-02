@@ -2,29 +2,16 @@
 "use server";
 
 import { z } from "zod";
-import { TicketInputSchema } from "../../../../../prisma/generated/schemas";
 import { getCurrentUser } from "@/features/auth/user/action";
 import prisma from "@/lib/prisma";
 
-const TicketCreateSchema = TicketInputSchema.omit({
-  id: true,
-  status: true,
-  index: true,
-  userId: true,
-  attractionId: true,
-  createdAt: true,
-  updatedAt: true,
-});
-
-const RegisterSchema = TicketCreateSchema.extend({
+const RegisterSchema = z.object({
   numberOfPeople: z.coerce.number(),
-  storeId: z.string(),
 });
 
 export async function createTicket(prevState: any, formData: FormData) {
   const validationResult = RegisterSchema.safeParse({
     numberOfPeople: formData.get("numberOfPeople"),
-    storeId: formData.get("storeId"),
   });
 
   if (!validationResult.success) {
@@ -35,7 +22,8 @@ export async function createTicket(prevState: any, formData: FormData) {
     };
   }
 
-  const { numberOfPeople, storeId } = validationResult.data;
+  const { numberOfPeople } = validationResult.data;
+  const storeId = formData.get("storeId") as string;
 
   try {
     const user = await getCurrentUser();

@@ -3,28 +3,21 @@
 
 import prisma from "@/lib/prisma";
 import { createClient } from "@/lib/supabase/server";
-import { StaffInputSchema } from "../../../../prisma/generated/schemas";
+import z from "zod";
 import { passwordSchema } from "@/lib/schema/auth";
 
-const CreateStaffSchema = StaffInputSchema.omit({
-  id: true,
-  supabaseUserId: true,
-  createdAt: true,
-  updatedAt: true,
-});
-
-const ResigterChema = CreateStaffSchema.extend({
+const ResigterChema = z.object({
+  domain: z.string(),
+  loginId: z.string(),
   password: passwordSchema,
 });
 
 export async function createStaff(prevState: any, formData: FormData) {
   const supabase = await createClient();
 
-  const domain = formData.get("domain") as string;
-  const loginId = formData.get("loginId") as string;
   const validationResult = ResigterChema.safeParse({
-    email: domain + "@" + loginId,
-    storeId: formData.get("storeId"),
+    domain: formData.get("domain"),
+    loginId: formData.get("loginId"),
     password: formData.get("password"),
   });
 
@@ -37,7 +30,9 @@ export async function createStaff(prevState: any, formData: FormData) {
     };
   }
 
-  const { email, password, storeId } = validationResult.data;
+  const { domain, loginId, password } = validationResult.data;
+  const email = domain + "@" + loginId;
+  const storeId = formData.get("storeId") as string;
 
   try {
     const { data: authData, error: authError } = await supabase.auth.signUp({
