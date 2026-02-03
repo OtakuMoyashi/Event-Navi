@@ -3,9 +3,7 @@
 import { User } from "@/generated/prisma/client";
 import prisma from "@/lib/prisma";
 import webpush from "web-push";
-import { getCurrentUser } from "../auth/user/action";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { create } from "domain";
 
 webpush.setVapidDetails(
   "mailto:your-name@example.com",
@@ -19,22 +17,29 @@ export type PushSubscriptionJSONInput = {
   expirationTime?: number | null;
 };
 
-export async function subscribeUser(sub: PushSubscriptionJSONInput) {
-  const fetchedUser: User = await getCurrentUser();
+export async function getUserSubscription(user: User) {
+  return await prisma.pushSubscription.findMany({
+    where: { id: user.id },
+  });
+}
 
+export async function subscribeUser(
+  sub: PushSubscriptionJSONInput,
+  user: User,
+) {
   try {
     await prisma.pushSubscription.upsert({
       where: { endpoint: sub.endpoint },
       update: {
         p256dh: sub.keys.p256dh,
         auth: sub.keys.auth,
-        userId: fetchedUser.id,
+        userId: user.id,
       },
       create: {
         endpoint: sub.endpoint,
         p256dh: sub.keys.p256dh,
         auth: sub.keys.auth,
-        userId: fetchedUser.id,
+        userId: user.id,
       },
     });
     return {
@@ -51,13 +56,11 @@ export async function subscribeUser(sub: PushSubscriptionJSONInput) {
   }
 }
 
-export async function unsubscribeUser() {
-  const fetchedUser: User = await getCurrentUser();
-
+export async function unsubscribeUser(user: User) {
   try {
     await prisma.pushSubscription.deleteMany({
       where: {
-        userId: fetchedUser.id,
+        userId: user.id,
       },
     });
     return {

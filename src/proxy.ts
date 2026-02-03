@@ -1,7 +1,5 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
-import { createId } from "@paralleldrive/cuid2";
-import prisma from "./lib/prisma";
 
 //TODO インストールしていなければcokkieを発行しない（匿名ユーザーを作らせない）ように変更
 export async function proxy(request: NextRequest) {
@@ -10,19 +8,6 @@ export async function proxy(request: NextRequest) {
       headers: request.headers,
     },
   });
-
-  const USER_ID_COOKIE = "guest_user_id";
-  const guestUserId = request.cookies.get(USER_ID_COOKIE)?.value;
-
-  if (!guestUserId) {
-    response.cookies.set(USER_ID_COOKIE, createId(), {
-      path: "/",
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      maxAge: 60 * 60 * 24 * 400,
-      sameSite: "lax",
-    });
-  }
 
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -76,21 +61,8 @@ export async function proxy(request: NextRequest) {
 
     const role = authUser.user_metadata?.role;
 
-    if (role === "SYSTEM_ADMIN") {
+    if (role === "SYSTEM_ADMIN" || role === "STORE_STAFF") {
       return response;
-    }
-
-    const urlStoreId = url.pathname.split("/")[2];
-
-    if (role === "STORE_STAFF" || role === "STORE_ADMIN") {
-      const staffRecord = await prisma.staff.findUnique({
-        where: { supabaseUserId: authUser.id },
-        select: { storeId: true },
-      });
-
-      if (!staffRecord || staffRecord.storeId !== urlStoreId) {
-        return NextResponse.redirect(new URL("/", request.url));
-      }
     }
   }
 

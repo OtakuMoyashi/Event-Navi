@@ -1,8 +1,13 @@
-import { Store } from "@/generated/prisma/client";
+import { Store, User } from "@/generated/prisma/client";
 import prisma from "@/lib/prisma";
 import { IssueTicketForm } from "./issue-form";
 
-export default async function IssueTicket({ eventId }: { eventId: string }) {
+interface IssueTicketProps {
+  eventId: string;
+  user: User;
+}
+
+export default async function IssueTicket({ eventId, user }: IssueTicketProps) {
   const stores: Store[] = await prisma.store.findMany({
     where: {
       eventId: eventId,
@@ -14,5 +19,5 @@ export default async function IssueTicket({ eventId }: { eventId: string }) {
     return <p>企画が存在しません</p>;
   }
 
-  return <IssueTicketForm stores={stores} />;
+  return <IssueTicketForm user={user} stores={stores} />;
 }

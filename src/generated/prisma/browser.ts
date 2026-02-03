@@ -53,15 +53,15 @@ export type Item = Prisma.ItemModel
  */
 export type StockLog = Prisma.StockLogModel
 /**
- * Model User
- * 
- */
-export type User = Prisma.UserModel
-/**
  * Model PushSubscription
  * 
  */
 export type PushSubscription = Prisma.PushSubscriptionModel
+/**
+ * Model User
+ * 
+ */
+export type User = Prisma.UserModel
 /**
  * Model Admin
  * 

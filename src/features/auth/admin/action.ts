@@ -56,7 +56,7 @@ export async function signUpAdmin(prevState: any, formData: FormData) {
     try {
       await prisma.admin.create({
         data: {
-          supabaseUserId: authData.user.id,
+          id: authData.user.id,
           email: email,
           role: role,
         },
@@ -113,7 +113,7 @@ export async function signInAdmin(prevState: any, formData: FormData) {
 
     if (authData.user) {
       const adminExists = await prisma.admin.findUnique({
-        where: { supabaseUserId: authData.user.id },
+        where: { id: authData.user.id },
       });
 
       if (!adminExists) {

@@ -12,8 +12,10 @@ import {
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { getOrCreateUser } from "@/features/auth/user/action";
 
 export default async function Home() {
+  const currentUser = await getOrCreateUser();
   const events = await prisma.event.findMany({
     select: {
       id: true,
@@ -49,8 +51,8 @@ export default async function Home() {
       </header>
       <div className="p-4 md:p-8 space-y-4">
         <Suspense>
-          <UserInfo />
-          <PushNotificationManager />
+          <UserInfo user={currentUser} />
+          <PushNotificationManager user={currentUser} />
           <InstallPrompt />
         </Suspense>
         <Card className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">

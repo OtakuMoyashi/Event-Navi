@@ -321,16 +321,6 @@ export type PushSubscriptionUncheckedUpdateManyInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
-export type PushSubscriptionListRelationFilter = {
-  every?: Prisma.PushSubscriptionWhereInput
-  some?: Prisma.PushSubscriptionWhereInput
-  none?: Prisma.PushSubscriptionWhereInput
-}
-
-export type PushSubscriptionOrderByRelationAggregateInput = {
-  _count?: Prisma.SortOrder
-}
-
 export type PushSubscriptionCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   endpoint?: Prisma.SortOrder
@@ -359,6 +349,16 @@ export type PushSubscriptionMinOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type PushSubscriptionListRelationFilter = {
+  every?: Prisma.PushSubscriptionWhereInput
+  some?: Prisma.PushSubscriptionWhereInput
+  none?: Prisma.PushSubscriptionWhereInput
+}
+
+export type PushSubscriptionOrderByRelationAggregateInput = {
+  _count?: Prisma.SortOrder
 }
 
 export type PushSubscriptionCreateNestedManyWithoutUserInput = {

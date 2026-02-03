@@ -2,14 +2,18 @@
 "use server";
 
 import { z } from "zod";
-import { getCurrentUser } from "@/features/auth/user/action";
 import prisma from "@/lib/prisma";
+import { User } from "@/generated/prisma/client";
 
 const RegisterSchema = z.object({
   numberOfPeople: z.coerce.number(),
 });
 
-export async function createTicket(prevState: any, formData: FormData) {
+export async function createTicket(
+  user: User,
+  prevState: any,
+  formData: FormData,
+) {
   const validationResult = RegisterSchema.safeParse({
     numberOfPeople: formData.get("numberOfPeople"),
   });
@@ -27,8 +31,6 @@ export async function createTicket(prevState: any, formData: FormData) {
   const storeId = formData.get("storeId") as string;
 
   try {
-    const user = await getCurrentUser();
-
     if (!user) {
       return {
         success: false,

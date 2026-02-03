@@ -208,7 +208,7 @@ export type UserScalarWhereWithAggregatesInput = {
 }
 
 export type UserCreateInput = {
-  id?: string
+  id: string
   createdAt?: Date | string
   updatedAt?: Date | string
   tickets?: Prisma.TicketCreateNestedManyWithoutUserInput
@@ -216,7 +216,7 @@ export type UserCreateInput = {
 }
 
 export type UserUncheckedCreateInput = {
-  id?: string
+  id: string
   createdAt?: Date | string
   updatedAt?: Date | string
   tickets?: Prisma.TicketUncheckedCreateNestedManyWithoutUserInput
@@ -240,7 +240,7 @@ export type UserUncheckedUpdateInput = {
 }
 
 export type UserCreateManyInput = {
-  id?: string
+  id: string
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -309,14 +309,14 @@ export type UserUpdateOneRequiredWithoutPushSubscriptionsNestedInput = {
 }
 
 export type UserCreateWithoutTicketsInput = {
-  id?: string
+  id: string
   createdAt?: Date | string
   updatedAt?: Date | string
   pushSubscriptions?: Prisma.PushSubscriptionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutTicketsInput = {
-  id?: string
+  id: string
   createdAt?: Date | string
   updatedAt?: Date | string
   pushSubscriptions?: Prisma.PushSubscriptionUncheckedCreateNestedManyWithoutUserInput
@@ -353,14 +353,14 @@ export type UserUncheckedUpdateWithoutTicketsInput = {
 }
 
 export type UserCreateWithoutPushSubscriptionsInput = {
-  id?: string
+  id: string
   createdAt?: Date | string
   updatedAt?: Date | string
   tickets?: Prisma.TicketCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutPushSubscriptionsInput = {
-  id?: string
+  id: string
   createdAt?: Date | string
   updatedAt?: Date | string
   tickets?: Prisma.TicketUncheckedCreateNestedManyWithoutUserInput

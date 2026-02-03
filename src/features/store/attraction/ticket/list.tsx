@@ -1,5 +1,5 @@
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { getCurrentUser } from "@/features/auth/user/action";
+import QRCode from "@/components/ui/qrcode";
 import prisma from "@/lib/prisma";
 
 const TICKET_STATUS_MAP = {
@@ -9,11 +9,14 @@ const TICKET_STATUS_MAP = {
   CANCELLED: { label: "キャンセル" },
 } as const;
 
-export default async function UserTicketList() {
-  const user = await getCurrentUser();
+interface UserTicketListProps {
+  userId: string;
+}
+
+export default async function UserTicketList({ userId }: UserTicketListProps) {
   const tickets = await prisma.ticket.findMany({
     where: {
-      userId: user.id,
+      userId: userId,
       status: "ISSUED",
     },
     include: {
@@ -41,6 +44,7 @@ export default async function UserTicketList() {
               <p>番号: {ticket.index}</p>
               <p>人数: {ticket.numberOfPeople}</p>
               <p>状態: {ticket.status}</p>
+              <QRCode text={ticket.id} />
             </Card>
           ))
         ) : (

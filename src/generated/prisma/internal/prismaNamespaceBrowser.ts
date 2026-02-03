@@ -58,8 +58,8 @@ export const ModelName = {
   Ticket: 'Ticket',
   Item: 'Item',
   StockLog: 'StockLog',
-  User: 'User',
   PushSubscription: 'PushSubscription',
+  User: 'User',
   Admin: 'Admin',
   Staff: 'Staff'
 } as const
@@ -171,15 +171,6 @@ export const StockLogScalarFieldEnum = {
 export type StockLogScalarFieldEnum = (typeof StockLogScalarFieldEnum)[keyof typeof StockLogScalarFieldEnum]
 
 
-export const UserScalarFieldEnum = {
-  id: 'id',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-} as const
-
-export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
-
-
 export const PushSubscriptionScalarFieldEnum = {
   id: 'id',
   endpoint: 'endpoint',
@@ -193,9 +184,17 @@ export const PushSubscriptionScalarFieldEnum = {
 export type PushSubscriptionScalarFieldEnum = (typeof PushSubscriptionScalarFieldEnum)[keyof typeof PushSubscriptionScalarFieldEnum]
 
 
+export const UserScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
 export const AdminScalarFieldEnum = {
   id: 'id',
-  supabaseUserId: 'supabaseUserId',
   email: 'email',
   name: 'name',
   role: 'role',
@@ -210,7 +209,6 @@ export type AdminScalarFieldEnum = (typeof AdminScalarFieldEnum)[keyof typeof Ad
 
 export const StaffScalarFieldEnum = {
   id: 'id',
-  supabaseUserId: 'supabaseUserId',
   email: 'email',
   name: 'name',
   storeId: 'storeId',

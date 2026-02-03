@@ -54,7 +54,7 @@ export async function createStaff(prevState: any, formData: FormData) {
     if (authData.user) {
       await prisma.staff.create({
         data: {
-          supabaseUserId: authData.user.id,
+          id: authData.user.id,
           email: email,
           storeId: storeId,
         },

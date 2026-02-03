@@ -146,17 +146,7 @@ model StockLog  {
   updatedAt DateTime  @updatedAt
 }
 
-model User {
-  id   String    @id @default(cuid())
 
-  tickets           Ticket[]
-  pushSubscriptions PushSubscription[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@map("users")
-}
 
 model PushSubscription {
   id       String    @id @default(cuid())
@@ -173,9 +163,20 @@ model PushSubscription {
   @@map("push_subscriptions")
 }
 
+model User {
+  id        String    @id
+
+  tickets           Ticket[]
+  pushSubscriptions PushSubscription[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
 model Admin {
-  id        String    @id @default(cuid())
-  supabaseUserId String @unique
+  id        String    @id
 
   email     String    @unique
   name      String? @db.VarChar(20)
@@ -200,8 +201,7 @@ enum AdminRole {
 }
 
 model Staff {
-  id        String    @id @default(cuid())
-  supabaseUserId String @unique
+  id        String    @id
 
   email   String    @unique
   name String? @db.VarChar(20)
