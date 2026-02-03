@@ -26,7 +26,7 @@ export async function createStaff(prevState: any, formData: FormData) {
     return {
       success: false,
       message: "入力形式が正しくありません。",
-      error: validationResult.error,
+      error: "入力形式が正しくありません", //仮実装
     };
   }
 
@@ -64,7 +64,8 @@ export async function createStaff(prevState: any, formData: FormData) {
     console.log(error);
     return {
       success: false,
-      message: "サーバーエラーが発生しました。",
+      message: "サーバーエラーが発生しました",
+      error: error instanceof Error ? error.message : String(error),
     };
   }
 }

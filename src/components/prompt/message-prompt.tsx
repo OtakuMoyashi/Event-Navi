@@ -6,7 +6,7 @@ type MessageProps = {
   message: any;
 };
 
-export const Message = ({ message }: MessageProps) => {
+export const MessagePrompt = ({ message }: MessageProps) => {
   return (
     <Alert>
       <CircleCheck />

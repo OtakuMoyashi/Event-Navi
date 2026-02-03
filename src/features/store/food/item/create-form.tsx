@@ -21,7 +21,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
-import { Message } from "@/components/ui/message";
+import { MessagePrompt } from "@/components/prompt/message-prompt";
 
 export function CreateItemForm({ stores }: { stores: Store[] }) {
   const [state, formAction, isPending] = useActionState(createItem, null);
@@ -73,7 +73,7 @@ export function CreateItemForm({ stores }: { stores: Store[] }) {
             </Field>
           </FieldGroup>
         </form>
-        {state?.message && <Message message={state.message} />}
+        {state?.message && <MessagePrompt message={state.message} />}
       </CardContent>
     </Card>
   );

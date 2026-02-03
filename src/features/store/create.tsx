@@ -12,16 +12,18 @@ import {
   FieldSeparator,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { Select } from "@/components/ui/select";
 import {
+  Select,
   SelectContent,
   SelectGroup,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@radix-ui/react-select";
+} from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { Message } from "@/components/ui/message";
+import { MessagePrompt } from "@/components/prompt/message-prompt";
+import { SuccessPrompt } from "@/components/prompt/success-prompt";
+import { ErrorPrompt } from "@/components/prompt/error-prompt";
 
 export default function CreateStore() {
   const [state, formAction, isPending] = useActionState(createStore, null);
@@ -49,7 +51,7 @@ export default function CreateStore() {
                   <FieldLabel>店舗の種類</FieldLabel>
                   <Select name="storeType" required disabled={isPending}>
                     <SelectTrigger>
-                      <SelectValue placeholder="店舗を選択" />
+                      <SelectValue placeholder="店舗の種類を選択" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectGroup>
@@ -72,7 +74,13 @@ export default function CreateStore() {
             </Field>
           </FieldGroup>
         </form>
-        {state?.message && <Message message={state.message} />}
+        <div className="space-y-4">
+          {state?.message && <MessagePrompt message={state.message} />}
+          {state?.error && <ErrorPrompt error={state.error} />}
+          {state?.success === true && (
+            <SuccessPrompt redirectLink="/admin/system/create" />
+          )}
+        </div>
       </CardContent>
     </Card>
   );

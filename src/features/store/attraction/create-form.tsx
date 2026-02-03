@@ -20,7 +20,7 @@ import {
   SelectGroup,
   SelectValue,
 } from "@/components/ui/select";
-import { Message } from "@/components/ui/message";
+import { MessagePrompt } from "@/components/prompt/message-prompt";
 
 export function CreateAttractionForm({ stores }: { stores: Store[] }) {
   const [state, formAction, isPending] = useActionState(
@@ -63,7 +63,7 @@ export function CreateAttractionForm({ stores }: { stores: Store[] }) {
             </Field>
           </FieldGroup>
         </form>
-        {state?.message && <Message message={state.message} />}
+        {state?.message && <MessagePrompt message={state.message} />}
       </CardContent>
     </Card>
   );

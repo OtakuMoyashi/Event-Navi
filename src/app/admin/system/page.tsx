@@ -1,7 +1,10 @@
-export default function AdminHomePage() {
+import Link from "next/link";
+
+export default function SystemAdminHomePage() {
   return (
     <div>
-      <p>Adminトップページ</p>
+      <p>SystemAdminトップページ</p>
+      <Link href="/admin/system/create">テストデータを作成する</Link>
     </div>
   );
 }

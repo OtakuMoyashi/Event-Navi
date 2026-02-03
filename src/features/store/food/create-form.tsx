@@ -20,7 +20,8 @@ import {
   SelectGroup,
   SelectValue,
 } from "@/components/ui/select";
-import { Message } from "@/components/ui/message";
+import { MessagePrompt } from "@/components/prompt/message-prompt";
+import { Alert } from "@/components/ui/alert";
 
 export function CreateFoodForm({ stores }: { stores: Store[] }) {
   const [state, formAction, isPending] = useActionState(
@@ -63,7 +64,9 @@ export function CreateFoodForm({ stores }: { stores: Store[] }) {
             </Field>
           </FieldGroup>
         </form>
-        {state?.message && <Message message={state.message} />}
+        <Alert>
+          {state?.message && <MessagePrompt message={state.message} />}
+        </Alert>
       </CardContent>
     </Card>
   );

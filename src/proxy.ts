@@ -3,6 +3,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { createId } from "@paralleldrive/cuid2";
 import prisma from "./lib/prisma";
 
+//TODO インストールしていなければcokkieを発行しない（匿名ユーザーを作らせない）ように変更
 export async function proxy(request: NextRequest) {
   let response = NextResponse.next({
     request: {
@@ -25,7 +26,7 @@ export async function proxy(request: NextRequest) {
 
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!,
     {
       cookies: {
         getAll() {

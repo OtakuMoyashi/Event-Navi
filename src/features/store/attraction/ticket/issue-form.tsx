@@ -21,7 +21,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
-import { Message } from "@/components/ui/message";
+import { MessagePrompt } from "@/components/prompt/message-prompt";
 
 export function IssueTicketForm({ stores }: { stores: Store[] }) {
   const [state, formAction, isPending] = useActionState(createTicket, null);
@@ -72,7 +72,7 @@ export function IssueTicketForm({ stores }: { stores: Store[] }) {
             </Field>
           </FieldGroup>
         </form>
-        {state?.message && <Message message={state.message} />}
+        {state?.message && <MessagePrompt message={state.message} />}
       </CardContent>
     </Card>
   );

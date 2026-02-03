@@ -9,9 +9,10 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-state-info text-primary-foreground hover:bg-primary/90",
-        warn: "bg-state-warn",
-        danger: "bg-state-danger",
+        default: "bg-state-info text-text-02 hover:bg-state-info/90",
+        warn: "bg-state-warn text-text-02 hover:bg-state-warn/90",
+        danger: "bg-state-danger text-text-02 hover:bg-state-danger/90",
+        success: "bg-state-success text-text-02 hover:bg-state-success/90",
       },
       size: {
         default: "h-9 px-4 py-2 has-[>svg]:px-3",

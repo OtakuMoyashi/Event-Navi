@@ -1,6 +1,6 @@
 {
-  "name": "KinshiNavi",
-  "short_name": "K-Navi",
+  "name": "Kinshi-Navi",
+  "short_name": "Kinshi-Navi",
   "start_url": "/",
   "scope": "/",
   "icons": [
@@ -20,16 +20,16 @@
   "screenshots": [
     {
       "src": "/images/screenshot-wide.png",
-      "sizes": "1920x1080",                  
+      "sizes": "1920x1080",
       "type": "image/png",
-      "form_factor": "wide",                
+      "form_factor": "wide",
       "label": "アプリのワイド画面表示"
     },
     {
       "src": "/images/screenshot-mobile.png",
       "sizes": "1080x2400",
       "type": "image/png",
-      "form_factor": "narrow",               
+      "form_factor": "narrow",
       "label": "アプリのモバイル画面表示"
     }
   ],

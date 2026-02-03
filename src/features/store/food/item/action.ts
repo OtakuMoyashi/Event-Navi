@@ -1,6 +1,6 @@
 "use server";
 
-import z from "zod";
+import z, { success } from "zod";
 import prisma from "@/lib/prisma";
 
 const RegisterSchema = z.object({
@@ -18,8 +18,9 @@ export async function createItem(prevState: any, formData: FormData) {
   if (!validationResult.success) {
     console.log(validationResult.error);
     return {
-      error: validationResult.error,
+      success: false,
       message: "入力形式が正しくありません",
+      error: "入力形式が正しくありません", //仮実装
     };
   }
 
@@ -59,7 +60,8 @@ export async function createItem(prevState: any, formData: FormData) {
     console.log(error);
     return {
       success: false,
-      message: "サーバーエラーが発生しました。",
+      message: "サーバーエラーが発生しました",
+      error: error instanceof Error ? error.message : String(error),
     };
   }
 }

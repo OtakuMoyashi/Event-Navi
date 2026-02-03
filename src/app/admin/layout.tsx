@@ -19,14 +19,6 @@ export default async function AdminLayout({ children }: Props) {
             <NavigationMenuList>
               <NavigationMenuItem>
                 <Link
-                  href="/"
-                  className={`${navigationMenuTriggerStyle()} bg-transparent`}
-                >
-                  Home
-                </Link>
-              </NavigationMenuItem>
-              <NavigationMenuItem>
-                <Link
                   href="/admin"
                   className={`${navigationMenuTriggerStyle()} bg-transparent`}
                 >
@@ -35,10 +27,26 @@ export default async function AdminLayout({ children }: Props) {
               </NavigationMenuItem>
               <NavigationMenuItem>
                 <Link
-                  href="/admin/create-event"
+                  href="/admin/system"
                   className={`${navigationMenuTriggerStyle()} bg-transparent`}
                 >
-                  イベントを作成
+                  システム管理
+                </Link>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <Link
+                  href="/admin/event"
+                  className={`${navigationMenuTriggerStyle()} bg-transparent`}
+                >
+                  イベント管理
+                </Link>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <Link
+                  href="/admin/store"
+                  className={`${navigationMenuTriggerStyle()} bg-transparent`}
+                >
+                  店舗管理
                 </Link>
               </NavigationMenuItem>
             </NavigationMenuList>

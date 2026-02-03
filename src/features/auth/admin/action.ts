@@ -26,8 +26,8 @@ export async function signUpAdmin(prevState: any, formData: FormData) {
     console.log(validationResult.error);
     return {
       success: false,
-      error: validationResult.error,
       message: "入力形式が正しくありません",
+      error: "入力形式が正しくありません", //仮実装
     };
   }
 
@@ -65,7 +65,8 @@ export async function signUpAdmin(prevState: any, formData: FormData) {
       console.log(error);
       return {
         success: false,
-        message: "サーバーエラーが発生しました。",
+        message: "サーバーエラーが発生しました",
+        error: error instanceof Error ? error.message : String(error),
       };
     }
   }
@@ -89,7 +90,7 @@ export async function signInAdmin(prevState: any, formData: FormData) {
     return {
       success: false,
       message: "入力形式が正しくありません。",
-      error: validationResult.error,
+      error: "入力形式が正しくありません", //仮実装
     };
   }
 
@@ -127,10 +128,10 @@ export async function signInAdmin(prevState: any, formData: FormData) {
     console.log(error);
     return {
       success: false,
-      message: "予期せぬエラーが発生しました",
-      error: error,
+      message: "サーバーエラーが発生しました",
+      error: error instanceof Error ? error.message : String(error),
     };
   }
 
-  redirect("/admin");
+  redirect("/admin/system");
 }
