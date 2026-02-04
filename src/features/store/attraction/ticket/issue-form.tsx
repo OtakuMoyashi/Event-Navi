@@ -86,9 +86,7 @@ export function IssueTicketForm({ stores, user }: IssueTicketFormProps) {
         <div className="space-y-4">
           {state?.message && <MessagePrompt message={state.message} />}
           {state?.error && <ErrorPrompt error={state.error} />}
-          {state?.success === true && (
-            <SuccessPrompt redirectLink="/admin/system/create" />
-          )}
+          {state?.success === true && <SuccessPrompt redirectLink="/" />}
         </div>
       </CardContent>
     </Card>

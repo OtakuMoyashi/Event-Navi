@@ -1,9 +1,15 @@
-import { getOrCreateUser } from "@/features/auth/user/action";
+import { getCurrentUser } from "@/features/auth/user/action";
 import UserInfo from "@/features/auth/user/info";
 import UserTicketList from "@/features/store/attraction/ticket/list";
+import { LoadingPrompt } from "@/components/prompt/loading-prompt";
 
 export default async function UserPage() {
-  const currentUser = await getOrCreateUser();
+  const currentUser = await getCurrentUser();
+
+  if (!currentUser) {
+    return <LoadingPrompt contentName="ユーザー情報" />;
+  }
+
   return (
     <div className="space-y-4">
       <UserInfo user={currentUser} />

@@ -214,7 +214,7 @@ export type StaffWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Staff"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Staff"> | Date | string
   store?: Prisma.XOR<Prisma.StoreScalarRelationFilter, Prisma.StoreWhereInput>
-}, "id" | "email">
+}, "id" | "id" | "email">
 
 export type StaffOrderByWithAggregationInput = {
   id?: Prisma.SortOrder

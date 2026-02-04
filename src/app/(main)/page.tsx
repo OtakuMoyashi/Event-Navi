@@ -12,12 +12,16 @@ import {
   CardTitle,
   CardFooter,
 } from "@/components/ui/card";
-import { getOrCreateUser } from "@/features/auth/user/action";
+import { getCurrentUser } from "@/features/auth/user/action";
 import { LoadingPrompt } from "@/components/prompt/loading-prompt";
 import { NotFoundPrompt } from "@/components/prompt/not-found-prompt";
 
 export default async function Home() {
-  const currentUser = await getOrCreateUser();
+  const currentUser = await getCurrentUser();
+
+  if (!currentUser) {
+    return <LoadingPrompt contentName="ユーザー情報" />;
+  }
   const events = await prisma.event.findMany({
     select: {
       id: true,

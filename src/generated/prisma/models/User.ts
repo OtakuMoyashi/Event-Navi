@@ -187,7 +187,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   tickets?: Prisma.TicketListRelationFilter
   pushSubscriptions?: Prisma.PushSubscriptionListRelationFilter
-}, "id">
+}, "id" | "id">
 
 export type UserOrderByWithAggregationInput = {
   id?: Prisma.SortOrder

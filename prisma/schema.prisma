@@ -164,7 +164,7 @@ model PushSubscription {
 }
 
 model User {
-  id        String    @id
+  id        String    @id @unique
 
   tickets           Ticket[]
   pushSubscriptions PushSubscription[]
@@ -176,7 +176,7 @@ model User {
 }
 
 model Admin {
-  id        String    @id
+  id        String    @id @unique
 
   email     String    @unique
   name      String? @db.VarChar(20)
@@ -201,7 +201,7 @@ enum AdminRole {
 }
 
 model Staff {
-  id        String    @id
+  id        String    @id @unique
 
   email   String    @unique
   name String? @db.VarChar(20)
