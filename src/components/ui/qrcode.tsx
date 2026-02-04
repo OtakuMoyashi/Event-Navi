@@ -4,20 +4,21 @@ import { QRCodeCanvas } from "qrcode.react";
 
 interface QRCodeProps {
   text: string;
+  size: number;
 }
 
-const QRCode = ({ text }: QRCodeProps) => {
+const QRCode = ({ text, size }: QRCodeProps) => {
   return (
     <QRCodeCanvas
       value={text}
-      size={128}
+      size={size}
       level={"L"}
       imageSettings={{
-        src: "/favicon.ico",
+        src: "/images/icon-512x512.png",
         x: undefined,
         y: undefined,
-        height: 24,
-        width: 24,
+        height: size / 4,
+        width: size / 4,
         excavate: true,
       }}
     />

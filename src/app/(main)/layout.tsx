@@ -1,44 +1,27 @@
 import {
   NavigationMenu,
   NavigationMenuList,
-  NavigationMenuItem,
   navigationMenuTriggerStyle,
+  NavigationMenuItem,
 } from "@/components/ui/navigation-menu";
-import prisma from "@/lib/prisma";
 import Link from "next/link";
 
-type Props = {
+export default function MainLayout({
+  children,
+}: {
   children: React.ReactNode;
-  params: Promise<{ event_id: string }>;
-};
-
-export default async function EventLayout({ children, params }: Props) {
-  const { event_id } = await params;
-
-  const event = await prisma.event.findUnique({
-    where: { id: event_id },
-    select: {
-      id: true,
-      name: true,
-      slug: true,
-    },
-  });
-
-  if (!event) {
-    return <p>イベントが存在しません。</p>;
-  }
-
+}) {
   return (
-    <div>
+    <>
       <header className="bg-main/70 w-full flex h-16 justify-between items-center gap-8 px-4 sm:px-6 lg:px-8 backdrop-blur-none">
         <NavigationMenu>
           <NavigationMenuList>
             <NavigationMenuItem>
               <Link
-                href={`/event/${event.id}`}
+                href="/"
                 className={`${navigationMenuTriggerStyle()} bg-transparent text-xl`}
               >
-                {event.name}
+                Event-System
               </Link>
             </NavigationMenuItem>
           </NavigationMenuList>
@@ -47,10 +30,10 @@ export default async function EventLayout({ children, params }: Props) {
           <NavigationMenuList>
             <NavigationMenuItem>
               <Link
-                href={`/event/${event.id}/issue-ticket`}
+                href="/admin"
                 className={`${navigationMenuTriggerStyle()} bg-transparent`}
               >
-                整理券を発行する
+                管理者画面
               </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
@@ -64,7 +47,7 @@ export default async function EventLayout({ children, params }: Props) {
           </NavigationMenuList>
         </NavigationMenu>
       </header>
-      <main className="p-4 md:p-8">{children}</main>
-    </div>
+      <main className="p-4 space-y-4 md:p-8 md:space-y-8">{children}</main>
+    </>
   );
 }

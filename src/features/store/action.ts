@@ -30,6 +30,7 @@ export async function createStore(prevState: any, formData: FormData) {
 
   const { slug, name } = validationResult.data;
   const storeType = formData.get("storeType") as StoreType;
+  const eventId = formData.get("eventId") as string;
 
   try {
     await prisma.$transaction(async (tx) => {
@@ -38,6 +39,7 @@ export async function createStore(prevState: any, formData: FormData) {
           slug: slug,
           name: name,
           storeType: storeType,
+          eventId: eventId,
         },
       });
       switch (createdStore.storeType) {
