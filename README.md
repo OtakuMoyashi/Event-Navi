@@ -1,36 +1,91 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# kinshi-navi
 
-## Getting Started
+kinshi-navi is a web application created for the 'Kinshi Festival', the cultural festival of Nagano High School in Nagano Prefecture.
 
-First, run the development server:
+kinshi-naviは長野県長野高校の文化祭『金鵄祭』のために作成されたWebアプリです。現在開発中です。
+
+## Table of contents
+
+- [Features](#features)
+- [Getting started](#getting-started)
+- [Usage](#usage)
+- [Development](#development)
+- [Contributing](#contributing)
+- [License](#license)
+- [Contact](#contact)
+
+## Features
+
+- Primary feature 1 — short explanation
+- Primary feature 2 — short explanation
+- TypeScript-first codebase, focused on clarity and DX
+
+## Getting started
+
+Prerequisites:
+
+- Node.js >= 16 (or specify your required version)
+- npm or pnpm/yarn
+
+Install:
+
+```bash
+npm install
+```
+
+Run locally (development):
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Build:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+npm run build
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Run tests:
 
-## Learn More
+```bash
+npm test
+```
 
-To learn more about Next.js, take a look at the following resources:
+Note: If your repository uses different commands (e.g., `pnpm`, `yarn`, or custom script names), tell me the correct commands and I will update the README.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Usage
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Add a short example how to use the library or run the app. For example:
 
-## Deploy on Vercel
+```ts
+// example usage (replace with real snippet)
+import { navigate } from 'kinshi-navi';
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+navigate('/path');
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Replace the snippet above with an actual example from this project.
+
+## Development
+
+- Code style: (e.g., Prettier / ESLint) — mention config if present
+- Type checking: `npm run typecheck` (adjust if different)
+- Where to find main source: `src/` (TypeScript is the primary language)
+
+## Contributing
+
+Contributions are welcome.
+
+- Open an issue for larger changes or discussion.
+- Create a feature branch from `main` (or the repo's default branch).
+- Open a pull request describing your changes and include tests where appropriate.
+
+If you have a contributing guide (CONTRIBUTING.md), link to it here.
+
+## License
+
+Specify the repository license here (e.g., MIT). If you want me to use a specific license, tell me which one.
+
+## Contact
+
+Maintainers / contact: add names or links here.
