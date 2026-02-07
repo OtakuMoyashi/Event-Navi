@@ -7,6 +7,86 @@ datasource db {
   provider = "postgresql"
 }
 
+// Better-auth models
+model User {
+  id            String    @id
+  name          String?
+  email         String?   @unique
+  emailVerified Boolean   @default(false)
+  image         String?
+  password      String?
+  role          String    @default("user")
+  isAnonymous Boolean?
+
+  accounts      Account[]
+  sessions      Session[]
+  verifications Verification[]
+  tickets       Ticket[]
+  pushSubscriptions PushSubscription[]
+  admin         Admin?
+  staff         Staff?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("users")
+}
+
+model Account {
+  id            String  @id @default(cuid())
+  userId        String
+  type          String
+  provider      String
+  providerAccountId String
+  refreshToken  String?
+  accessToken   String?
+  expiresAt     Int?
+  tokenType     String?
+  scope         String?
+  idToken       String?
+  sessionState  String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  expiresAt DateTime
+  token     String   @unique
+  ipAddress String?
+  userAgent String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("sessions")
+}
+
+model Verification {
+  id         String   @id @default(cuid())
+  identifier String
+  value      String
+  expiresAt  DateTime
+
+  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([identifier, value])
+  @@map("verifications")
+}
+
 model Event {
   id          String     @id @default(cuid())
   slug        String   @unique
@@ -163,20 +243,11 @@ model PushSubscription {
   @@map("push_subscriptions")
 }
 
-model User {
-  id        String    @id @unique
-
-  tickets           Ticket[]
-  pushSubscriptions PushSubscription[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@map("users")
-}
-
 model Admin {
-  id        String    @id @unique
+  id        String    @id @default(cuid())
+  
+  userId    String    @unique
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   email     String    @unique
   name      String? @db.VarChar(20)
@@ -201,7 +272,10 @@ enum AdminRole {
 }
 
 model Staff {
-  id        String    @id @unique
+  id        String    @id @default(cuid())
+  
+  userId    String    @unique
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   email   String    @unique
   name String? @db.VarChar(20)

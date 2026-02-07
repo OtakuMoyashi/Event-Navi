@@ -1,68 +1,52 @@
-import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
+import { headers } from "next/headers";
+import { auth } from "@/lib/auth";
+import prisma from "@/lib/prisma";
 
-//TODO インストールしていなければcokkieを発行しない（匿名ユーザーを作らせない）ように変更
 export async function proxy(request: NextRequest) {
-  let response = NextResponse.next({
-    request: {
-      headers: request.headers,
-    },
-  });
-
-  const supabase = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!,
-    {
-      cookies: {
-        getAll() {
-          return request.cookies.getAll();
-        },
-        setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value }) =>
-            request.cookies.set(name, value),
-          );
-          response = NextResponse.next({
-            request,
-          });
-          cookiesToSet.forEach(({ name, value, options }) =>
-            response.cookies.set(name, value, options),
-          );
-        },
-      },
-    },
-  );
-
-  const {
-    data: { user: authUser },
-  } = await supabase.auth.getUser();
   const url = new URL(request.url);
 
+  // 公式ドキュメントサンプル通り: headersを渡す
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  // Admin パスの認可チェック
   if (url.pathname.startsWith("/admin")) {
-    if (!authUser) {
-      return NextResponse.redirect(new URL("/login", request.url));
+    if (!session?.user) {
+      return NextResponse.redirect(new URL("/", request.url));
     }
 
-    const role = authUser.user_metadata?.role;
+    // Admin権限を確認
+    const admin = await prisma.admin.findUnique({
+      where: { userId: session.user.id },
+    });
 
-    if (role !== "SYSTEM_ADMIN") {
-      return NextResponse.redirect(new URL("/login", request.url));
+    if (!admin) {
+      return NextResponse.redirect(new URL("/", request.url));
     }
-    return response;
+
+    return NextResponse.next();
   }
 
+  // Staff Store パスの認可チェック
   if (url.pathname.startsWith("/staff/store/")) {
-    if (!authUser) {
-      return NextResponse.redirect(new URL("/login", request.url));
+    if (!session?.user) {
+      return NextResponse.redirect(new URL("/", request.url));
     }
 
-    const role = authUser.user_metadata?.role;
+    // Staff権限を確認
+    const staff = await prisma.staff.findUnique({
+      where: { userId: session.user.id },
+    });
 
-    if (role === "SYSTEM_ADMIN" || role === "STORE_STAFF") {
-      return response;
+    if (!staff) {
+      return NextResponse.redirect(new URL("/", request.url));
     }
+
+    return NextResponse.next();
   }
-
-  return response;
+  return NextResponse.next();
 }
 
 export const config = {

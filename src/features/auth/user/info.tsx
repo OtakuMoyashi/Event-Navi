@@ -1,27 +1,18 @@
+"use client";
+
 import { Card, CardContent } from "@/components/ui/card";
-import { User } from "@/generated/prisma/client";
+import { LoadingPrompt } from "@/components/prompt/loading-prompt";
+import { useCurrentUser } from "@/hooks/useCurrentUser";
 
-interface UserInfoProps {
-  user: User;
-}
-
-export default async function UserInfo({ user }: UserInfoProps) {
+export default function UserInfo() {
+  const { user, loading } = useCurrentUser();
+  if (loading) return <LoadingPrompt contentName="ユーザー情報" />;
+  if (!user) return <div>ユーザー情報が取得できませんでした。</div>;
   return (
-    <div className="space-y-4">
-      <h2>ユーザー情報</h2>
-      <Card>
-        <CardContent>
-          {user ? (
-            <div>
-              <p>ユーザーID:{user.id}</p>
-            </div>
-          ) : (
-            <div>
-              <p>uuidに対応するユーザーが存在しません。</p>
-            </div>
-          )}
-        </CardContent>
-      </Card>
-    </div>
+    <Card>
+      <CardContent>
+        <p>ユーザーID: {user.id}</p>
+      </CardContent>
+    </Card>
   );
 }

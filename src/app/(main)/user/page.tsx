@@ -1,19 +1,17 @@
-import { getCurrentUser } from "@/features/auth/user/action";
 import UserInfo from "@/features/auth/user/info";
-import UserTicketList from "@/features/store/attraction/ticket/list";
+import { Suspense } from "react";
 import { LoadingPrompt } from "@/components/prompt/loading-prompt";
+import { PushNotificationManager } from "@/features/push/manager";
 
-export default async function UserPage() {
-  const currentUser = await getCurrentUser();
-
-  if (!currentUser) {
-    return <LoadingPrompt contentName="ユーザー情報" />;
-  }
-
+export default function UserPage() {
   return (
     <div className="space-y-4">
-      <UserInfo user={currentUser} />
-      <UserTicketList user={currentUser} />
+      <Suspense fallback={<LoadingPrompt contentName="ユーザー情報" />}>
+        <UserInfo />
+      </Suspense>
+      <Suspense fallback={<LoadingPrompt contentName="通知設定" />}>
+        <PushNotificationManager />
+      </Suspense>
     </div>
   );
 }

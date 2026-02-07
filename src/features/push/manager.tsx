@@ -1,10 +1,12 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { useState, useEffect, useRef } from "react";
 import { getUserSubscription, subscribeUser, unsubscribeUser } from "./action";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card";
-import { User } from "@/generated/prisma/client";
+import { useCurrentUser } from "@/hooks/useCurrentUser";
+import { LoadingPrompt } from "@/components/prompt/loading-prompt";
 
 function urlBase64ToUint8Array(base64String: string) {
   const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
@@ -19,13 +21,7 @@ function urlBase64ToUint8Array(base64String: string) {
   return outputArray;
 }
 
-interface PushNotificationManagerProps {
-  user: User;
-}
-
-export function PushNotificationManager({
-  user,
-}: PushNotificationManagerProps) {
+export function PushNotificationManager() {
   const [isSupported, setIsSupported] = useState(false);
   const [subscription, setSubscription] = useState<PushSubscription | null>(
     null,
@@ -33,7 +29,10 @@ export function PushNotificationManager({
   const [isLoading, setIsLoading] = useState(false);
   const isRegistering = useRef(false);
 
+  const { user, loading } = useCurrentUser();
+
   async function registerServiceWorker() {
+    if (!user) return;
     if (isRegistering.current) return;
     isRegistering.current = true;
 
@@ -63,13 +62,16 @@ export function PushNotificationManager({
   }
 
   useEffect(() => {
+    if (loading) return;
+    if (!user) return;
     if ("serviceWorker" in navigator && "PushManager" in window) {
       setIsSupported(true);
       registerServiceWorker();
     }
-  }, []);
+  }, [user, loading]);
 
   async function subscribeToPush() {
+    if (!user) return;
     setIsLoading(true);
     try {
       const registration = await navigator.serviceWorker.ready;
@@ -91,6 +93,7 @@ export function PushNotificationManager({
   }
 
   async function unsubscribeFromPush() {
+    if (!user) return;
     setIsLoading(true);
     try {
       await subscription?.unsubscribe();
@@ -103,6 +106,12 @@ export function PushNotificationManager({
     }
   }
 
+  if (loading) {
+    return <LoadingPrompt contentName="プッシュ通知設定" />;
+  }
+  if (!user) {
+    return <div>ユーザー情報が取得できませんでした。</div>;
+  }
   if (!isSupported) {
     return (
       <div className="p-4 bg-red-50 border border-red-200 rounded-lg">

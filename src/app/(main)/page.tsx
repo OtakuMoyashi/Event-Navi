@@ -1,6 +1,3 @@
-import { InstallPrompt } from "@/features/push/install";
-import { PushNotificationManager } from "@/features/push/manager";
-import UserInfo from "@/features/auth/user/info";
 import { Suspense } from "react";
 import prisma from "@/lib/prisma";
 import { Button } from "@/components/ui/button";
@@ -12,16 +9,10 @@ import {
   CardTitle,
   CardFooter,
 } from "@/components/ui/card";
-import { getCurrentUser } from "@/features/auth/user/action";
 import { LoadingPrompt } from "@/components/prompt/loading-prompt";
 import { NotFoundPrompt } from "@/components/prompt/not-found-prompt";
 
 export default async function Home() {
-  const currentUser = await getCurrentUser();
-
-  if (!currentUser) {
-    return <LoadingPrompt contentName="ユーザー情報" />;
-  }
   const events = await prisma.event.findMany({
     select: {
       id: true,
@@ -31,10 +22,6 @@ export default async function Home() {
   });
   return (
     <div className="space-y-4">
-      <Suspense fallback={<LoadingPrompt contentName="通知設定" />}>
-        <PushNotificationManager user={currentUser} />
-        <InstallPrompt />
-      </Suspense>
       <Suspense fallback={<LoadingPrompt contentName="イベント一覧" />}>
         <div className="space-y-6">
           <h2 className="text-xl font-bold px-1">イベント一覧</h2>

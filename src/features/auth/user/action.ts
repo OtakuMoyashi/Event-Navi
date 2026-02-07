@@ -1,22 +1,25 @@
 "use server";
 
-import { createClient } from "@/lib/supabase/server";
+import { auth } from "@/lib/auth";
 import { User } from "@/generated/prisma/client";
 import prisma from "@/lib/prisma";
+import { headers } from "next/headers";
 
 export async function getCurrentUser(): Promise<User | null> {
-  const supabase = await createClient();
-  const {
-    data: { user: authUser },
-  } = await supabase.auth.getUser();
+  try {
+    const session = await auth.api.getSession({
+      headers: await headers(),
+    });
 
-  if (!authUser) {
+    if (!session || !session.user) {
+      return null;
+    }
+
+    return await prisma.user.findUnique({
+      where: { id: session.user.id },
+    });
+  } catch (error) {
+    console.error("Error getting current user:", error);
     return null;
   }
-
-  return await prisma.user.upsert({
-    where: { id: authUser.id },
-    update: {},
-    create: { id: authUser.id },
-  });
 }

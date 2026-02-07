@@ -8,11 +8,12 @@
     "build": "prisma generate &&  next build",
     "start": "next start",
     "lint": "next lint",
-    "db:generate": "prisma generate",
-    "db:push": "prisma db push",
-    "db:migrate": "prisma migrate dev",
-    "db:studio": "dotenv -e .env.test prisma studio",
-    "db:migrate:test": "dotenv -e .env.test -- prisma migrate dev"
+    "db:generate": "dotenv -e .env.local prisma generate",
+    "db:push": "dotenv -e .env.local prisma db push",
+    "db:migrate": "dotenv -e .env.local prisma migrate dev",
+    "db:studio": "dotenv -e .env.local prisma studio",
+    "db:migrate:test": "dotenv -e .env.test -- prisma migrate dev",
+    "better-auth:migrate": "dotenv -e .env.local -- @better-auth/cli migrate"
   },
   "dependencies": {
     "@paralleldrive/cuid2": "^3.3.0",
@@ -25,6 +26,7 @@
     "@radix-ui/react-slot": "^1.2.4",
     "@supabase/ssr": "^0.8.0",
     "@supabase/supabase-js": "^2.93.3",
+    "better-auth": "^1.4.18",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "dotenv": "^17.2.3",

@@ -2,64 +2,55 @@
 "use server";
 
 import prisma from "@/lib/prisma";
-import { createClient } from "@/lib/supabase/server";
+import { auth } from "@/lib/auth";
 import z from "zod";
 import { passwordSchema } from "@/lib/schema/auth";
 
-const ResigterChema = z.object({
-  domain: z.string(),
+const SignUpSchema = z.object({
   loginId: z.string(),
   password: passwordSchema,
 });
 
 export async function createStaff(prevState: any, formData: FormData) {
-  const supabase = await createClient();
-
-  const validationResult = ResigterChema.safeParse({
-    domain: formData.get("domain"),
+  const validationResult = SignUpSchema.safeParse({
     loginId: formData.get("loginId"),
     password: formData.get("password"),
   });
 
   if (!validationResult.success) {
-    console.log(validationResult.error);
     return {
       success: false,
-      message: "入力形式が正しくありません。",
-      error: "入力形式が正しくありません", //仮実装
+      message: "入力形式が正しくありません",
     };
   }
 
-  const { domain, loginId, password } = validationResult.data;
-  const email = domain + "@" + loginId;
+  const { loginId, password } = validationResult.data;
+  const email = `${loginId}@$example.com`;
   const storeId = formData.get("storeId") as string;
 
   try {
-    const { data: authData, error: authError } = await supabase.auth.signUp({
-      email: email,
-      password: password,
-      options: {
-        data: {
-          role: "STORE_STAFF",
-        },
+    const data = await auth.api.signUpEmail({
+      body: {
+        email,
+        password,
+        name: loginId,
       },
     });
-    if (authError) {
-      console.log(authError);
-      return {
-        success: false,
-        message: "Supabase Authにユーザーが存在しません。",
-      };
-    }
-    if (authData.user) {
-      await prisma.staff.create({
-        data: {
-          id: authData.user.id,
-          email: email,
-          storeId: storeId,
-        },
-      });
-    }
+
+    const userId = data.user.id;
+
+    await prisma.staff.create({
+      data: {
+        userId,
+        email,
+        storeId,
+      },
+    });
+
+    return {
+      success: true,
+      message: "スタッフアカウントが作成されました",
+    };
   } catch (error) {
     console.log(error);
     return {

@@ -78,7 +78,7 @@ export function IssueTicketForm({ stores, user }: IssueTicketFormProps) {
             <FieldSeparator />
             <Field>
               <Button type="submit" disabled={isPending}>
-                {isPending ? "作成中..." : "イベントを作成"}
+                {isPending ? "発行中..." : "整理券を発行"}
               </Button>
             </Field>
           </FieldGroup>

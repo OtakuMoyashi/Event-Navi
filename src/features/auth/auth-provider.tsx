@@ -1,27 +1,32 @@
 "use client";
 
 import { useEffect } from "react";
-import { createClient } from "@/lib/supabase/client";
+import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const router = useRouter();
-  const supabase = createClient();
 
   useEffect(() => {
     const syncAuth = async () => {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
-
-      if (!user) {
-        await supabase.auth.signInAnonymously();
-        router.refresh();
+      const session = await authClient.getSession();
+      console.log("raw session:", JSON.stringify(session, null, 2));
+      console.log("session?.data:", session?.data);
+      if (!session?.data) {
+        try {
+          const result = await authClient.signIn.anonymous();
+          console.log("匿名でサインインしました。", result);
+          console.log("fetch前");
+          await fetch("/api/user/create", { method: "POST" });
+          console.log("fetch後");
+        } catch (error) {
+          console.error("Anonymous signup error:", error);
+        }
       }
     };
 
     syncAuth();
-  }, [router, supabase]);
+  }, [router]);
 
   return <>{children}</>;
 }
