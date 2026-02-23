@@ -40,7 +40,7 @@ export async function signUpAdmin(prevState: any, formData: FormData) {
 
   try {
     // Better-authでユーザーを作成
-    const user = await auth.api.signUpEmail({
+    const response = await auth.api.signUpEmail({
       body: {
         email,
         password,
@@ -48,16 +48,21 @@ export async function signUpAdmin(prevState: any, formData: FormData) {
       },
       asResponse: true,
     });
+    // レスポンスをJSONパース
+    const data = await response.json();
+    console.log("[signUpAdmin] response status:", response.status);
+    console.log("[signUpAdmin] response.ok:", response.ok);
+    console.log("[signUpAdmin] data:", JSON.stringify(data, null, 2));
 
-    if (!user || !("userId" in user) || typeof user.userId !== "string") {
+    // レスポンスのOK判定
+    if (!response.ok || !data || !data.user || !data.user.id) {
       return {
         success: false,
         message: "ユーザー作成に失敗しました",
       };
     }
 
-    const userId: string = user.userId;
-
+    const userId: string = data.user.id;
     // Adminレコードを作成
     await prisma.admin.create({
       data: {
@@ -111,23 +116,17 @@ export async function signInAdmin(prevState: any, formData: FormData) {
       asResponse: true,
     });
 
-    if (!response || !("userId" in response)) {
+    const data = await response.json();
+
+    // レスポンスのOK判定
+    if (!response.ok || !data || !data.user || !data.user.id) {
       return {
         success: false,
-        message: "メールアドレスまたはパスワードが正しくありません",
+        message: "ユーザー作成に失敗しました",
       };
     }
 
-    const userId = response.userId;
-    if (typeof userId !== "string" || !userId) {
-      // userIdが不正な場合は早期リターン
-      return {
-        success: false,
-        message: "認証情報の取得に失敗しました",
-        errorCode: "INVALID_USER_ID",
-      };
-    }
-
+    const userId: string = data.user.id;
     // Admin権限確認
     const admin = await prisma.admin.findUnique({
       where: { userId },

@@ -6,85 +6,70 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
-
-// Better-auth models
 model User {
   id            String    @id
   name          String?
-  email         String?   @unique
-  emailVerified Boolean   @default(false)
+  email         String
+  emailVerified Boolean
   image         String?
-  password      String?
+  isAnonymous   Boolean?  
   role          String    @default("user")
-  isAnonymous Boolean?
-
-  accounts      Account[]
+  createdAt     DateTime
+  updatedAt     DateTime
   sessions      Session[]
-  verifications Verification[]
-  tickets       Ticket[]
+  accounts      Account[]
+
+  @@unique([email])
+  @@map("user")
+  tickets Ticket[]
   pushSubscriptions PushSubscription[]
-  admin         Admin?
-  staff         Staff?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@map("users")
-}
-
-model Account {
-  id            String  @id @default(cuid())
-  userId        String
-  type          String
-  provider      String
-  providerAccountId String
-  refreshToken  String?
-  accessToken   String?
-  expiresAt     Int?
-  tokenType     String?
-  scope         String?
-  idToken       String?
-  sessionState  String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@unique([provider, providerAccountId])
-  @@map("accounts")
+  admins Admin[]
+  staffs Staff[]
 }
 
 model Session {
-  id        String   @id @default(cuid())
-  userId    String
+  id        String   @id
   expiresAt DateTime
-  token     String   @unique
+  token     String
+  createdAt DateTime
+  updatedAt DateTime
   ipAddress String?
   userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@unique([token])
+  @@map("session")
+}
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime
+  updatedAt             DateTime
 
-  @@map("sessions")
+  @@map("account")
 }
 
 model Verification {
-  id         String   @id @default(cuid())
+  id         String    @id
   identifier String
   value      String
   expiresAt  DateTime
+  createdAt  DateTime?
+  updatedAt  DateTime?
 
-  user   User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId String?
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@unique([identifier, value])
-  @@map("verifications")
+  @@map("verification")
 }
 
 model Event {
@@ -168,7 +153,7 @@ enum TicketStatus {
   ISSUED
   CALLED
   COMPLETED
-  CANCELLED
+  CANCELED
 }
 
 model Ticket {

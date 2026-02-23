@@ -4,6 +4,7 @@
 import { z } from "zod";
 import prisma from "@/lib/prisma";
 import { User } from "@/generated/prisma/client";
+import { ca } from "zod/v4/locales";
 
 const RegisterSchema = z.object({
   numberOfPeople: z.coerce.number(),
@@ -126,6 +127,26 @@ export async function callTicket(ticketId: string) {
           status: "CALLED",
         },
       });
+    });
+    return {
+      success: true,
+      message: "操作が完了しました。",
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      success: false,
+      message: "サーバーエラーが発生しました",
+      error: error instanceof Error ? error.message : String(error),
+    };
+  }
+}
+
+export async function cancelTicket(ticketId: string) {
+  try {
+    await prisma.ticket.update({
+      where: { id: ticketId },
+      data: { status: "CANCELED" },
     });
     return {
       success: true,

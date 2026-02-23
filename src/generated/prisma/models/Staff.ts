@@ -261,7 +261,7 @@ export type StaffCreateInput = {
   name?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutStaffInput
+  user: Prisma.UserCreateNestedOneWithoutStaffsInput
   store: Prisma.StoreCreateNestedOneWithoutStaffsInput
 }
 
@@ -281,7 +281,7 @@ export type StaffUpdateInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutStaffNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutStaffsNestedInput
   store?: Prisma.StoreUpdateOneRequiredWithoutStaffsNestedInput
 }
 
@@ -321,11 +321,6 @@ export type StaffUncheckedUpdateManyInput = {
   storeId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-}
-
-export type StaffNullableScalarRelationFilter = {
-  is?: Prisma.StaffWhereInput | null
-  isNot?: Prisma.StaffWhereInput | null
 }
 
 export type StaffListRelationFilter = {
@@ -368,36 +363,46 @@ export type StaffMinOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
 }
 
-export type StaffCreateNestedOneWithoutUserInput = {
-  create?: Prisma.XOR<Prisma.StaffCreateWithoutUserInput, Prisma.StaffUncheckedCreateWithoutUserInput>
-  connectOrCreate?: Prisma.StaffCreateOrConnectWithoutUserInput
-  connect?: Prisma.StaffWhereUniqueInput
+export type StaffCreateNestedManyWithoutUserInput = {
+  create?: Prisma.XOR<Prisma.StaffCreateWithoutUserInput, Prisma.StaffUncheckedCreateWithoutUserInput> | Prisma.StaffCreateWithoutUserInput[] | Prisma.StaffUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.StaffCreateOrConnectWithoutUserInput | Prisma.StaffCreateOrConnectWithoutUserInput[]
+  createMany?: Prisma.StaffCreateManyUserInputEnvelope
+  connect?: Prisma.StaffWhereUniqueInput | Prisma.StaffWhereUniqueInput[]
 }
 
-export type StaffUncheckedCreateNestedOneWithoutUserInput = {
-  create?: Prisma.XOR<Prisma.StaffCreateWithoutUserInput, Prisma.StaffUncheckedCreateWithoutUserInput>
-  connectOrCreate?: Prisma.StaffCreateOrConnectWithoutUserInput
-  connect?: Prisma.StaffWhereUniqueInput
+export type StaffUncheckedCreateNestedManyWithoutUserInput = {
+  create?: Prisma.XOR<Prisma.StaffCreateWithoutUserInput, Prisma.StaffUncheckedCreateWithoutUserInput> | Prisma.StaffCreateWithoutUserInput[] | Prisma.StaffUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.StaffCreateOrConnectWithoutUserInput | Prisma.StaffCreateOrConnectWithoutUserInput[]
+  createMany?: Prisma.StaffCreateManyUserInputEnvelope
+  connect?: Prisma.StaffWhereUniqueInput | Prisma.StaffWhereUniqueInput[]
 }
 
-export type StaffUpdateOneWithoutUserNestedInput = {
-  create?: Prisma.XOR<Prisma.StaffCreateWithoutUserInput, Prisma.StaffUncheckedCreateWithoutUserInput>
-  connectOrCreate?: Prisma.StaffCreateOrConnectWithoutUserInput
-  upsert?: Prisma.StaffUpsertWithoutUserInput
-  disconnect?: Prisma.StaffWhereInput | boolean
-  delete?: Prisma.StaffWhereInput | boolean
-  connect?: Prisma.StaffWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.StaffUpdateToOneWithWhereWithoutUserInput, Prisma.StaffUpdateWithoutUserInput>, Prisma.StaffUncheckedUpdateWithoutUserInput>
+export type StaffUpdateManyWithoutUserNestedInput = {
+  create?: Prisma.XOR<Prisma.StaffCreateWithoutUserInput, Prisma.StaffUncheckedCreateWithoutUserInput> | Prisma.StaffCreateWithoutUserInput[] | Prisma.StaffUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.StaffCreateOrConnectWithoutUserInput | Prisma.StaffCreateOrConnectWithoutUserInput[]
+  upsert?: Prisma.StaffUpsertWithWhereUniqueWithoutUserInput | Prisma.StaffUpsertWithWhereUniqueWithoutUserInput[]
+  createMany?: Prisma.StaffCreateManyUserInputEnvelope
+  set?: Prisma.StaffWhereUniqueInput | Prisma.StaffWhereUniqueInput[]
+  disconnect?: Prisma.StaffWhereUniqueInput | Prisma.StaffWhereUniqueInput[]
+  delete?: Prisma.StaffWhereUniqueInput | Prisma.StaffWhereUniqueInput[]
+  connect?: Prisma.StaffWhereUniqueInput | Prisma.StaffWhereUniqueInput[]
+  update?: Prisma.StaffUpdateWithWhereUniqueWithoutUserInput | Prisma.StaffUpdateWithWhereUniqueWithoutUserInput[]
+  updateMany?: Prisma.StaffUpdateManyWithWhereWithoutUserInput | Prisma.StaffUpdateManyWithWhereWithoutUserInput[]
+  deleteMany?: Prisma.StaffScalarWhereInput | Prisma.StaffScalarWhereInput[]
 }
 
-export type StaffUncheckedUpdateOneWithoutUserNestedInput = {
-  create?: Prisma.XOR<Prisma.StaffCreateWithoutUserInput, Prisma.StaffUncheckedCreateWithoutUserInput>
-  connectOrCreate?: Prisma.StaffCreateOrConnectWithoutUserInput
-  upsert?: Prisma.StaffUpsertWithoutUserInput
-  disconnect?: Prisma.StaffWhereInput | boolean
-  delete?: Prisma.StaffWhereInput | boolean
-  connect?: Prisma.StaffWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.StaffUpdateToOneWithWhereWithoutUserInput, Prisma.StaffUpdateWithoutUserInput>, Prisma.StaffUncheckedUpdateWithoutUserInput>
+export type StaffUncheckedUpdateManyWithoutUserNestedInput = {
+  create?: Prisma.XOR<Prisma.StaffCreateWithoutUserInput, Prisma.StaffUncheckedCreateWithoutUserInput> | Prisma.StaffCreateWithoutUserInput[] | Prisma.StaffUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.StaffCreateOrConnectWithoutUserInput | Prisma.StaffCreateOrConnectWithoutUserInput[]
+  upsert?: Prisma.StaffUpsertWithWhereUniqueWithoutUserInput | Prisma.StaffUpsertWithWhereUniqueWithoutUserInput[]
+  createMany?: Prisma.StaffCreateManyUserInputEnvelope
+  set?: Prisma.StaffWhereUniqueInput | Prisma.StaffWhereUniqueInput[]
+  disconnect?: Prisma.StaffWhereUniqueInput | Prisma.StaffWhereUniqueInput[]
+  delete?: Prisma.StaffWhereUniqueInput | Prisma.StaffWhereUniqueInput[]
+  connect?: Prisma.StaffWhereUniqueInput | Prisma.StaffWhereUniqueInput[]
+  update?: Prisma.StaffUpdateWithWhereUniqueWithoutUserInput | Prisma.StaffUpdateWithWhereUniqueWithoutUserInput[]
+  updateMany?: Prisma.StaffUpdateManyWithWhereWithoutUserInput | Prisma.StaffUpdateManyWithWhereWithoutUserInput[]
+  deleteMany?: Prisma.StaffScalarWhereInput | Prisma.StaffScalarWhereInput[]
 }
 
 export type StaffCreateNestedManyWithoutStoreInput = {
@@ -465,33 +470,38 @@ export type StaffCreateOrConnectWithoutUserInput = {
   create: Prisma.XOR<Prisma.StaffCreateWithoutUserInput, Prisma.StaffUncheckedCreateWithoutUserInput>
 }
 
-export type StaffUpsertWithoutUserInput = {
-  update: Prisma.XOR<Prisma.StaffUpdateWithoutUserInput, Prisma.StaffUncheckedUpdateWithoutUserInput>
-  create: Prisma.XOR<Prisma.StaffCreateWithoutUserInput, Prisma.StaffUncheckedCreateWithoutUserInput>
-  where?: Prisma.StaffWhereInput
+export type StaffCreateManyUserInputEnvelope = {
+  data: Prisma.StaffCreateManyUserInput | Prisma.StaffCreateManyUserInput[]
+  skipDuplicates?: boolean
 }
 
-export type StaffUpdateToOneWithWhereWithoutUserInput = {
-  where?: Prisma.StaffWhereInput
+export type StaffUpsertWithWhereUniqueWithoutUserInput = {
+  where: Prisma.StaffWhereUniqueInput
+  update: Prisma.XOR<Prisma.StaffUpdateWithoutUserInput, Prisma.StaffUncheckedUpdateWithoutUserInput>
+  create: Prisma.XOR<Prisma.StaffCreateWithoutUserInput, Prisma.StaffUncheckedCreateWithoutUserInput>
+}
+
+export type StaffUpdateWithWhereUniqueWithoutUserInput = {
+  where: Prisma.StaffWhereUniqueInput
   data: Prisma.XOR<Prisma.StaffUpdateWithoutUserInput, Prisma.StaffUncheckedUpdateWithoutUserInput>
 }
 
-export type StaffUpdateWithoutUserInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  store?: Prisma.StoreUpdateOneRequiredWithoutStaffsNestedInput
+export type StaffUpdateManyWithWhereWithoutUserInput = {
+  where: Prisma.StaffScalarWhereInput
+  data: Prisma.XOR<Prisma.StaffUpdateManyMutationInput, Prisma.StaffUncheckedUpdateManyWithoutUserInput>
 }
 
-export type StaffUncheckedUpdateWithoutUserInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  email?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  storeId?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+export type StaffScalarWhereInput = {
+  AND?: Prisma.StaffScalarWhereInput | Prisma.StaffScalarWhereInput[]
+  OR?: Prisma.StaffScalarWhereInput[]
+  NOT?: Prisma.StaffScalarWhereInput | Prisma.StaffScalarWhereInput[]
+  id?: Prisma.StringFilter<"Staff"> | string
+  userId?: Prisma.StringFilter<"Staff"> | string
+  email?: Prisma.StringFilter<"Staff"> | string
+  name?: Prisma.StringNullableFilter<"Staff"> | string | null
+  storeId?: Prisma.StringFilter<"Staff"> | string
+  createdAt?: Prisma.DateTimeFilter<"Staff"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Staff"> | Date | string
 }
 
 export type StaffCreateWithoutStoreInput = {
@@ -500,7 +510,7 @@ export type StaffCreateWithoutStoreInput = {
   name?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutStaffInput
+  user: Prisma.UserCreateNestedOneWithoutStaffsInput
 }
 
 export type StaffUncheckedCreateWithoutStoreInput = {
@@ -538,17 +548,40 @@ export type StaffUpdateManyWithWhereWithoutStoreInput = {
   data: Prisma.XOR<Prisma.StaffUpdateManyMutationInput, Prisma.StaffUncheckedUpdateManyWithoutStoreInput>
 }
 
-export type StaffScalarWhereInput = {
-  AND?: Prisma.StaffScalarWhereInput | Prisma.StaffScalarWhereInput[]
-  OR?: Prisma.StaffScalarWhereInput[]
-  NOT?: Prisma.StaffScalarWhereInput | Prisma.StaffScalarWhereInput[]
-  id?: Prisma.StringFilter<"Staff"> | string
-  userId?: Prisma.StringFilter<"Staff"> | string
-  email?: Prisma.StringFilter<"Staff"> | string
-  name?: Prisma.StringNullableFilter<"Staff"> | string | null
-  storeId?: Prisma.StringFilter<"Staff"> | string
-  createdAt?: Prisma.DateTimeFilter<"Staff"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"Staff"> | Date | string
+export type StaffCreateManyUserInput = {
+  id?: string
+  email: string
+  name?: string | null
+  storeId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type StaffUpdateWithoutUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  store?: Prisma.StoreUpdateOneRequiredWithoutStaffsNestedInput
+}
+
+export type StaffUncheckedUpdateWithoutUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type StaffUncheckedUpdateManyWithoutUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type StaffCreateManyStoreInput = {
@@ -566,7 +599,7 @@ export type StaffUpdateWithoutStoreInput = {
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutStaffNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutStaffsNestedInput
 }
 
 export type StaffUncheckedUpdateWithoutStoreInput = {

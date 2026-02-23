@@ -23,7 +23,7 @@ const TICKET_STATUS_MAP = {
   ISSUED: { label: "発券済み" },
   CALLED: { label: "呼出中" },
   COMPLETED: { label: "完了" },
-  CANCELLED: { label: "キャンセル" },
+  CANCELED: { label: "キャンセル" },
 } as const;
 
 interface UserTicketListProps {

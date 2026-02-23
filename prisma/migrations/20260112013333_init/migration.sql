@@ -1,5 +1,5 @@
 -- CreateEnum
-CREATE TYPE "TicketStatus" AS ENUM ('ISSUED', 'CALLED', 'COMPLETED', 'CANCELLED');
+CREATE TYPE "TicketStatus" AS ENUM ('ISSUED', 'CALLED', 'COMPLETED', 'CANCELED');
 
 -- CreateEnum
 CREATE TYPE "StaffRole" AS ENUM ('STAFF', 'ADMIN');
