@@ -5,8 +5,7 @@ import { useState, useEffect, useRef } from "react";
 import { getUserSubscription, subscribeUser, unsubscribeUser } from "./action";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card";
-import { useCurrentUser } from "@/hooks/useCurrentUser";
-import { LoadingPrompt } from "@/components/prompt/loading-prompt";
+import type { User } from "@/generated/prisma/client";
 
 function urlBase64ToUint8Array(base64String: string) {
   const padding = "=".repeat((4 - (base64String.length % 4)) % 4);
@@ -21,15 +20,19 @@ function urlBase64ToUint8Array(base64String: string) {
   return outputArray;
 }
 
-export function PushNotificationManager() {
+interface PushNotificationManagerProps {
+  user: User;
+}
+
+export function PushNotificationManager({
+  user,
+}: PushNotificationManagerProps) {
   const [isSupported, setIsSupported] = useState(false);
   const [subscription, setSubscription] = useState<PushSubscription | null>(
     null,
   );
   const [isLoading, setIsLoading] = useState(false);
   const isRegistering = useRef(false);
-
-  const { user, loading } = useCurrentUser();
 
   async function registerServiceWorker() {
     if (!user) return;
@@ -62,13 +65,11 @@ export function PushNotificationManager() {
   }
 
   useEffect(() => {
-    if (loading) return;
-    if (!user) return;
     if ("serviceWorker" in navigator && "PushManager" in window) {
       setIsSupported(true);
       registerServiceWorker();
     }
-  }, [user, loading]);
+  });
 
   async function subscribeToPush() {
     if (!user) return;
@@ -106,12 +107,6 @@ export function PushNotificationManager() {
     }
   }
 
-  if (loading) {
-    return <LoadingPrompt contentName="プッシュ通知設定" />;
-  }
-  if (!user) {
-    return <div>ユーザー情報が取得できませんでした。</div>;
-  }
   if (!isSupported) {
     return (
       <div className="p-4 bg-red-50 border border-red-200 rounded-lg">

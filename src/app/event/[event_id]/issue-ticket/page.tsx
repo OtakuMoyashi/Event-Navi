@@ -1,6 +1,6 @@
 import { LoadingPrompt } from "@/components/prompt/loading-prompt";
 import { getCurrentUser } from "@/features/auth/user/action";
-import CreateTicket from "@/features/store/attraction/ticket/issue";
+import IssueTicket from "@/features/store/attraction/ticket/issue";
 
 export default async function TicketIssuePage(props: {
   params: Promise<{ event_id: string }>;
@@ -14,7 +14,7 @@ export default async function TicketIssuePage(props: {
 
   return (
     <div>
-      <CreateTicket user={currentUser} eventId={event_id} />
+      <IssueTicket user={currentUser} eventId={event_id} />
     </div>
   );
 }

@@ -1,10 +1,3 @@
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-} from "@/components/ui/card";
-import QRCode from "@/components/ui/qrcode";
 import { User } from "@/generated/prisma/client";
 import prisma from "@/lib/prisma";
 import { NotFoundPrompt } from "@/components/prompt/not-found-prompt";
@@ -15,9 +8,7 @@ import {
   CarouselNext,
   CarouselItem,
 } from "@/components/ui/carousel";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
+import { TicketCard } from "./ticket";
 
 const TICKET_STATUS_MAP = {
   ISSUED: { label: "発券済み" },
@@ -76,37 +67,7 @@ export default async function UserTicketList({ user }: UserTicketListProps) {
                     key={ticket.id}
                     className="pl-2 md:pl-4 basis-full"
                   >
-                    <Card className="px-4 py-8 space-y-4">
-                      <CardHeader className="flex flex-col gap-4 items-start">
-                        <p className="text-sm text-text-01">
-                          イベント名：{ticket.attraction.store.event?.name}
-                        </p>
-                        <p className="text-sm text-text-01">
-                          企画名：{ticket.attraction.store.name}
-                        </p>
-                        <p className="text-sm text-text-01">
-                          人数:{ticket.numberOfPeople}名
-                        </p>
-                        <Separator />
-                      </CardHeader>
-                      <CardContent className="flex flex-col gap-y-4">
-                        <div className="flex flex-row gap-x-4 pb-8 justify-start items-baseline">
-                          <p className="text-xl">No.{ticket.index}</p>
-                          <Badge variant="info">{statusLabel}</Badge>
-                        </div>
-                        <div className="flex justify-center p">
-                          <QRCode text={ticket.id} size={256} />
-                        </div>
-                      </CardContent>
-                      <Separator />
-                      <CardFooter className="flex flex-col gap-4 items-start">
-                        <div className="text-sm text-text-01">
-                          <p>発券日時：{ticket.createdAt.toLocaleString()}</p>
-                        </div>
-                        <Button variant="danger">削除する</Button>{" "}
-                        {/* TODO 削除ロジック実装する */}
-                      </CardFooter>
-                    </Card>
+                    <TicketCard ticket={ticket} statusLabel={statusLabel} />
                   </CarouselItem>
                 );
               })}

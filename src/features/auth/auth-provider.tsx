@@ -14,11 +14,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       console.log("session?.data:", session?.data);
       if (!session?.data) {
         try {
-          const result = await authClient.signIn.anonymous();
-          console.log("匿名でサインインしました。", result);
-          console.log("fetch前");
-          await fetch("/api/user/create", { method: "POST" });
-          console.log("fetch後");
+          await authClient.signIn.anonymous();
         } catch (error) {
           console.error("Anonymous signup error:", error);
         }

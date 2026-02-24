@@ -4,7 +4,6 @@
 import { z } from "zod";
 import prisma from "@/lib/prisma";
 import { User } from "@/generated/prisma/client";
-import { ca } from "zod/v4/locales";
 
 const RegisterSchema = z.object({
   numberOfPeople: z.coerce.number(),

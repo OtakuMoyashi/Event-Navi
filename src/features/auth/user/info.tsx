@@ -1,13 +1,13 @@
 "use client";
 
 import { Card, CardContent } from "@/components/ui/card";
-import { LoadingPrompt } from "@/components/prompt/loading-prompt";
-import { useCurrentUser } from "@/hooks/useCurrentUser";
+import type { User } from "@/generated/prisma/client";
 
-export default function UserInfo() {
-  const { user, loading } = useCurrentUser();
-  if (loading) return <LoadingPrompt contentName="ユーザー情報" />;
-  if (!user) return <div>ユーザー情報が取得できませんでした。</div>;
+interface UserInfoProps {
+  user: User;
+}
+
+export default function UserInfo({ user }: UserInfoProps) {
   return (
     <Card>
       <CardContent>
