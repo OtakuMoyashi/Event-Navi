@@ -18,7 +18,11 @@ export const auth = betterAuth({
   }),
   secret: betterAuthSecret, // validated value
   basePath: "/api/auth",
-  baseURL: process.env.BETTER_AUTH_URL || "http://localhost:3000",
+  baseURL:
+    process.env.BETTER_AUTH_URL ||
+    "http://localhost:3000" ||
+    process.env.BETTER_AUTH_FEATURE_URL ||
+    process.env.BETTER_AUTH_DEVELOP_URL,
   emailAndPassword: {
     enabled: true,
   },
