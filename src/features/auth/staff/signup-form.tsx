@@ -22,7 +22,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
-import { Message } from "@/components/ui/message";
+import { MessagePrompt } from "@/components/prompt/message-prompt";
+import Link from "next/link";
 
 export function SignUpStaffForm({ stores }: { stores: Store[] }) {
   const [state, formAction, isPending] = useActionState(createStaff, null);
@@ -37,10 +38,6 @@ export function SignUpStaffForm({ stores }: { stores: Store[] }) {
           <FieldGroup>
             <FieldSet>
               <FieldGroup>
-                <Field>
-                  <FieldLabel>仮想ドメイン</FieldLabel>
-                  <Input name="domain" required disabled={isPending} />
-                </Field>
                 <Field>
                   <FieldLabel>ログインID</FieldLabel>
                   <Input name="loginId" required disabled={isPending} />
@@ -84,7 +81,12 @@ export function SignUpStaffForm({ stores }: { stores: Store[] }) {
             </Field>
           </FieldGroup>
         </form>
-        {state?.message && <Message message={state.message} />}
+        {state?.message && <MessagePrompt message={state.message} />}
+        {state?.success && (
+          <Button>
+            <Link href="/signin">サインイン</Link>
+          </Button>
+        )}
       </CardContent>
     </Card>
   );

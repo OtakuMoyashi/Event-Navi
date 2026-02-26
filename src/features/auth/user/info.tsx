@@ -1,25 +1,17 @@
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-import { getCurrentUser } from "./action";
+"use client";
 
-//ユーザー情報を表示するコンポーネント
-export default async function UserInfo() {
-  const user = await getCurrentUser();
+import { Card, CardContent } from "@/components/ui/card";
+import type { User } from "@/generated/prisma/client";
 
+interface UserInfoProps {
+  user: User;
+}
+
+export default function UserInfo({ user }: UserInfoProps) {
   return (
     <Card>
-      <CardHeader>
-        <CardTitle>ユーザー情報</CardTitle>
-      </CardHeader>
       <CardContent>
-        {user ? (
-          <div>
-            <p>ユーザーID:{user.id}</p>
-          </div>
-        ) : (
-          <div>
-            <p>uuidに対応するユーザーが存在しません。</p>
-          </div>
-        )}
+        <p>ユーザーID: {user.id}</p>
       </CardContent>
     </Card>
   );

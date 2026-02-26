@@ -5,12 +5,14 @@ import prisma from "@/lib/prisma";
 import { redirect } from "next/navigation";
 import z from "zod";
 import { StoreType } from "@/generated/prisma/enums";
+import { revalidatePath } from "next/cache";
 
 const RegisterSchema = z.object({
   slug: z.string(),
   name: z.string(),
 });
 
+//TODO eventId?の紐づけ
 export async function createStore(prevState: any, formData: FormData) {
   const validationResult = RegisterSchema.safeParse({
     slug: formData.get("slug"),
@@ -21,13 +23,14 @@ export async function createStore(prevState: any, formData: FormData) {
     console.log(validationResult.error);
     return {
       success: false,
-      message: "入力形式が正しくありません。",
-      error: validationResult.error,
+      message: "入力形式が正しくありません",
+      error: "入力形式が正しくありません", //仮実装
     };
   }
 
   const { slug, name } = validationResult.data;
   const storeType = formData.get("storeType") as StoreType;
+  const eventId = formData.get("eventId") as string;
 
   try {
     await prisma.$transaction(async (tx) => {
@@ -36,6 +39,7 @@ export async function createStore(prevState: any, formData: FormData) {
           slug: slug,
           name: name,
           storeType: storeType,
+          eventId: eventId,
         },
       });
       switch (createdStore.storeType) {
@@ -62,7 +66,8 @@ export async function createStore(prevState: any, formData: FormData) {
     console.log(error);
     return {
       success: false,
-      message: "サーバーエラーが発生しました。",
+      message: "サーバーエラーが発生しました",
+      error: error instanceof Error ? error.message : String(error),
     };
   }
 }
@@ -80,8 +85,13 @@ export async function updateStoreEventId(
       data: { eventId },
     });
   } catch (error) {
-    return { message: "データベースの更新に失敗しました" };
+    return {
+      success: false,
+      message: "サーバーエラーが発生しました",
+      error: error instanceof Error ? error.message : String(error),
+    };
   }
 
+  revalidatePath(`/admin/store/${storeId}`);
   redirect(`/admin/store/${storeId}`);
 }

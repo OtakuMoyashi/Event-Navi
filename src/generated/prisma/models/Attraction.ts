@@ -20,12 +20,26 @@ export type AttractionModel = runtime.Types.Result.DefaultSelection<Prisma.$Attr
 
 export type AggregateAttraction = {
   _count: AttractionCountAggregateOutputType | null
+  _avg: AttractionAvgAggregateOutputType | null
+  _sum: AttractionSumAggregateOutputType | null
   _min: AttractionMinAggregateOutputType | null
   _max: AttractionMaxAggregateOutputType | null
 }
 
+export type AttractionAvgAggregateOutputType = {
+  playTime: number | null
+  peopleCapacity: number | null
+}
+
+export type AttractionSumAggregateOutputType = {
+  playTime: number | null
+  peopleCapacity: number | null
+}
+
 export type AttractionMinAggregateOutputType = {
   id: string | null
+  playTime: number | null
+  peopleCapacity: number | null
   storeId: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -33,6 +47,8 @@ export type AttractionMinAggregateOutputType = {
 
 export type AttractionMaxAggregateOutputType = {
   id: string | null
+  playTime: number | null
+  peopleCapacity: number | null
   storeId: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -40,6 +56,8 @@ export type AttractionMaxAggregateOutputType = {
 
 export type AttractionCountAggregateOutputType = {
   id: number
+  playTime: number
+  peopleCapacity: number
   storeId: number
   createdAt: number
   updatedAt: number
@@ -47,8 +65,20 @@ export type AttractionCountAggregateOutputType = {
 }
 
 
+export type AttractionAvgAggregateInputType = {
+  playTime?: true
+  peopleCapacity?: true
+}
+
+export type AttractionSumAggregateInputType = {
+  playTime?: true
+  peopleCapacity?: true
+}
+
 export type AttractionMinAggregateInputType = {
   id?: true
+  playTime?: true
+  peopleCapacity?: true
   storeId?: true
   createdAt?: true
   updatedAt?: true
@@ -56,6 +86,8 @@ export type AttractionMinAggregateInputType = {
 
 export type AttractionMaxAggregateInputType = {
   id?: true
+  playTime?: true
+  peopleCapacity?: true
   storeId?: true
   createdAt?: true
   updatedAt?: true
@@ -63,6 +95,8 @@ export type AttractionMaxAggregateInputType = {
 
 export type AttractionCountAggregateInputType = {
   id?: true
+  playTime?: true
+  peopleCapacity?: true
   storeId?: true
   createdAt?: true
   updatedAt?: true
@@ -107,6 +141,18 @@ export type AttractionAggregateArgs<ExtArgs extends runtime.Types.Extensions.Int
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: AttractionAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: AttractionSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: AttractionMinAggregateInputType
@@ -137,16 +183,22 @@ export type AttractionGroupByArgs<ExtArgs extends runtime.Types.Extensions.Inter
   take?: number
   skip?: number
   _count?: AttractionCountAggregateInputType | true
+  _avg?: AttractionAvgAggregateInputType
+  _sum?: AttractionSumAggregateInputType
   _min?: AttractionMinAggregateInputType
   _max?: AttractionMaxAggregateInputType
 }
 
 export type AttractionGroupByOutputType = {
   id: string
+  playTime: number | null
+  peopleCapacity: number
   storeId: string
   createdAt: Date
   updatedAt: Date
   _count: AttractionCountAggregateOutputType | null
+  _avg: AttractionAvgAggregateOutputType | null
+  _sum: AttractionSumAggregateOutputType | null
   _min: AttractionMinAggregateOutputType | null
   _max: AttractionMaxAggregateOutputType | null
 }
@@ -171,6 +223,8 @@ export type AttractionWhereInput = {
   OR?: Prisma.AttractionWhereInput[]
   NOT?: Prisma.AttractionWhereInput | Prisma.AttractionWhereInput[]
   id?: Prisma.StringFilter<"Attraction"> | string
+  playTime?: Prisma.IntNullableFilter<"Attraction"> | number | null
+  peopleCapacity?: Prisma.IntFilter<"Attraction"> | number
   storeId?: Prisma.StringFilter<"Attraction"> | string
   createdAt?: Prisma.DateTimeFilter<"Attraction"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Attraction"> | Date | string
@@ -180,6 +234,8 @@ export type AttractionWhereInput = {
 
 export type AttractionOrderByWithRelationInput = {
   id?: Prisma.SortOrder
+  playTime?: Prisma.SortOrderInput | Prisma.SortOrder
+  peopleCapacity?: Prisma.SortOrder
   storeId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -193,6 +249,8 @@ export type AttractionWhereUniqueInput = Prisma.AtLeast<{
   AND?: Prisma.AttractionWhereInput | Prisma.AttractionWhereInput[]
   OR?: Prisma.AttractionWhereInput[]
   NOT?: Prisma.AttractionWhereInput | Prisma.AttractionWhereInput[]
+  playTime?: Prisma.IntNullableFilter<"Attraction"> | number | null
+  peopleCapacity?: Prisma.IntFilter<"Attraction"> | number
   createdAt?: Prisma.DateTimeFilter<"Attraction"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Attraction"> | Date | string
   store?: Prisma.XOR<Prisma.StoreScalarRelationFilter, Prisma.StoreWhereInput>
@@ -201,12 +259,16 @@ export type AttractionWhereUniqueInput = Prisma.AtLeast<{
 
 export type AttractionOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
+  playTime?: Prisma.SortOrderInput | Prisma.SortOrder
+  peopleCapacity?: Prisma.SortOrder
   storeId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.AttractionCountOrderByAggregateInput
+  _avg?: Prisma.AttractionAvgOrderByAggregateInput
   _max?: Prisma.AttractionMaxOrderByAggregateInput
   _min?: Prisma.AttractionMinOrderByAggregateInput
+  _sum?: Prisma.AttractionSumOrderByAggregateInput
 }
 
 export type AttractionScalarWhereWithAggregatesInput = {
@@ -214,6 +276,8 @@ export type AttractionScalarWhereWithAggregatesInput = {
   OR?: Prisma.AttractionScalarWhereWithAggregatesInput[]
   NOT?: Prisma.AttractionScalarWhereWithAggregatesInput | Prisma.AttractionScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Attraction"> | string
+  playTime?: Prisma.IntNullableWithAggregatesFilter<"Attraction"> | number | null
+  peopleCapacity?: Prisma.IntWithAggregatesFilter<"Attraction"> | number
   storeId?: Prisma.StringWithAggregatesFilter<"Attraction"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Attraction"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Attraction"> | Date | string
@@ -221,6 +285,8 @@ export type AttractionScalarWhereWithAggregatesInput = {
 
 export type AttractionCreateInput = {
   id?: string
+  playTime?: number | null
+  peopleCapacity?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   store: Prisma.StoreCreateNestedOneWithoutAttractionInput
@@ -229,6 +295,8 @@ export type AttractionCreateInput = {
 
 export type AttractionUncheckedCreateInput = {
   id?: string
+  playTime?: number | null
+  peopleCapacity?: number
   storeId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -237,6 +305,8 @@ export type AttractionUncheckedCreateInput = {
 
 export type AttractionUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  playTime?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  peopleCapacity?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   store?: Prisma.StoreUpdateOneRequiredWithoutAttractionNestedInput
@@ -245,6 +315,8 @@ export type AttractionUpdateInput = {
 
 export type AttractionUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  playTime?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  peopleCapacity?: Prisma.IntFieldUpdateOperationsInput | number
   storeId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -253,6 +325,8 @@ export type AttractionUncheckedUpdateInput = {
 
 export type AttractionCreateManyInput = {
   id?: string
+  playTime?: number | null
+  peopleCapacity?: number
   storeId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -260,12 +334,16 @@ export type AttractionCreateManyInput = {
 
 export type AttractionUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  playTime?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  peopleCapacity?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type AttractionUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  playTime?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  peopleCapacity?: Prisma.IntFieldUpdateOperationsInput | number
   storeId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -278,13 +356,22 @@ export type AttractionNullableScalarRelationFilter = {
 
 export type AttractionCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  playTime?: Prisma.SortOrder
+  peopleCapacity?: Prisma.SortOrder
   storeId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
 
+export type AttractionAvgOrderByAggregateInput = {
+  playTime?: Prisma.SortOrder
+  peopleCapacity?: Prisma.SortOrder
+}
+
 export type AttractionMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  playTime?: Prisma.SortOrder
+  peopleCapacity?: Prisma.SortOrder
   storeId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -292,9 +379,16 @@ export type AttractionMaxOrderByAggregateInput = {
 
 export type AttractionMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  playTime?: Prisma.SortOrder
+  peopleCapacity?: Prisma.SortOrder
   storeId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type AttractionSumOrderByAggregateInput = {
+  playTime?: Prisma.SortOrder
+  peopleCapacity?: Prisma.SortOrder
 }
 
 export type AttractionScalarRelationFilter = {
@@ -334,6 +428,22 @@ export type AttractionUncheckedUpdateOneWithoutStoreNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.AttractionUpdateToOneWithWhereWithoutStoreInput, Prisma.AttractionUpdateWithoutStoreInput>, Prisma.AttractionUncheckedUpdateWithoutStoreInput>
 }
 
+export type NullableIntFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
+export type IntFieldUpdateOperationsInput = {
+  set?: number
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
 export type AttractionCreateNestedOneWithoutTicketsInput = {
   create?: Prisma.XOR<Prisma.AttractionCreateWithoutTicketsInput, Prisma.AttractionUncheckedCreateWithoutTicketsInput>
   connectOrCreate?: Prisma.AttractionCreateOrConnectWithoutTicketsInput
@@ -350,6 +460,8 @@ export type AttractionUpdateOneRequiredWithoutTicketsNestedInput = {
 
 export type AttractionCreateWithoutStoreInput = {
   id?: string
+  playTime?: number | null
+  peopleCapacity?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   tickets?: Prisma.TicketCreateNestedManyWithoutAttractionInput
@@ -357,6 +469,8 @@ export type AttractionCreateWithoutStoreInput = {
 
 export type AttractionUncheckedCreateWithoutStoreInput = {
   id?: string
+  playTime?: number | null
+  peopleCapacity?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   tickets?: Prisma.TicketUncheckedCreateNestedManyWithoutAttractionInput
@@ -380,6 +494,8 @@ export type AttractionUpdateToOneWithWhereWithoutStoreInput = {
 
 export type AttractionUpdateWithoutStoreInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  playTime?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  peopleCapacity?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tickets?: Prisma.TicketUpdateManyWithoutAttractionNestedInput
@@ -387,6 +503,8 @@ export type AttractionUpdateWithoutStoreInput = {
 
 export type AttractionUncheckedUpdateWithoutStoreInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  playTime?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  peopleCapacity?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   tickets?: Prisma.TicketUncheckedUpdateManyWithoutAttractionNestedInput
@@ -394,6 +512,8 @@ export type AttractionUncheckedUpdateWithoutStoreInput = {
 
 export type AttractionCreateWithoutTicketsInput = {
   id?: string
+  playTime?: number | null
+  peopleCapacity?: number
   createdAt?: Date | string
   updatedAt?: Date | string
   store: Prisma.StoreCreateNestedOneWithoutAttractionInput
@@ -401,6 +521,8 @@ export type AttractionCreateWithoutTicketsInput = {
 
 export type AttractionUncheckedCreateWithoutTicketsInput = {
   id?: string
+  playTime?: number | null
+  peopleCapacity?: number
   storeId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -424,6 +546,8 @@ export type AttractionUpdateToOneWithWhereWithoutTicketsInput = {
 
 export type AttractionUpdateWithoutTicketsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  playTime?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  peopleCapacity?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   store?: Prisma.StoreUpdateOneRequiredWithoutAttractionNestedInput
@@ -431,6 +555,8 @@ export type AttractionUpdateWithoutTicketsInput = {
 
 export type AttractionUncheckedUpdateWithoutTicketsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  playTime?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  peopleCapacity?: Prisma.IntFieldUpdateOperationsInput | number
   storeId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -469,6 +595,8 @@ export type AttractionCountOutputTypeCountTicketsArgs<ExtArgs extends runtime.Ty
 
 export type AttractionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  playTime?: boolean
+  peopleCapacity?: boolean
   storeId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -479,6 +607,8 @@ export type AttractionSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
 
 export type AttractionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  playTime?: boolean
+  peopleCapacity?: boolean
   storeId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -487,6 +617,8 @@ export type AttractionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ex
 
 export type AttractionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  playTime?: boolean
+  peopleCapacity?: boolean
   storeId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -495,12 +627,14 @@ export type AttractionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ex
 
 export type AttractionSelectScalar = {
   id?: boolean
+  playTime?: boolean
+  peopleCapacity?: boolean
   storeId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type AttractionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "storeId" | "createdAt" | "updatedAt", ExtArgs["result"]["attraction"]>
+export type AttractionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "playTime" | "peopleCapacity" | "storeId" | "createdAt" | "updatedAt", ExtArgs["result"]["attraction"]>
 export type AttractionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   store?: boolean | Prisma.StoreDefaultArgs<ExtArgs>
   tickets?: boolean | Prisma.Attraction$ticketsArgs<ExtArgs>
@@ -521,6 +655,8 @@ export type $AttractionPayload<ExtArgs extends runtime.Types.Extensions.Internal
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
+    playTime: number | null
+    peopleCapacity: number
     storeId: string
     createdAt: Date
     updatedAt: Date
@@ -950,6 +1086,8 @@ export interface Prisma__AttractionClient<T, Null = never, ExtArgs extends runti
  */
 export interface AttractionFieldRefs {
   readonly id: Prisma.FieldRef<"Attraction", 'String'>
+  readonly playTime: Prisma.FieldRef<"Attraction", 'Int'>
+  readonly peopleCapacity: Prisma.FieldRef<"Attraction", 'Int'>
   readonly storeId: Prisma.FieldRef<"Attraction", 'String'>
   readonly createdAt: Prisma.FieldRef<"Attraction", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Attraction", 'DateTime'>

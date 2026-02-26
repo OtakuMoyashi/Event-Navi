@@ -17,10 +17,10 @@ export async function createEvent(prevState: any, formData: FormData) {
     });
 
     if (!validationResult.success) {
-      console.log(validationResult.error);
       return {
         success: false,
-        message: "入力形式が正しくありません。",
+        message: "入力形式が正しくありません",
+        validationError: validationResult.error,
       };
     }
 
@@ -40,7 +40,8 @@ export async function createEvent(prevState: any, formData: FormData) {
     console.log(error);
     return {
       success: false,
-      message: "サーバーエラーが発生しました。",
+      message: "サーバーエラーが発生しました",
+      error: error instanceof Error ? error.message : String(error),
     };
   }
 }

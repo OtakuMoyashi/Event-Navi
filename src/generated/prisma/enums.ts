@@ -21,7 +21,7 @@ export const TicketStatus = {
   ISSUED: 'ISSUED',
   CALLED: 'CALLED',
   COMPLETED: 'COMPLETED',
-  CANCELLED: 'CANCELLED'
+  CANCELED: 'CANCELED'
 } as const
 
 export type TicketStatus = (typeof TicketStatus)[keyof typeof TicketStatus]

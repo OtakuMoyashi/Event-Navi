@@ -2,69 +2,130 @@
 "use server";
 
 import prisma from "@/lib/prisma";
-import { createClient } from "@/lib/supabase/server";
+import { auth } from "@/lib/auth";
 import z from "zod";
 import { passwordSchema } from "@/lib/schema/auth";
+import { redirect } from "next/navigation";
 
-const ResigterChema = z.object({
-  domain: z.string(),
+const SignUpSchema = z.object({
   loginId: z.string(),
   password: passwordSchema,
 });
 
 export async function createStaff(prevState: any, formData: FormData) {
-  const supabase = await createClient();
-
-  const validationResult = ResigterChema.safeParse({
-    domain: formData.get("domain"),
+  const validationResult = SignUpSchema.safeParse({
     loginId: formData.get("loginId"),
     password: formData.get("password"),
   });
 
   if (!validationResult.success) {
-    console.log(validationResult.error);
     return {
       success: false,
-      message: "入力形式が正しくありません。",
-      error: validationResult.error,
+      message: "入力形式が正しくありません",
     };
   }
 
-  const { domain, loginId, password } = validationResult.data;
-  const email = domain + "@" + loginId;
+  const { loginId, password } = validationResult.data;
+  const email = `${loginId}@example.com`;
   const storeId = formData.get("storeId") as string;
 
   try {
-    const { data: authData, error: authError } = await supabase.auth.signUp({
-      email: email,
-      password: password,
-      options: {
-        data: {
-          role: "STORE_STAFF",
-        },
+    const data = await auth.api.signUpEmail({
+      body: {
+        email,
+        password,
+        name: loginId,
       },
     });
-    if (authError) {
-      console.log(authError);
-      return {
-        success: false,
-        message: "Supabase Authにユーザーが存在しません。",
-      };
-    }
-    if (authData.user) {
-      await prisma.staff.create({
-        data: {
-          supabaseUserId: authData.user.id,
-          email: email,
-          storeId: storeId,
-        },
-      });
-    }
+
+    const userId = data.user.id;
+
+    await prisma.staff.create({
+      data: {
+        userId,
+        email,
+        storeId,
+      },
+    });
+
+    return {
+      success: true,
+      message: "スタッフアカウントが作成されました",
+    };
   } catch (error) {
     console.log(error);
     return {
       success: false,
-      message: "サーバーエラーが発生しました。",
+      message: "サーバーエラーが発生しました",
+      error: error instanceof Error ? error.message : String(error),
+    };
+  }
+}
+
+const SignInSchema = z.object({
+  loginId: z.string(),
+  password: passwordSchema,
+});
+
+export async function signInStaff(prevState: any, formData: FormData) {
+  const validationResult = SignInSchema.safeParse({
+    loginId: formData.get("loginId"),
+    password: formData.get("password"),
+  });
+
+  if (!validationResult.success) {
+    return {
+      success: false,
+      message: "入力形式が正しくありません",
+    };
+  }
+
+  const { loginId, password } = validationResult.data;
+  const email = `${loginId}@example.com`;
+
+  try {
+    // Better-authでサインイン
+    const response = await auth.api.signInEmail({
+      body: {
+        email,
+        password,
+      },
+      asResponse: true,
+    });
+
+    const data = await response.json();
+
+    // レスポンスのOK判定
+    if (!response.ok || !data || !data.user || !data.user.id) {
+      return {
+        success: false,
+        message: "ユーザー作成に失敗しました",
+      };
+    }
+
+    const userId: string = data.user.id;
+    // Admin権限確認
+    const admin = await prisma.admin.findUnique({
+      where: { userId },
+    });
+
+    if (!admin) {
+      // サインアウト処理
+      return {
+        success: false,
+        message: "管理者権限が見つかりません",
+      };
+    }
+
+    // セッション情報をクッキーに設定（better-authが自動処理）
+    redirect("/staff");
+  } catch (error) {
+    // Log the full error for server-side debugging
+    console.error("[signInAdmin] error:", error);
+    return {
+      success: false,
+      message: "サーバーエラーが発生しました",
+      errorCode: "INTERNAL_ERROR", // 非公開のエラーコードやフラグのみ返す
     };
   }
 }

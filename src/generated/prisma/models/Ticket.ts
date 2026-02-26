@@ -435,60 +435,6 @@ export type TicketSumOrderByAggregateInput = {
   numberOfPeople?: Prisma.SortOrder
 }
 
-export type TicketCreateNestedManyWithoutAttractionInput = {
-  create?: Prisma.XOR<Prisma.TicketCreateWithoutAttractionInput, Prisma.TicketUncheckedCreateWithoutAttractionInput> | Prisma.TicketCreateWithoutAttractionInput[] | Prisma.TicketUncheckedCreateWithoutAttractionInput[]
-  connectOrCreate?: Prisma.TicketCreateOrConnectWithoutAttractionInput | Prisma.TicketCreateOrConnectWithoutAttractionInput[]
-  createMany?: Prisma.TicketCreateManyAttractionInputEnvelope
-  connect?: Prisma.TicketWhereUniqueInput | Prisma.TicketWhereUniqueInput[]
-}
-
-export type TicketUncheckedCreateNestedManyWithoutAttractionInput = {
-  create?: Prisma.XOR<Prisma.TicketCreateWithoutAttractionInput, Prisma.TicketUncheckedCreateWithoutAttractionInput> | Prisma.TicketCreateWithoutAttractionInput[] | Prisma.TicketUncheckedCreateWithoutAttractionInput[]
-  connectOrCreate?: Prisma.TicketCreateOrConnectWithoutAttractionInput | Prisma.TicketCreateOrConnectWithoutAttractionInput[]
-  createMany?: Prisma.TicketCreateManyAttractionInputEnvelope
-  connect?: Prisma.TicketWhereUniqueInput | Prisma.TicketWhereUniqueInput[]
-}
-
-export type TicketUpdateManyWithoutAttractionNestedInput = {
-  create?: Prisma.XOR<Prisma.TicketCreateWithoutAttractionInput, Prisma.TicketUncheckedCreateWithoutAttractionInput> | Prisma.TicketCreateWithoutAttractionInput[] | Prisma.TicketUncheckedCreateWithoutAttractionInput[]
-  connectOrCreate?: Prisma.TicketCreateOrConnectWithoutAttractionInput | Prisma.TicketCreateOrConnectWithoutAttractionInput[]
-  upsert?: Prisma.TicketUpsertWithWhereUniqueWithoutAttractionInput | Prisma.TicketUpsertWithWhereUniqueWithoutAttractionInput[]
-  createMany?: Prisma.TicketCreateManyAttractionInputEnvelope
-  set?: Prisma.TicketWhereUniqueInput | Prisma.TicketWhereUniqueInput[]
-  disconnect?: Prisma.TicketWhereUniqueInput | Prisma.TicketWhereUniqueInput[]
-  delete?: Prisma.TicketWhereUniqueInput | Prisma.TicketWhereUniqueInput[]
-  connect?: Prisma.TicketWhereUniqueInput | Prisma.TicketWhereUniqueInput[]
-  update?: Prisma.TicketUpdateWithWhereUniqueWithoutAttractionInput | Prisma.TicketUpdateWithWhereUniqueWithoutAttractionInput[]
-  updateMany?: Prisma.TicketUpdateManyWithWhereWithoutAttractionInput | Prisma.TicketUpdateManyWithWhereWithoutAttractionInput[]
-  deleteMany?: Prisma.TicketScalarWhereInput | Prisma.TicketScalarWhereInput[]
-}
-
-export type TicketUncheckedUpdateManyWithoutAttractionNestedInput = {
-  create?: Prisma.XOR<Prisma.TicketCreateWithoutAttractionInput, Prisma.TicketUncheckedCreateWithoutAttractionInput> | Prisma.TicketCreateWithoutAttractionInput[] | Prisma.TicketUncheckedCreateWithoutAttractionInput[]
-  connectOrCreate?: Prisma.TicketCreateOrConnectWithoutAttractionInput | Prisma.TicketCreateOrConnectWithoutAttractionInput[]
-  upsert?: Prisma.TicketUpsertWithWhereUniqueWithoutAttractionInput | Prisma.TicketUpsertWithWhereUniqueWithoutAttractionInput[]
-  createMany?: Prisma.TicketCreateManyAttractionInputEnvelope
-  set?: Prisma.TicketWhereUniqueInput | Prisma.TicketWhereUniqueInput[]
-  disconnect?: Prisma.TicketWhereUniqueInput | Prisma.TicketWhereUniqueInput[]
-  delete?: Prisma.TicketWhereUniqueInput | Prisma.TicketWhereUniqueInput[]
-  connect?: Prisma.TicketWhereUniqueInput | Prisma.TicketWhereUniqueInput[]
-  update?: Prisma.TicketUpdateWithWhereUniqueWithoutAttractionInput | Prisma.TicketUpdateWithWhereUniqueWithoutAttractionInput[]
-  updateMany?: Prisma.TicketUpdateManyWithWhereWithoutAttractionInput | Prisma.TicketUpdateManyWithWhereWithoutAttractionInput[]
-  deleteMany?: Prisma.TicketScalarWhereInput | Prisma.TicketScalarWhereInput[]
-}
-
-export type IntFieldUpdateOperationsInput = {
-  set?: number
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
-export type EnumTicketStatusFieldUpdateOperationsInput = {
-  set?: $Enums.TicketStatus
-}
-
 export type TicketCreateNestedManyWithoutUserInput = {
   create?: Prisma.XOR<Prisma.TicketCreateWithoutUserInput, Prisma.TicketUncheckedCreateWithoutUserInput> | Prisma.TicketCreateWithoutUserInput[] | Prisma.TicketUncheckedCreateWithoutUserInput[]
   connectOrCreate?: Prisma.TicketCreateOrConnectWithoutUserInput | Prisma.TicketCreateOrConnectWithoutUserInput[]
@@ -531,64 +477,50 @@ export type TicketUncheckedUpdateManyWithoutUserNestedInput = {
   deleteMany?: Prisma.TicketScalarWhereInput | Prisma.TicketScalarWhereInput[]
 }
 
-export type TicketCreateWithoutAttractionInput = {
-  id?: string
-  index: number
-  numberOfPeople: number
-  status?: $Enums.TicketStatus
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  user: Prisma.UserCreateNestedOneWithoutTicketsInput
+export type TicketCreateNestedManyWithoutAttractionInput = {
+  create?: Prisma.XOR<Prisma.TicketCreateWithoutAttractionInput, Prisma.TicketUncheckedCreateWithoutAttractionInput> | Prisma.TicketCreateWithoutAttractionInput[] | Prisma.TicketUncheckedCreateWithoutAttractionInput[]
+  connectOrCreate?: Prisma.TicketCreateOrConnectWithoutAttractionInput | Prisma.TicketCreateOrConnectWithoutAttractionInput[]
+  createMany?: Prisma.TicketCreateManyAttractionInputEnvelope
+  connect?: Prisma.TicketWhereUniqueInput | Prisma.TicketWhereUniqueInput[]
 }
 
-export type TicketUncheckedCreateWithoutAttractionInput = {
-  id?: string
-  index: number
-  numberOfPeople: number
-  status?: $Enums.TicketStatus
-  userId: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
+export type TicketUncheckedCreateNestedManyWithoutAttractionInput = {
+  create?: Prisma.XOR<Prisma.TicketCreateWithoutAttractionInput, Prisma.TicketUncheckedCreateWithoutAttractionInput> | Prisma.TicketCreateWithoutAttractionInput[] | Prisma.TicketUncheckedCreateWithoutAttractionInput[]
+  connectOrCreate?: Prisma.TicketCreateOrConnectWithoutAttractionInput | Prisma.TicketCreateOrConnectWithoutAttractionInput[]
+  createMany?: Prisma.TicketCreateManyAttractionInputEnvelope
+  connect?: Prisma.TicketWhereUniqueInput | Prisma.TicketWhereUniqueInput[]
 }
 
-export type TicketCreateOrConnectWithoutAttractionInput = {
-  where: Prisma.TicketWhereUniqueInput
-  create: Prisma.XOR<Prisma.TicketCreateWithoutAttractionInput, Prisma.TicketUncheckedCreateWithoutAttractionInput>
+export type TicketUpdateManyWithoutAttractionNestedInput = {
+  create?: Prisma.XOR<Prisma.TicketCreateWithoutAttractionInput, Prisma.TicketUncheckedCreateWithoutAttractionInput> | Prisma.TicketCreateWithoutAttractionInput[] | Prisma.TicketUncheckedCreateWithoutAttractionInput[]
+  connectOrCreate?: Prisma.TicketCreateOrConnectWithoutAttractionInput | Prisma.TicketCreateOrConnectWithoutAttractionInput[]
+  upsert?: Prisma.TicketUpsertWithWhereUniqueWithoutAttractionInput | Prisma.TicketUpsertWithWhereUniqueWithoutAttractionInput[]
+  createMany?: Prisma.TicketCreateManyAttractionInputEnvelope
+  set?: Prisma.TicketWhereUniqueInput | Prisma.TicketWhereUniqueInput[]
+  disconnect?: Prisma.TicketWhereUniqueInput | Prisma.TicketWhereUniqueInput[]
+  delete?: Prisma.TicketWhereUniqueInput | Prisma.TicketWhereUniqueInput[]
+  connect?: Prisma.TicketWhereUniqueInput | Prisma.TicketWhereUniqueInput[]
+  update?: Prisma.TicketUpdateWithWhereUniqueWithoutAttractionInput | Prisma.TicketUpdateWithWhereUniqueWithoutAttractionInput[]
+  updateMany?: Prisma.TicketUpdateManyWithWhereWithoutAttractionInput | Prisma.TicketUpdateManyWithWhereWithoutAttractionInput[]
+  deleteMany?: Prisma.TicketScalarWhereInput | Prisma.TicketScalarWhereInput[]
 }
 
-export type TicketCreateManyAttractionInputEnvelope = {
-  data: Prisma.TicketCreateManyAttractionInput | Prisma.TicketCreateManyAttractionInput[]
-  skipDuplicates?: boolean
+export type TicketUncheckedUpdateManyWithoutAttractionNestedInput = {
+  create?: Prisma.XOR<Prisma.TicketCreateWithoutAttractionInput, Prisma.TicketUncheckedCreateWithoutAttractionInput> | Prisma.TicketCreateWithoutAttractionInput[] | Prisma.TicketUncheckedCreateWithoutAttractionInput[]
+  connectOrCreate?: Prisma.TicketCreateOrConnectWithoutAttractionInput | Prisma.TicketCreateOrConnectWithoutAttractionInput[]
+  upsert?: Prisma.TicketUpsertWithWhereUniqueWithoutAttractionInput | Prisma.TicketUpsertWithWhereUniqueWithoutAttractionInput[]
+  createMany?: Prisma.TicketCreateManyAttractionInputEnvelope
+  set?: Prisma.TicketWhereUniqueInput | Prisma.TicketWhereUniqueInput[]
+  disconnect?: Prisma.TicketWhereUniqueInput | Prisma.TicketWhereUniqueInput[]
+  delete?: Prisma.TicketWhereUniqueInput | Prisma.TicketWhereUniqueInput[]
+  connect?: Prisma.TicketWhereUniqueInput | Prisma.TicketWhereUniqueInput[]
+  update?: Prisma.TicketUpdateWithWhereUniqueWithoutAttractionInput | Prisma.TicketUpdateWithWhereUniqueWithoutAttractionInput[]
+  updateMany?: Prisma.TicketUpdateManyWithWhereWithoutAttractionInput | Prisma.TicketUpdateManyWithWhereWithoutAttractionInput[]
+  deleteMany?: Prisma.TicketScalarWhereInput | Prisma.TicketScalarWhereInput[]
 }
 
-export type TicketUpsertWithWhereUniqueWithoutAttractionInput = {
-  where: Prisma.TicketWhereUniqueInput
-  update: Prisma.XOR<Prisma.TicketUpdateWithoutAttractionInput, Prisma.TicketUncheckedUpdateWithoutAttractionInput>
-  create: Prisma.XOR<Prisma.TicketCreateWithoutAttractionInput, Prisma.TicketUncheckedCreateWithoutAttractionInput>
-}
-
-export type TicketUpdateWithWhereUniqueWithoutAttractionInput = {
-  where: Prisma.TicketWhereUniqueInput
-  data: Prisma.XOR<Prisma.TicketUpdateWithoutAttractionInput, Prisma.TicketUncheckedUpdateWithoutAttractionInput>
-}
-
-export type TicketUpdateManyWithWhereWithoutAttractionInput = {
-  where: Prisma.TicketScalarWhereInput
-  data: Prisma.XOR<Prisma.TicketUpdateManyMutationInput, Prisma.TicketUncheckedUpdateManyWithoutAttractionInput>
-}
-
-export type TicketScalarWhereInput = {
-  AND?: Prisma.TicketScalarWhereInput | Prisma.TicketScalarWhereInput[]
-  OR?: Prisma.TicketScalarWhereInput[]
-  NOT?: Prisma.TicketScalarWhereInput | Prisma.TicketScalarWhereInput[]
-  id?: Prisma.StringFilter<"Ticket"> | string
-  index?: Prisma.IntFilter<"Ticket"> | number
-  numberOfPeople?: Prisma.IntFilter<"Ticket"> | number
-  status?: Prisma.EnumTicketStatusFilter<"Ticket"> | $Enums.TicketStatus
-  attractionId?: Prisma.StringFilter<"Ticket"> | string
-  userId?: Prisma.StringFilter<"Ticket"> | string
-  createdAt?: Prisma.DateTimeFilter<"Ticket"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"Ticket"> | Date | string
+export type EnumTicketStatusFieldUpdateOperationsInput = {
+  set?: $Enums.TicketStatus
 }
 
 export type TicketCreateWithoutUserInput = {
@@ -637,7 +569,31 @@ export type TicketUpdateManyWithWhereWithoutUserInput = {
   data: Prisma.XOR<Prisma.TicketUpdateManyMutationInput, Prisma.TicketUncheckedUpdateManyWithoutUserInput>
 }
 
-export type TicketCreateManyAttractionInput = {
+export type TicketScalarWhereInput = {
+  AND?: Prisma.TicketScalarWhereInput | Prisma.TicketScalarWhereInput[]
+  OR?: Prisma.TicketScalarWhereInput[]
+  NOT?: Prisma.TicketScalarWhereInput | Prisma.TicketScalarWhereInput[]
+  id?: Prisma.StringFilter<"Ticket"> | string
+  index?: Prisma.IntFilter<"Ticket"> | number
+  numberOfPeople?: Prisma.IntFilter<"Ticket"> | number
+  status?: Prisma.EnumTicketStatusFilter<"Ticket"> | $Enums.TicketStatus
+  attractionId?: Prisma.StringFilter<"Ticket"> | string
+  userId?: Prisma.StringFilter<"Ticket"> | string
+  createdAt?: Prisma.DateTimeFilter<"Ticket"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Ticket"> | Date | string
+}
+
+export type TicketCreateWithoutAttractionInput = {
+  id?: string
+  index: number
+  numberOfPeople: number
+  status?: $Enums.TicketStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutTicketsInput
+}
+
+export type TicketUncheckedCreateWithoutAttractionInput = {
   id?: string
   index: number
   numberOfPeople: number
@@ -647,34 +603,30 @@ export type TicketCreateManyAttractionInput = {
   updatedAt?: Date | string
 }
 
-export type TicketUpdateWithoutAttractionInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  index?: Prisma.IntFieldUpdateOperationsInput | number
-  numberOfPeople?: Prisma.IntFieldUpdateOperationsInput | number
-  status?: Prisma.EnumTicketStatusFieldUpdateOperationsInput | $Enums.TicketStatus
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  user?: Prisma.UserUpdateOneRequiredWithoutTicketsNestedInput
+export type TicketCreateOrConnectWithoutAttractionInput = {
+  where: Prisma.TicketWhereUniqueInput
+  create: Prisma.XOR<Prisma.TicketCreateWithoutAttractionInput, Prisma.TicketUncheckedCreateWithoutAttractionInput>
 }
 
-export type TicketUncheckedUpdateWithoutAttractionInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  index?: Prisma.IntFieldUpdateOperationsInput | number
-  numberOfPeople?: Prisma.IntFieldUpdateOperationsInput | number
-  status?: Prisma.EnumTicketStatusFieldUpdateOperationsInput | $Enums.TicketStatus
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+export type TicketCreateManyAttractionInputEnvelope = {
+  data: Prisma.TicketCreateManyAttractionInput | Prisma.TicketCreateManyAttractionInput[]
+  skipDuplicates?: boolean
 }
 
-export type TicketUncheckedUpdateManyWithoutAttractionInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  index?: Prisma.IntFieldUpdateOperationsInput | number
-  numberOfPeople?: Prisma.IntFieldUpdateOperationsInput | number
-  status?: Prisma.EnumTicketStatusFieldUpdateOperationsInput | $Enums.TicketStatus
-  userId?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+export type TicketUpsertWithWhereUniqueWithoutAttractionInput = {
+  where: Prisma.TicketWhereUniqueInput
+  update: Prisma.XOR<Prisma.TicketUpdateWithoutAttractionInput, Prisma.TicketUncheckedUpdateWithoutAttractionInput>
+  create: Prisma.XOR<Prisma.TicketCreateWithoutAttractionInput, Prisma.TicketUncheckedCreateWithoutAttractionInput>
+}
+
+export type TicketUpdateWithWhereUniqueWithoutAttractionInput = {
+  where: Prisma.TicketWhereUniqueInput
+  data: Prisma.XOR<Prisma.TicketUpdateWithoutAttractionInput, Prisma.TicketUncheckedUpdateWithoutAttractionInput>
+}
+
+export type TicketUpdateManyWithWhereWithoutAttractionInput = {
+  where: Prisma.TicketScalarWhereInput
+  data: Prisma.XOR<Prisma.TicketUpdateManyMutationInput, Prisma.TicketUncheckedUpdateManyWithoutAttractionInput>
 }
 
 export type TicketCreateManyUserInput = {
@@ -713,6 +665,46 @@ export type TicketUncheckedUpdateManyWithoutUserInput = {
   numberOfPeople?: Prisma.IntFieldUpdateOperationsInput | number
   status?: Prisma.EnumTicketStatusFieldUpdateOperationsInput | $Enums.TicketStatus
   attractionId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type TicketCreateManyAttractionInput = {
+  id?: string
+  index: number
+  numberOfPeople: number
+  status?: $Enums.TicketStatus
+  userId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type TicketUpdateWithoutAttractionInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  index?: Prisma.IntFieldUpdateOperationsInput | number
+  numberOfPeople?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumTicketStatusFieldUpdateOperationsInput | $Enums.TicketStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutTicketsNestedInput
+}
+
+export type TicketUncheckedUpdateWithoutAttractionInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  index?: Prisma.IntFieldUpdateOperationsInput | number
+  numberOfPeople?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumTicketStatusFieldUpdateOperationsInput | $Enums.TicketStatus
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type TicketUncheckedUpdateManyWithoutAttractionInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  index?: Prisma.IntFieldUpdateOperationsInput | number
+  numberOfPeople?: Prisma.IntFieldUpdateOperationsInput | number
+  status?: Prisma.EnumTicketStatusFieldUpdateOperationsInput | $Enums.TicketStatus
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }

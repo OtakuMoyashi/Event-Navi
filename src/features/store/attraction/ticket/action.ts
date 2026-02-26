@@ -2,14 +2,18 @@
 "use server";
 
 import { z } from "zod";
-import { getCurrentUser } from "@/features/auth/user/action";
 import prisma from "@/lib/prisma";
+import { User } from "@/generated/prisma/client";
 
 const RegisterSchema = z.object({
   numberOfPeople: z.coerce.number(),
 });
 
-export async function createTicket(prevState: any, formData: FormData) {
+export async function createTicket(
+  user: User,
+  prevState: any,
+  formData: FormData,
+) {
   const validationResult = RegisterSchema.safeParse({
     numberOfPeople: formData.get("numberOfPeople"),
   });
@@ -17,8 +21,9 @@ export async function createTicket(prevState: any, formData: FormData) {
   if (!validationResult.success) {
     console.log(validationResult.error);
     return {
-      error: validationResult.error,
+      success: false,
       message: "入力形式が正しくありません",
+      error: "入力形式が正しくありません", //仮実装
     };
   }
 
@@ -26,8 +31,6 @@ export async function createTicket(prevState: any, formData: FormData) {
   const storeId = formData.get("storeId") as string;
 
   try {
-    const user = await getCurrentUser();
-
     if (!user) {
       return {
         success: false,
@@ -79,7 +82,8 @@ export async function createTicket(prevState: any, formData: FormData) {
     console.log(error);
     return {
       success: false,
-      message: "サーバーエラーが発生しました。",
+      message: "サーバーエラーが発生しました",
+      error: error instanceof Error ? error.message : String(error),
     };
   }
 }
@@ -131,7 +135,28 @@ export async function callTicket(ticketId: string) {
     console.log(error);
     return {
       success: false,
-      message: "サーバーエラーが発生しました。",
+      message: "サーバーエラーが発生しました",
+      error: error instanceof Error ? error.message : String(error),
+    };
+  }
+}
+
+export async function cancelTicket(ticketId: string) {
+  try {
+    await prisma.ticket.update({
+      where: { id: ticketId },
+      data: { status: "CANCELED" },
+    });
+    return {
+      success: true,
+      message: "操作が完了しました。",
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      success: false,
+      message: "サーバーエラーが発生しました",
+      error: error instanceof Error ? error.message : String(error),
     };
   }
 }

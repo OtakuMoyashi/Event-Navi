@@ -23,7 +23,8 @@ export async function createAttractionWithFrom(
     console.log(error);
     return {
       success: false,
-      message: "サーバーエラーが発生しました。",
+      message: "サーバーエラーが発生しました",
+      error: error instanceof Error ? error.message : String(error),
     };
   }
 }

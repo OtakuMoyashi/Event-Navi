@@ -6,6 +6,71 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+model User {
+  id            String    @id
+  name          String?
+  email         String
+  emailVerified Boolean
+  image         String?
+  isAnonymous   Boolean?  
+  role          String    @default("user")
+  createdAt     DateTime
+  updatedAt     DateTime
+  sessions      Session[]
+  accounts      Account[]
+
+  @@unique([email])
+  @@map("user")
+  tickets Ticket[]
+  pushSubscriptions PushSubscription[]
+  admins Admin[]
+  staffs Staff[]
+}
+
+model Session {
+  id        String   @id
+  expiresAt DateTime
+  token     String
+  createdAt DateTime
+  updatedAt DateTime
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([token])
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime
+  updatedAt             DateTime
+
+  @@map("account")
+}
+
+model Verification {
+  id         String    @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime?
+  updatedAt  DateTime?
+
+  @@map("verification")
+}
 
 model Event {
   id          String     @id @default(cuid())
@@ -59,6 +124,9 @@ model Store {
 model Attraction {
   id String @id @default(cuid())
 
+  playTime Int? @default(5)
+  peopleCapacity Int @default(5)
+
   storeId String @unique
   store Store @relation(fields: [storeId], references: [id], onDelete: Cascade)
 
@@ -88,7 +156,7 @@ enum TicketStatus {
   ISSUED
   CALLED
   COMPLETED
-  CANCELLED
+  CANCELED
 }
 
 model Ticket {
@@ -146,17 +214,7 @@ model StockLog  {
   updatedAt DateTime  @updatedAt
 }
 
-model User {
-  id   String    @id @default(cuid())
 
-  tickets           Ticket[]
-  pushSubscriptions PushSubscription[]
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  @@map("users")
-}
 
 model PushSubscription {
   id       String    @id @default(cuid())
@@ -175,7 +233,9 @@ model PushSubscription {
 
 model Admin {
   id        String    @id @default(cuid())
-  supabaseUserId String @unique
+  
+  userId    String    @unique
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   email     String    @unique
   name      String? @db.VarChar(20)
@@ -201,7 +261,9 @@ enum AdminRole {
 
 model Staff {
   id        String    @id @default(cuid())
-  supabaseUserId String @unique
+  
+  userId    String    @unique
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   email   String    @unique
   name String? @db.VarChar(20)

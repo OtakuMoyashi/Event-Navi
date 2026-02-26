@@ -13,7 +13,7 @@ import {
   FieldSet,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { Message } from "@/components/ui/message";
+import { MessagePrompt } from "@/components/prompt/message-prompt";
 
 export default function SignInAdmin() {
   const [state, formAction, isPending] = useActionState(signInAdmin, null);
@@ -56,7 +56,7 @@ export default function SignInAdmin() {
             </Field>
           </FieldGroup>
         </form>
-        {state?.message && <Message message={state.message} />}
+        {state?.message && <MessagePrompt message={state.message} />}
       </CardContent>
     </Card>
   );

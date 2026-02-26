@@ -26,7 +26,7 @@ export type AggregateStaff = {
 
 export type StaffMinAggregateOutputType = {
   id: string | null
-  supabaseUserId: string | null
+  userId: string | null
   email: string | null
   name: string | null
   storeId: string | null
@@ -36,7 +36,7 @@ export type StaffMinAggregateOutputType = {
 
 export type StaffMaxAggregateOutputType = {
   id: string | null
-  supabaseUserId: string | null
+  userId: string | null
   email: string | null
   name: string | null
   storeId: string | null
@@ -46,7 +46,7 @@ export type StaffMaxAggregateOutputType = {
 
 export type StaffCountAggregateOutputType = {
   id: number
-  supabaseUserId: number
+  userId: number
   email: number
   name: number
   storeId: number
@@ -58,7 +58,7 @@ export type StaffCountAggregateOutputType = {
 
 export type StaffMinAggregateInputType = {
   id?: true
-  supabaseUserId?: true
+  userId?: true
   email?: true
   name?: true
   storeId?: true
@@ -68,7 +68,7 @@ export type StaffMinAggregateInputType = {
 
 export type StaffMaxAggregateInputType = {
   id?: true
-  supabaseUserId?: true
+  userId?: true
   email?: true
   name?: true
   storeId?: true
@@ -78,7 +78,7 @@ export type StaffMaxAggregateInputType = {
 
 export type StaffCountAggregateInputType = {
   id?: true
-  supabaseUserId?: true
+  userId?: true
   email?: true
   name?: true
   storeId?: true
@@ -161,7 +161,7 @@ export type StaffGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalAr
 
 export type StaffGroupByOutputType = {
   id: string
-  supabaseUserId: string
+  userId: string
   email: string
   name: string | null
   storeId: string
@@ -192,29 +192,31 @@ export type StaffWhereInput = {
   OR?: Prisma.StaffWhereInput[]
   NOT?: Prisma.StaffWhereInput | Prisma.StaffWhereInput[]
   id?: Prisma.StringFilter<"Staff"> | string
-  supabaseUserId?: Prisma.StringFilter<"Staff"> | string
+  userId?: Prisma.StringFilter<"Staff"> | string
   email?: Prisma.StringFilter<"Staff"> | string
   name?: Prisma.StringNullableFilter<"Staff"> | string | null
   storeId?: Prisma.StringFilter<"Staff"> | string
   createdAt?: Prisma.DateTimeFilter<"Staff"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Staff"> | Date | string
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   store?: Prisma.XOR<Prisma.StoreScalarRelationFilter, Prisma.StoreWhereInput>
 }
 
 export type StaffOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  supabaseUserId?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
   email?: Prisma.SortOrder
   name?: Prisma.SortOrderInput | Prisma.SortOrder
   storeId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  user?: Prisma.UserOrderByWithRelationInput
   store?: Prisma.StoreOrderByWithRelationInput
 }
 
 export type StaffWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  supabaseUserId?: string
+  userId?: string
   email?: string
   AND?: Prisma.StaffWhereInput | Prisma.StaffWhereInput[]
   OR?: Prisma.StaffWhereInput[]
@@ -223,12 +225,13 @@ export type StaffWhereUniqueInput = Prisma.AtLeast<{
   storeId?: Prisma.StringFilter<"Staff"> | string
   createdAt?: Prisma.DateTimeFilter<"Staff"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Staff"> | Date | string
+  user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   store?: Prisma.XOR<Prisma.StoreScalarRelationFilter, Prisma.StoreWhereInput>
-}, "id" | "supabaseUserId" | "email">
+}, "id" | "userId" | "email">
 
 export type StaffOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  supabaseUserId?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
   email?: Prisma.SortOrder
   name?: Prisma.SortOrderInput | Prisma.SortOrder
   storeId?: Prisma.SortOrder
@@ -244,7 +247,7 @@ export type StaffScalarWhereWithAggregatesInput = {
   OR?: Prisma.StaffScalarWhereWithAggregatesInput[]
   NOT?: Prisma.StaffScalarWhereWithAggregatesInput | Prisma.StaffScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Staff"> | string
-  supabaseUserId?: Prisma.StringWithAggregatesFilter<"Staff"> | string
+  userId?: Prisma.StringWithAggregatesFilter<"Staff"> | string
   email?: Prisma.StringWithAggregatesFilter<"Staff"> | string
   name?: Prisma.StringNullableWithAggregatesFilter<"Staff"> | string | null
   storeId?: Prisma.StringWithAggregatesFilter<"Staff"> | string
@@ -254,17 +257,17 @@ export type StaffScalarWhereWithAggregatesInput = {
 
 export type StaffCreateInput = {
   id?: string
-  supabaseUserId: string
   email: string
   name?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutStaffsInput
   store: Prisma.StoreCreateNestedOneWithoutStaffsInput
 }
 
 export type StaffUncheckedCreateInput = {
   id?: string
-  supabaseUserId: string
+  userId: string
   email: string
   name?: string | null
   storeId: string
@@ -274,17 +277,17 @@ export type StaffUncheckedCreateInput = {
 
 export type StaffUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  supabaseUserId?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutStaffsNestedInput
   store?: Prisma.StoreUpdateOneRequiredWithoutStaffsNestedInput
 }
 
 export type StaffUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  supabaseUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -294,7 +297,7 @@ export type StaffUncheckedUpdateInput = {
 
 export type StaffCreateManyInput = {
   id?: string
-  supabaseUserId: string
+  userId: string
   email: string
   name?: string | null
   storeId: string
@@ -304,7 +307,6 @@ export type StaffCreateManyInput = {
 
 export type StaffUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  supabaseUserId?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -313,7 +315,7 @@ export type StaffUpdateManyMutationInput = {
 
 export type StaffUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  supabaseUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   storeId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -333,7 +335,7 @@ export type StaffOrderByRelationAggregateInput = {
 
 export type StaffCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  supabaseUserId?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
   email?: Prisma.SortOrder
   name?: Prisma.SortOrder
   storeId?: Prisma.SortOrder
@@ -343,7 +345,7 @@ export type StaffCountOrderByAggregateInput = {
 
 export type StaffMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  supabaseUserId?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
   email?: Prisma.SortOrder
   name?: Prisma.SortOrder
   storeId?: Prisma.SortOrder
@@ -353,12 +355,54 @@ export type StaffMaxOrderByAggregateInput = {
 
 export type StaffMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  supabaseUserId?: Prisma.SortOrder
+  userId?: Prisma.SortOrder
   email?: Prisma.SortOrder
   name?: Prisma.SortOrder
   storeId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type StaffCreateNestedManyWithoutUserInput = {
+  create?: Prisma.XOR<Prisma.StaffCreateWithoutUserInput, Prisma.StaffUncheckedCreateWithoutUserInput> | Prisma.StaffCreateWithoutUserInput[] | Prisma.StaffUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.StaffCreateOrConnectWithoutUserInput | Prisma.StaffCreateOrConnectWithoutUserInput[]
+  createMany?: Prisma.StaffCreateManyUserInputEnvelope
+  connect?: Prisma.StaffWhereUniqueInput | Prisma.StaffWhereUniqueInput[]
+}
+
+export type StaffUncheckedCreateNestedManyWithoutUserInput = {
+  create?: Prisma.XOR<Prisma.StaffCreateWithoutUserInput, Prisma.StaffUncheckedCreateWithoutUserInput> | Prisma.StaffCreateWithoutUserInput[] | Prisma.StaffUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.StaffCreateOrConnectWithoutUserInput | Prisma.StaffCreateOrConnectWithoutUserInput[]
+  createMany?: Prisma.StaffCreateManyUserInputEnvelope
+  connect?: Prisma.StaffWhereUniqueInput | Prisma.StaffWhereUniqueInput[]
+}
+
+export type StaffUpdateManyWithoutUserNestedInput = {
+  create?: Prisma.XOR<Prisma.StaffCreateWithoutUserInput, Prisma.StaffUncheckedCreateWithoutUserInput> | Prisma.StaffCreateWithoutUserInput[] | Prisma.StaffUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.StaffCreateOrConnectWithoutUserInput | Prisma.StaffCreateOrConnectWithoutUserInput[]
+  upsert?: Prisma.StaffUpsertWithWhereUniqueWithoutUserInput | Prisma.StaffUpsertWithWhereUniqueWithoutUserInput[]
+  createMany?: Prisma.StaffCreateManyUserInputEnvelope
+  set?: Prisma.StaffWhereUniqueInput | Prisma.StaffWhereUniqueInput[]
+  disconnect?: Prisma.StaffWhereUniqueInput | Prisma.StaffWhereUniqueInput[]
+  delete?: Prisma.StaffWhereUniqueInput | Prisma.StaffWhereUniqueInput[]
+  connect?: Prisma.StaffWhereUniqueInput | Prisma.StaffWhereUniqueInput[]
+  update?: Prisma.StaffUpdateWithWhereUniqueWithoutUserInput | Prisma.StaffUpdateWithWhereUniqueWithoutUserInput[]
+  updateMany?: Prisma.StaffUpdateManyWithWhereWithoutUserInput | Prisma.StaffUpdateManyWithWhereWithoutUserInput[]
+  deleteMany?: Prisma.StaffScalarWhereInput | Prisma.StaffScalarWhereInput[]
+}
+
+export type StaffUncheckedUpdateManyWithoutUserNestedInput = {
+  create?: Prisma.XOR<Prisma.StaffCreateWithoutUserInput, Prisma.StaffUncheckedCreateWithoutUserInput> | Prisma.StaffCreateWithoutUserInput[] | Prisma.StaffUncheckedCreateWithoutUserInput[]
+  connectOrCreate?: Prisma.StaffCreateOrConnectWithoutUserInput | Prisma.StaffCreateOrConnectWithoutUserInput[]
+  upsert?: Prisma.StaffUpsertWithWhereUniqueWithoutUserInput | Prisma.StaffUpsertWithWhereUniqueWithoutUserInput[]
+  createMany?: Prisma.StaffCreateManyUserInputEnvelope
+  set?: Prisma.StaffWhereUniqueInput | Prisma.StaffWhereUniqueInput[]
+  disconnect?: Prisma.StaffWhereUniqueInput | Prisma.StaffWhereUniqueInput[]
+  delete?: Prisma.StaffWhereUniqueInput | Prisma.StaffWhereUniqueInput[]
+  connect?: Prisma.StaffWhereUniqueInput | Prisma.StaffWhereUniqueInput[]
+  update?: Prisma.StaffUpdateWithWhereUniqueWithoutUserInput | Prisma.StaffUpdateWithWhereUniqueWithoutUserInput[]
+  updateMany?: Prisma.StaffUpdateManyWithWhereWithoutUserInput | Prisma.StaffUpdateManyWithWhereWithoutUserInput[]
+  deleteMany?: Prisma.StaffScalarWhereInput | Prisma.StaffScalarWhereInput[]
 }
 
 export type StaffCreateNestedManyWithoutStoreInput = {
@@ -403,18 +447,75 @@ export type StaffUncheckedUpdateManyWithoutStoreNestedInput = {
   deleteMany?: Prisma.StaffScalarWhereInput | Prisma.StaffScalarWhereInput[]
 }
 
-export type StaffCreateWithoutStoreInput = {
+export type StaffCreateWithoutUserInput = {
   id?: string
-  supabaseUserId: string
   email: string
   name?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  store: Prisma.StoreCreateNestedOneWithoutStaffsInput
+}
+
+export type StaffUncheckedCreateWithoutUserInput = {
+  id?: string
+  email: string
+  name?: string | null
+  storeId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type StaffCreateOrConnectWithoutUserInput = {
+  where: Prisma.StaffWhereUniqueInput
+  create: Prisma.XOR<Prisma.StaffCreateWithoutUserInput, Prisma.StaffUncheckedCreateWithoutUserInput>
+}
+
+export type StaffCreateManyUserInputEnvelope = {
+  data: Prisma.StaffCreateManyUserInput | Prisma.StaffCreateManyUserInput[]
+  skipDuplicates?: boolean
+}
+
+export type StaffUpsertWithWhereUniqueWithoutUserInput = {
+  where: Prisma.StaffWhereUniqueInput
+  update: Prisma.XOR<Prisma.StaffUpdateWithoutUserInput, Prisma.StaffUncheckedUpdateWithoutUserInput>
+  create: Prisma.XOR<Prisma.StaffCreateWithoutUserInput, Prisma.StaffUncheckedCreateWithoutUserInput>
+}
+
+export type StaffUpdateWithWhereUniqueWithoutUserInput = {
+  where: Prisma.StaffWhereUniqueInput
+  data: Prisma.XOR<Prisma.StaffUpdateWithoutUserInput, Prisma.StaffUncheckedUpdateWithoutUserInput>
+}
+
+export type StaffUpdateManyWithWhereWithoutUserInput = {
+  where: Prisma.StaffScalarWhereInput
+  data: Prisma.XOR<Prisma.StaffUpdateManyMutationInput, Prisma.StaffUncheckedUpdateManyWithoutUserInput>
+}
+
+export type StaffScalarWhereInput = {
+  AND?: Prisma.StaffScalarWhereInput | Prisma.StaffScalarWhereInput[]
+  OR?: Prisma.StaffScalarWhereInput[]
+  NOT?: Prisma.StaffScalarWhereInput | Prisma.StaffScalarWhereInput[]
+  id?: Prisma.StringFilter<"Staff"> | string
+  userId?: Prisma.StringFilter<"Staff"> | string
+  email?: Prisma.StringFilter<"Staff"> | string
+  name?: Prisma.StringNullableFilter<"Staff"> | string | null
+  storeId?: Prisma.StringFilter<"Staff"> | string
+  createdAt?: Prisma.DateTimeFilter<"Staff"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Staff"> | Date | string
+}
+
+export type StaffCreateWithoutStoreInput = {
+  id?: string
+  email: string
+  name?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutStaffsInput
 }
 
 export type StaffUncheckedCreateWithoutStoreInput = {
   id?: string
-  supabaseUserId: string
+  userId: string
   email: string
   name?: string | null
   createdAt?: Date | string
@@ -447,22 +548,45 @@ export type StaffUpdateManyWithWhereWithoutStoreInput = {
   data: Prisma.XOR<Prisma.StaffUpdateManyMutationInput, Prisma.StaffUncheckedUpdateManyWithoutStoreInput>
 }
 
-export type StaffScalarWhereInput = {
-  AND?: Prisma.StaffScalarWhereInput | Prisma.StaffScalarWhereInput[]
-  OR?: Prisma.StaffScalarWhereInput[]
-  NOT?: Prisma.StaffScalarWhereInput | Prisma.StaffScalarWhereInput[]
-  id?: Prisma.StringFilter<"Staff"> | string
-  supabaseUserId?: Prisma.StringFilter<"Staff"> | string
-  email?: Prisma.StringFilter<"Staff"> | string
-  name?: Prisma.StringNullableFilter<"Staff"> | string | null
-  storeId?: Prisma.StringFilter<"Staff"> | string
-  createdAt?: Prisma.DateTimeFilter<"Staff"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"Staff"> | Date | string
+export type StaffCreateManyUserInput = {
+  id?: string
+  email: string
+  name?: string | null
+  storeId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type StaffUpdateWithoutUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  store?: Prisma.StoreUpdateOneRequiredWithoutStaffsNestedInput
+}
+
+export type StaffUncheckedUpdateWithoutUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type StaffUncheckedUpdateManyWithoutUserInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  storeId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type StaffCreateManyStoreInput = {
   id?: string
-  supabaseUserId: string
+  userId: string
   email: string
   name?: string | null
   createdAt?: Date | string
@@ -471,16 +595,16 @@ export type StaffCreateManyStoreInput = {
 
 export type StaffUpdateWithoutStoreInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  supabaseUserId?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutStaffsNestedInput
 }
 
 export type StaffUncheckedUpdateWithoutStoreInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  supabaseUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -489,7 +613,7 @@ export type StaffUncheckedUpdateWithoutStoreInput = {
 
 export type StaffUncheckedUpdateManyWithoutStoreInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  supabaseUserId?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
   email?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -500,40 +624,43 @@ export type StaffUncheckedUpdateManyWithoutStoreInput = {
 
 export type StaffSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  supabaseUserId?: boolean
+  userId?: boolean
   email?: boolean
   name?: boolean
   storeId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   store?: boolean | Prisma.StoreDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["staff"]>
 
 export type StaffSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  supabaseUserId?: boolean
+  userId?: boolean
   email?: boolean
   name?: boolean
   storeId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   store?: boolean | Prisma.StoreDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["staff"]>
 
 export type StaffSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  supabaseUserId?: boolean
+  userId?: boolean
   email?: boolean
   name?: boolean
   storeId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   store?: boolean | Prisma.StoreDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["staff"]>
 
 export type StaffSelectScalar = {
   id?: boolean
-  supabaseUserId?: boolean
+  userId?: boolean
   email?: boolean
   name?: boolean
   storeId?: boolean
@@ -541,25 +668,29 @@ export type StaffSelectScalar = {
   updatedAt?: boolean
 }
 
-export type StaffOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "supabaseUserId" | "email" | "name" | "storeId" | "createdAt" | "updatedAt", ExtArgs["result"]["staff"]>
+export type StaffOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "email" | "name" | "storeId" | "createdAt" | "updatedAt", ExtArgs["result"]["staff"]>
 export type StaffInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   store?: boolean | Prisma.StoreDefaultArgs<ExtArgs>
 }
 export type StaffIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   store?: boolean | Prisma.StoreDefaultArgs<ExtArgs>
 }
 export type StaffIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   store?: boolean | Prisma.StoreDefaultArgs<ExtArgs>
 }
 
 export type $StaffPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Staff"
   objects: {
+    user: Prisma.$UserPayload<ExtArgs>
     store: Prisma.$StorePayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    supabaseUserId: string
+    userId: string
     email: string
     name: string | null
     storeId: string
@@ -959,6 +1090,7 @@ readonly fields: StaffFieldRefs;
  */
 export interface Prisma__StaffClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   store<T extends Prisma.StoreDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.StoreDefaultArgs<ExtArgs>>): Prisma.Prisma__StoreClient<runtime.Types.Result.GetResult<Prisma.$StorePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -990,7 +1122,7 @@ export interface Prisma__StaffClient<T, Null = never, ExtArgs extends runtime.Ty
  */
 export interface StaffFieldRefs {
   readonly id: Prisma.FieldRef<"Staff", 'String'>
-  readonly supabaseUserId: Prisma.FieldRef<"Staff", 'String'>
+  readonly userId: Prisma.FieldRef<"Staff", 'String'>
   readonly email: Prisma.FieldRef<"Staff", 'String'>
   readonly name: Prisma.FieldRef<"Staff", 'String'>
   readonly storeId: Prisma.FieldRef<"Staff", 'String'>

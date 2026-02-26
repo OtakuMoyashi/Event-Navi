@@ -2,7 +2,7 @@
 
 import { useActionState } from "react";
 import { createTicket } from "./action";
-import { Store } from "@/generated/prisma/client";
+import { Store, User } from "@/generated/prisma/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
@@ -21,10 +21,21 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
-import { Message } from "@/components/ui/message";
+import { MessagePrompt } from "@/components/prompt/message-prompt";
+import { SuccessPrompt } from "@/components/prompt/success-prompt";
+import { ErrorPrompt } from "@/components/prompt/error-prompt";
 
-export function IssueTicketForm({ stores }: { stores: Store[] }) {
-  const [state, formAction, isPending] = useActionState(createTicket, null);
+interface IssueTicketFormProps {
+  stores: Store[];
+  user: User;
+}
+
+export function IssueTicketForm({ stores, user }: IssueTicketFormProps) {
+  const createTicketWithUser = createTicket.bind(null, user);
+  const [state, formAction, isPending] = useActionState(
+    createTicketWithUser,
+    null,
+  );
 
   return (
     <Card>
@@ -67,12 +78,16 @@ export function IssueTicketForm({ stores }: { stores: Store[] }) {
             <FieldSeparator />
             <Field>
               <Button type="submit" disabled={isPending}>
-                {isPending ? "作成中..." : "イベントを作成"}
+                {isPending ? "発行中..." : "整理券を発行"}
               </Button>
             </Field>
           </FieldGroup>
         </form>
-        {state?.message && <Message message={state.message} />}
+        <div className="space-y-4">
+          {state?.message && <MessagePrompt message={state.message} />}
+          {state?.error && <ErrorPrompt error={state.error} />}
+          {state?.success === true && <SuccessPrompt redirectLink="/" />}
+        </div>
       </CardContent>
     </Card>
   );
