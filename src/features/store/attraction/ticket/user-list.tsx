@@ -9,13 +9,7 @@ import {
   CarouselItem,
 } from "@/components/ui/carousel";
 import { TicketCard } from "./ticket";
-
-const TICKET_STATUS_MAP = {
-  ISSUED: { label: "発券済み" },
-  CALLED: { label: "呼出中" },
-  COMPLETED: { label: "完了" },
-  CANCELED: { label: "キャンセル" },
-} as const;
+import { TICKET_STATUS_MAP } from "@/lib/type";
 
 interface UserTicketListProps {
   user: User;

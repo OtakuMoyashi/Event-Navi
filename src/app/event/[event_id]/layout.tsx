@@ -47,14 +47,6 @@ export default async function EventLayout({ children, params }: Props) {
           <NavigationMenuList>
             <NavigationMenuItem>
               <Link
-                href={`/event/${event.id}/issue-ticket`}
-                className={`${navigationMenuTriggerStyle()} bg-transparent`}
-              >
-                整理券を発行する
-              </Link>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <Link
                 href="/user"
                 className={`${navigationMenuTriggerStyle()} bg-transparent`}
               >

@@ -9,23 +9,39 @@ import {
   CarouselItem,
 } from "@/components/ui/carousel";
 import { TicketCard } from "./ticket";
-
-const TICKET_STATUS_MAP = {
-  ISSUED: { label: "発券済み" },
-  CALLED: { label: "呼出中" },
-  COMPLETED: { label: "完了" },
-  CANCELED: { label: "キャンセル" },
-} as const;
+import { TICKET_STATUS_MAP } from "@/lib/type";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 interface AttractionTicketListProps {
-  store: Store;
-  attraction: Attraction;
+  storeId: string;
 }
 
-export default async function UserTicketList({
-  store,
-  attraction,
+export default async function AttractionTicketList({
+  storeId,
 }: AttractionTicketListProps) {
+  const store = await prisma.store.findUnique({
+    where: {
+      id: storeId,
+    },
+  });
+  if (!store) {
+    return <p>店舗が存在しません。</p>;
+  }
+  const attraction = await prisma.attraction.findUnique({
+    where: {
+      storeId: store.id,
+    },
+  });
+  if (!attraction) {
+    return <p>企画が存在しません。</p>;
+  }
   const tickets = await prisma.ticket.findMany({
     where: {
       attractionId: attraction.id,
@@ -69,32 +85,34 @@ export default async function UserTicketList({
               );
             });
             return (
-              <Carousel
-                opts={{
-                  align: "start",
-                  loop: false,
-                }}
-                className="w-full max-w-lg mx-auto"
-              >
-                <CarouselContent className="-ml-2 md:-ml-4">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>No.</TableHead>
+                    <TableHead>人数</TableHead>
+                    <TableHead>状態</TableHead>
+                    <TableHead>発行日時</TableHead>
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
                   {sortedTickets.map((ticket) => {
                     const statusLabel =
                       TICKET_STATUS_MAP[
                         ticket.status as keyof typeof TICKET_STATUS_MAP
                       ]?.label ?? ticket.status;
                     return (
-                      <CarouselItem
-                        key={ticket.id}
-                        className="pl-2 md:pl-4 basis-full"
-                      >
-                        <TicketCard ticket={ticket} statusLabel={statusLabel} />
-                      </CarouselItem>
+                      <TableRow key={ticket.id}>
+                        <TableCell>{ticket.index}</TableCell>
+                        <TableCell>{ticket.numberOfPeople}</TableCell>
+                        <TableCell>{statusLabel}</TableCell>
+                        <TableCell>
+                          {ticket.createdAt.toLocaleString()}
+                        </TableCell>
+                      </TableRow>
                     );
                   })}
-                </CarouselContent>
-                <CarouselPrevious />
-                <CarouselNext />
-              </Carousel>
+                </TableBody>
+              </Table>
             );
           })()}
         </div>

@@ -450,14 +450,6 @@ export type ItemUncheckedUpdateOneWithoutFoodNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.ItemUpdateToOneWithWhereWithoutFoodInput, Prisma.ItemUpdateWithoutFoodInput>, Prisma.ItemUncheckedUpdateWithoutFoodInput>
 }
 
-export type NullableIntFieldUpdateOperationsInput = {
-  set?: number | null
-  increment?: number
-  decrement?: number
-  multiply?: number
-  divide?: number
-}
-
 export type ItemCreateNestedOneWithoutStocklogInput = {
   create?: Prisma.XOR<Prisma.ItemCreateWithoutStocklogInput, Prisma.ItemUncheckedCreateWithoutStocklogInput>
   connectOrCreate?: Prisma.ItemCreateOrConnectWithoutStocklogInput

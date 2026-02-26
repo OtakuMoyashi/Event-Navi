@@ -4,6 +4,8 @@ import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 
 export async function proxy(request: NextRequest) {
+  const adminAuthPaths = ["/admin/signin", "/admin/signup", "/admin/signout"];
+  const staffAuthPaths = ["/staff/signin", "/staff/signup", "/staff/signout"];
   const url = new URL(request.url);
 
   // 公式ドキュメントサンプル通り: headersを渡す
@@ -12,7 +14,10 @@ export async function proxy(request: NextRequest) {
   });
 
   // Admin パスの認可チェック
-  if (url.pathname.startsWith("/admin")) {
+  if (
+    url.pathname.startsWith("/admin") &&
+    !adminAuthPaths.includes(url.pathname)
+  ) {
     if (!session?.user) {
       return NextResponse.redirect(new URL("/", request.url));
     }
@@ -23,14 +28,17 @@ export async function proxy(request: NextRequest) {
     });
 
     if (!admin) {
-      return NextResponse.redirect(new URL("/login", request.url));
+      return NextResponse.redirect(new URL("/admin/signin", request.url));
     }
 
     return NextResponse.next();
   }
 
   // Staff Store パスの認可チェック
-  if (url.pathname.startsWith("/staff/store/")) {
+  if (
+    url.pathname.startsWith("/staff") &&
+    !staffAuthPaths.includes(url.pathname)
+  ) {
     if (!session?.user) {
       return NextResponse.redirect(new URL("/", request.url));
     }
@@ -41,7 +49,7 @@ export async function proxy(request: NextRequest) {
     });
 
     if (!staff) {
-      return NextResponse.redirect(new URL("/", request.url));
+      return NextResponse.redirect(new URL("/staff/signin", request.url));
     }
 
     return NextResponse.next();

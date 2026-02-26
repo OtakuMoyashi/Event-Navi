@@ -1586,6 +1586,8 @@ export type StoreScalarFieldEnum = (typeof StoreScalarFieldEnum)[keyof typeof St
 
 export const AttractionScalarFieldEnum = {
   id: 'id',
+  playTime: 'playTime',
+  peopleCapacity: 'peopleCapacity',
   storeId: 'storeId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

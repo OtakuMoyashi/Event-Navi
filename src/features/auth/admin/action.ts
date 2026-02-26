@@ -140,8 +140,7 @@ export async function signInAdmin(prevState: any, formData: FormData) {
       };
     }
 
-    // セッション情報をクッキーに設定（better-authが自動処理）
-    redirect("/admin/system");
+    redirect("/admin");
   } catch (error) {
     // Log the full error for server-side debugging
     console.error("[signInAdmin] error:", error);
@@ -151,4 +150,9 @@ export async function signInAdmin(prevState: any, formData: FormData) {
       errorCode: "INTERNAL_ERROR", // 非公開のエラーコードやフラグのみ返す
     };
   }
+}
+
+export async function signOutAdmin() {
+  await auth.api.signOut();
+  return redirect("/singin");
 }

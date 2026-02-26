@@ -124,6 +124,9 @@ model Store {
 model Attraction {
   id String @id @default(cuid())
 
+  playTime Int? @default(5)
+  peopleCapacity Int @default(5)
+
   storeId String @unique
   store Store @relation(fields: [storeId], references: [id], onDelete: Cascade)
 

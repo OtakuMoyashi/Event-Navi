@@ -33,7 +33,15 @@ export default function MainLayout({
                 href="/admin"
                 className={`${navigationMenuTriggerStyle()} bg-transparent`}
               >
-                管理者画面
+                管理者ページ
+              </Link>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <Link
+                href="/staff"
+                className={`${navigationMenuTriggerStyle()} bg-transparent`}
+              >
+                スタッフページ
               </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
@@ -41,7 +49,7 @@ export default function MainLayout({
                 href="/user"
                 className={`${navigationMenuTriggerStyle()} bg-transparent`}
               >
-                ユーザー情報
+                ユーザーページ
               </Link>
             </NavigationMenuItem>
           </NavigationMenuList>

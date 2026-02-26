@@ -35,7 +35,6 @@ export function PushNotificationManager({
   const isRegistering = useRef(false);
 
   async function registerServiceWorker() {
-    if (!user) return;
     if (isRegistering.current) return;
     isRegistering.current = true;
 
@@ -69,7 +68,7 @@ export function PushNotificationManager({
       setIsSupported(true);
       registerServiceWorker();
     }
-  });
+  }, []);
 
   async function subscribeToPush() {
     if (!user) return;

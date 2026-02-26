@@ -64,7 +64,16 @@ export function TicketCard({ ticket, statusLabel }: TicketCardProps) {
       <Separator />
       <CardFooter className="flex flex-col gap-4 items-start">
         <div className="text-sm text-text-01">
-          <p>発券日時：{ticket.createdAt.toLocaleString()}</p>
+          <p>
+            発券日時：
+            {ticket.createdAt.toLocaleString("ja-JP", {
+              year: "numeric",
+              month: "2-digit",
+              day: "2-digit",
+              hour: "2-digit",
+              minute: "2-digit",
+            })}
+          </p>
         </div>
         <Button variant="danger" onClick={handleCancel} disabled={loading}>
           {loading ? "削除中..." : "削除する"}
