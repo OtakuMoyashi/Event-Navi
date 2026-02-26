@@ -84,7 +84,7 @@ export function SignUpStaffForm({ stores }: { stores: Store[] }) {
         {state?.message && <MessagePrompt message={state.message} />}
         {state?.success && (
           <Button>
-            <Link href="/signin">サインイン</Link>
+            <Link href="/staff/signin">サインイン</Link>
           </Button>
         )}
       </CardContent>
