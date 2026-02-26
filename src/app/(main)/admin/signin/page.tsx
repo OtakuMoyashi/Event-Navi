@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import SignInAdmin from "@/features/auth/admin/signin";
 import Link from "next/link";
 
-export default function LoginPage() {
+export default function AdminSigninPage() {
   return (
     <div className="space-4">
       <SignInAdmin />
@@ -13,7 +13,7 @@ export default function LoginPage() {
         </CardHeader>
         <CardContent>
           <Button>
-            <Link href="/signup">アカウントを登録</Link>
+            <Link href="/admin/signup">アカウントを登録</Link>
           </Button>
         </CardContent>
       </Card>
