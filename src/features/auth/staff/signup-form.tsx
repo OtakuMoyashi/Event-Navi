@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
 import { createStaff } from "./action";
 import { Store } from "@/generated/prisma/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -23,10 +23,17 @@ import {
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { MessagePrompt } from "@/components/prompt/message-prompt";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export function SignUpStaffForm({ stores }: { stores: Store[] }) {
+  const router = useRouter();
   const [state, formAction, isPending] = useActionState(createStaff, null);
+
+  useEffect(() => {
+    if (state?.success) {
+      router.push("/staff/signin");
+    }
+  }, [state, router]);
 
   return (
     <Card>
@@ -82,11 +89,6 @@ export function SignUpStaffForm({ stores }: { stores: Store[] }) {
           </FieldGroup>
         </form>
         {state?.message && <MessagePrompt message={state.message} />}
-        {state?.success && (
-          <Button>
-            <Link href="/staff/signin">サインイン</Link>
-          </Button>
-        )}
       </CardContent>
     </Card>
   );

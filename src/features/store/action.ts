@@ -2,7 +2,6 @@
 "use server";
 
 import prisma from "@/lib/prisma";
-import { redirect } from "next/navigation";
 import z from "zod";
 import { StoreType } from "@/generated/prisma/enums";
 import { revalidatePath } from "next/cache";
@@ -84,6 +83,10 @@ export async function updateStoreEventId(
       where: { id: storeId },
       data: { eventId },
     });
+    return {
+      success: true,
+      message: "操作が完了しました。",
+    };
   } catch (error) {
     return {
       success: false,
@@ -91,7 +94,4 @@ export async function updateStoreEventId(
       error: error instanceof Error ? error.message : String(error),
     };
   }
-
-  revalidatePath(`/admin/store/${storeId}`);
-  redirect(`/admin/store/${storeId}`);
 }

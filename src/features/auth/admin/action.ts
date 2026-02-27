@@ -5,7 +5,6 @@ import prisma from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { passwordSchema } from "@/lib/schema/auth";
 import z from "zod";
-import { redirect } from "next/navigation";
 import { AdminRole } from "@/generated/prisma/enums";
 
 const SignUpSchema = z.object({
@@ -50,9 +49,6 @@ export async function signUpAdmin(prevState: any, formData: FormData) {
     });
     // レスポンスをJSONパース
     const data = await response.json();
-    console.log("[signUpAdmin] response status:", response.status);
-    console.log("[signUpAdmin] response.ok:", response.ok);
-    console.log("[signUpAdmin] data:", JSON.stringify(data, null, 2));
 
     // レスポンスのOK判定
     if (!response.ok || !data || !data.user || !data.user.id) {
@@ -133,14 +129,15 @@ export async function signInAdmin(prevState: any, formData: FormData) {
     });
 
     if (!admin) {
-      // サインアウト処理
       return {
         success: false,
         message: "管理者権限が見つかりません",
       };
     }
-
-    redirect("/admin");
+    return {
+      success: true,
+      message: "ログイン成功",
+    };
   } catch (error) {
     // Log the full error for server-side debugging
     console.error("[signInAdmin] error:", error);
@@ -150,9 +147,4 @@ export async function signInAdmin(prevState: any, formData: FormData) {
       errorCode: "INTERNAL_ERROR", // 非公開のエラーコードやフラグのみ返す
     };
   }
-}
-
-export async function signOutAdmin() {
-  await auth.api.signOut();
-  return redirect("/singin");
 }
