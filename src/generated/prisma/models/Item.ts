@@ -645,9 +645,6 @@ export type $ItemPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     name: string
     stock: number
     foodId: string
-    /**
-     * @zod.coerce.number()
-     */
     price: number | null
     createdAt: Date
     updatedAt: Date

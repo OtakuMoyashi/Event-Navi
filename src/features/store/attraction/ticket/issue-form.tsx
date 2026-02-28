@@ -22,16 +22,20 @@ import {
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { MessagePrompt } from "@/components/prompt/message-prompt";
-import { SuccessPrompt } from "@/components/prompt/success-prompt";
 import { ErrorPrompt } from "@/components/prompt/error-prompt";
 
 interface IssueTicketFormProps {
   stores: Store[];
-  user: User;
+  userId: string;
+  isPaper: boolean;
 }
 
-export function IssueTicketForm({ stores, user }: IssueTicketFormProps) {
-  const createTicketWithUser = createTicket.bind(null, user);
+export function IssueTicketForm({
+  stores,
+  userId,
+  isPaper,
+}: IssueTicketFormProps) {
+  const createTicketWithUser = createTicket.bind(null, userId, isPaper);
   const [state, formAction, isPending] = useActionState(
     createTicketWithUser,
     null,
@@ -86,7 +90,6 @@ export function IssueTicketForm({ stores, user }: IssueTicketFormProps) {
         <div className="space-y-4">
           {state?.message && <MessagePrompt message={state.message} />}
           {state?.error && <ErrorPrompt error={state.error} />}
-          {state?.success === true && <SuccessPrompt redirectLink="/" />}
         </div>
       </CardContent>
     </Card>

@@ -17,15 +17,15 @@ export type PushSubscriptionJSONInput = {
   expirationTime?: number | null;
 };
 
-export async function getUserSubscription(user: User) {
+export async function getUserSubscription(userId: string) {
   return await prisma.pushSubscription.findMany({
-    where: { id: user.id },
+    where: { id: userId },
   });
 }
 
 export async function subscribeUser(
   sub: PushSubscriptionJSONInput,
-  user: User,
+  userId: string,
 ) {
   try {
     await prisma.pushSubscription.upsert({
@@ -33,13 +33,13 @@ export async function subscribeUser(
       update: {
         p256dh: sub.keys.p256dh,
         auth: sub.keys.auth,
-        userId: user.id,
+        userId: userId,
       },
       create: {
         endpoint: sub.endpoint,
         p256dh: sub.keys.p256dh,
         auth: sub.keys.auth,
-        userId: user.id,
+        userId: userId,
       },
     });
     return {
@@ -56,11 +56,11 @@ export async function subscribeUser(
   }
 }
 
-export async function unsubscribeUser(user: User) {
+export async function unsubscribeUser(userId: string) {
   try {
     await prisma.pushSubscription.deleteMany({
       where: {
-        userId: user.id,
+        userId: userId,
       },
     });
     return {

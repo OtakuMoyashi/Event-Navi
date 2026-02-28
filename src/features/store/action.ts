@@ -4,14 +4,12 @@
 import prisma from "@/lib/prisma";
 import z from "zod";
 import { StoreType } from "@/generated/prisma/enums";
-import { revalidatePath } from "next/cache";
 
 const RegisterSchema = z.object({
   slug: z.string(),
   name: z.string(),
 });
 
-//TODO eventId?の紐づけ
 export async function createStore(prevState: any, formData: FormData) {
   const validationResult = RegisterSchema.safeParse({
     slug: formData.get("slug"),

@@ -1,14 +1,6 @@
 import { Attraction, Store, User } from "@/generated/prisma/client";
 import prisma from "@/lib/prisma";
 import { NotFoundPrompt } from "@/components/prompt/not-found-prompt";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselPrevious,
-  CarouselNext,
-  CarouselItem,
-} from "@/components/ui/carousel";
-import { TicketCard } from "./ticket";
 import { TICKET_STATUS_MAP } from "@/lib/type";
 import {
   Table,
@@ -18,6 +10,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { Badge } from "@/components/ui/badge";
 
 interface AttractionTicketListProps {
   storeId: string;
@@ -45,17 +38,6 @@ export default async function AttractionTicketList({
   const tickets = await prisma.ticket.findMany({
     where: {
       attractionId: attraction.id,
-    },
-    include: {
-      attraction: {
-        include: {
-          store: {
-            include: {
-              event: true,
-            },
-          },
-        },
-      },
     },
     orderBy: {
       createdAt: "asc",
@@ -88,9 +70,10 @@ export default async function AttractionTicketList({
               <Table>
                 <TableHeader>
                   <TableRow>
-                    <TableHead>No.</TableHead>
+                    <TableHead>番号</TableHead>
                     <TableHead>人数</TableHead>
                     <TableHead>状態</TableHead>
+                    <TableHead>種類</TableHead>
                     <TableHead>発行日時</TableHead>
                   </TableRow>
                 </TableHeader>
@@ -104,7 +87,13 @@ export default async function AttractionTicketList({
                       <TableRow key={ticket.id}>
                         <TableCell>{ticket.index}</TableCell>
                         <TableCell>{ticket.numberOfPeople}</TableCell>
-                        <TableCell>{statusLabel}</TableCell>
+                        <TableCell>
+                          <Badge>{statusLabel}</Badge>
+                        </TableCell>
+                        <TableCell>
+                          <Badge>{ticket.isPaper ? "紙" : "デジタル"}</Badge>
+                        </TableCell>
+
                         <TableCell>
                           {ticket.createdAt.toLocaleString()}
                         </TableCell>

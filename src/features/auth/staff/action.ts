@@ -103,11 +103,11 @@ export async function signInStaff(prevState: any, formData: FormData) {
     }
 
     const userId: string = data.user.id;
-    const admin = await prisma.admin.findUnique({
+    const staff = await prisma.staff.findUnique({
       where: { userId },
     });
 
-    if (!admin) {
+    if (!staff) {
       return {
         success: false,
         message: "管理者権限が見つかりません",

@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import Signout from "@/features/auth/signout";
 import { getCurrentUser } from "@/features/auth/user/action";
 import prisma from "@/lib/prisma";
 import Link from "next/link";
@@ -23,6 +24,7 @@ export default async function StaffHomePage() {
       <Button>
         <Link href={`/staff/store/${staff.storeId}`}>店舗画面へ</Link>
       </Button>
+      <Signout />
     </div>
   );
 }

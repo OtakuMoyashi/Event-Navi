@@ -3,14 +3,14 @@
 
 import { z } from "zod";
 import prisma from "@/lib/prisma";
-import { User } from "@/generated/prisma/client";
 
 const RegisterSchema = z.object({
   numberOfPeople: z.coerce.number(),
 });
 
 export async function createTicket(
-  user: User,
+  userId: string,
+  isPaper: boolean,
   prevState: any,
   formData: FormData,
 ) {
@@ -31,13 +31,6 @@ export async function createTicket(
   const storeId = formData.get("storeId") as string;
 
   try {
-    if (!user) {
-      return {
-        success: false,
-        message: "匿名ユーザーが登録されていません。",
-      };
-    }
-
     const attraction = await prisma.attraction.findUnique({
       where: {
         storeId: storeId,
@@ -69,7 +62,8 @@ export async function createTicket(
           numberOfPeople: numberOfPeople,
           status: "ISSUED",
           attractionId: attraction.id,
-          userId: user.id,
+          userId: userId,
+          isPaper: isPaper,
         },
       });
     });

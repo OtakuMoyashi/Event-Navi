@@ -161,9 +161,10 @@ enum TicketStatus {
 
 model Ticket {
   id   String    @id @default(cuid())
-  index          Int  /// @zod.coerce.number()
-  numberOfPeople Int  /// @zod.coerce.number()
+  index          Int  
+  numberOfPeople Int  
   status         TicketStatus @default(ISSUED)
+  isPaper Boolean @default(false)
 
   attractionId String
   attraction   Attraction @relation(fields: [attractionId], references: [id])
@@ -181,14 +182,14 @@ model Ticket {
 model Item {
   id  String  @id @default(cuid())
   name  String
-  stock Int  // @zod.coerce.number()
+  stock Int  
 
   stocklog  StockLog?
 
   foodId  String @unique
   food  Food  @relation(fields: [foodId], references: [id], onDelete: Cascade)
 
-  price Int? /// @zod.coerce.number()
+  price Int? 
 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt

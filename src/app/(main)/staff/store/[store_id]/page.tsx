@@ -18,14 +18,23 @@ export default async function StoreStaffHomePage(props: {
   return (
     <div>
       {store.storeType === "ATTRACTION" && (
-        <Button>
-          <Link href={`/staff/store/${store_id}/ticket-list`}>
-            整理券の一覧
-          </Link>
-          <Link href={`/staff/store/${store_id}/call-ticket`}>
-            整理券を読み取る
-          </Link>
-        </Button>
+        <>
+          <Button>
+            <Link href={`/staff/store/${store_id}/ticket-list`}>
+              整理券の一覧
+            </Link>
+          </Button>
+          <Button>
+            <Link href={`/staff/store/${store_id}/call-ticket`}>
+              整理券を読み取る
+            </Link>
+          </Button>
+          <Button>
+            <Link href={`/staff/store/${store_id}/issue-ticket`}>
+              整理券を発行する（紙）
+            </Link>
+          </Button>
+        </>
       )}
     </div>
   );

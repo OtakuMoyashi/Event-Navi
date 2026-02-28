@@ -1,4 +1,3 @@
-import { User } from "@/generated/prisma/client";
 import prisma from "@/lib/prisma";
 import { NotFoundPrompt } from "@/components/prompt/not-found-prompt";
 import {
@@ -12,13 +11,13 @@ import { TicketCard } from "./ticket";
 import { TICKET_STATUS_MAP } from "@/lib/type";
 
 interface UserTicketListProps {
-  user: User;
+  userId: string;
 }
 
-export default async function UserTicketList({ user }: UserTicketListProps) {
+export default async function UserTicketList({ userId }: UserTicketListProps) {
   const tickets = await prisma.ticket.findMany({
     where: {
-      userId: user.id,
+      userId: userId,
       status: "ISSUED",
     },
     include: {
