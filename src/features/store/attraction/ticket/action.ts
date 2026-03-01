@@ -86,7 +86,7 @@ export async function createTicket(
 }
 
 const CallFirstTicketSchema = z.object({
-  count: z.coerce.number(),
+  count: z.coerce.number().int().positive(),
 });
 export async function callFirstTicket(
   attractionId: string,
@@ -108,32 +108,33 @@ export async function callFirstTicket(
 
   const { count } = validationResult.data;
   try {
-    const issuedCount = await prisma.ticket.count({
-      where: {
-        attractionId: attractionId,
-        status: "ISSUED",
-      },
-    });
-    const limitedCount = Math.min(count, issuedCount);
-    if (limitedCount === 0) {
-      return {
-        success: false,
-        message: "呼び出す整理券がありません。",
-      };
-    }
-    const tickets = await prisma.ticket.findMany({
-      where: {
-        attractionId: attractionId,
-        status: "ISSUED",
-      },
-      orderBy: {
-        index: "asc",
-      },
-      take: limitedCount,
-      select: { id: true },
-    });
-    const ids = tickets.map((t) => t.id);
     await prisma.$transaction(async (tx) => {
+      const issuedCount = await tx.ticket.count({
+        where: {
+          attractionId: attractionId,
+          status: "ISSUED",
+        },
+      });
+      const limitedCount = Math.min(count, issuedCount);
+      if (limitedCount === 0) {
+        return {
+          success: false,
+          message: "呼び出す整理券がありません。",
+        };
+      }
+      const tickets = await tx.ticket.findMany({
+        where: {
+          attractionId: attractionId,
+          status: "ISSUED",
+        },
+        orderBy: {
+          index: "asc",
+        },
+        take: limitedCount,
+        select: { id: true },
+      });
+      const ids = tickets.map((t) => t.id);
+
       const calledTickets = await tx.ticket.findMany({
         where: {
           id: { in: ids },
@@ -164,12 +165,12 @@ export async function callFirstTicket(
           );
         }
       }
-    });
 
-    return {
-      success: true,
-      message: `${ids.length}件の整理券を呼び出しました。`,
-    };
+      return {
+        success: true,
+        message: `${ids.length}件の整理券を呼び出しました。`,
+      };
+    });
   } catch (error) {
     console.log(error);
     return {

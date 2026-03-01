@@ -51,6 +51,7 @@ export default function FirstCallTicketForm({
                   <Input
                     name="count"
                     type="number"
+                    min="1"
                     required
                     disabled={isPending}
                   />
