@@ -7,7 +7,7 @@ import { getCurrentUser } from "@/features/auth/user/action";
 export default async function UserPage() {
   const user = await getCurrentUser();
   if (!user) {
-    return <p>ユーザーが存在しません。</p>;
+    return <LoadingPrompt contentName="ユーザー情報" />;
   }
   return (
     <div className="space-y-4">
