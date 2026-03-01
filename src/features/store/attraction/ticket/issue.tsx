@@ -24,5 +24,5 @@ export default async function IssueTicket({
     return <p>企画が存在しません</p>;
   }
 
-  return <IssueTicketForm userId={userId} stores={stores} isPaper={true} />;
+  return <IssueTicketForm userId={userId} stores={stores} isPaper={isPaper} />;
 }
