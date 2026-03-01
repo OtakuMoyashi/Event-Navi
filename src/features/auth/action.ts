@@ -1,9 +1,11 @@
 "use server";
 
 import { auth } from "@/lib/auth";
-import { redirect } from "next/navigation";
 
 export async function signOut() {
-  await auth.api.signOut();
-  redirect("/");
+  try {
+    await auth.api.signOut();
+  } catch (error) {
+    console.log("サーバーエラー");
+  }
 }

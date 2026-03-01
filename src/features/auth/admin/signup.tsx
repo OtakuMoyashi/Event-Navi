@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
 import { signUpAdmin } from "./action";
 import { AdminRole } from "@/generated/prisma/enums";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -23,10 +23,18 @@ import {
 } from "@/components/ui/select";
 import { Input } from "@/components/ui/input";
 import { MessagePrompt } from "@/components/prompt/message-prompt";
+import { useRouter } from "next/navigation";
 
 export default function SignUpAdmin() {
+  const router = useRouter();
   const [state, formAction, isPending] = useActionState(signUpAdmin, null);
   const adminRoles = Object.values(AdminRole);
+
+  useEffect(() => {
+    if (state?.success) {
+      router.push("/admin/signin");
+    }
+  }, [state, router]);
 
   return (
     <Card>

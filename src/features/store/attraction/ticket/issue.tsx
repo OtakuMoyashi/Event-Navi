@@ -4,10 +4,15 @@ import { IssueTicketForm } from "./issue-form";
 
 interface IssueTicketProps {
   eventId: string;
-  user: User;
+  userId: string;
+  isPaper: boolean;
 }
 
-export default async function IssueTicket({ eventId, user }: IssueTicketProps) {
+export default async function IssueTicket({
+  eventId,
+  userId,
+  isPaper,
+}: IssueTicketProps) {
   const stores: Store[] = await prisma.store.findMany({
     where: {
       eventId: eventId,
@@ -19,5 +24,5 @@ export default async function IssueTicket({ eventId, user }: IssueTicketProps) {
     return <p>企画が存在しません</p>;
   }
 
-  return <IssueTicketForm user={user} stores={stores} />;
+  return <IssueTicketForm userId={userId} stores={stores} isPaper={true} />;
 }

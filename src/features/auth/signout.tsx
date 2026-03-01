@@ -1,27 +1,21 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { signOut } from "@/features/auth/action";
+import { useRouter } from "next/navigation";
 import { useActionState } from "react";
-import { Field } from "@/components/ui/field";
+import { signOut } from "./action";
+import { Button } from "@/components/ui/button";
 
-export default function SignOut() {
+export default function Signout() {
+  const router = useRouter();
   const [state, formAction, isPending] = useActionState(signOut, null);
+
   return (
-    <Card>
-      <CardHeader>
-        <CardTitle>サインアウトページ</CardTitle>
-      </CardHeader>
-      <CardContent>
-        <form action={formAction}>
-          <Field>
-            <Button type="submit" disabled={isPending}>
-              {isPending ? "サインアウト中..." : "サインアウト"}
-            </Button>
-          </Field>
-        </form>
-      </CardContent>
-    </Card>
+    <>
+      <form action={formAction}>
+        <Button type="submit" disabled={isPending}>
+          サインアウト
+        </Button>
+      </form>
+    </>
   );
 }

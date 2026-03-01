@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import SignOut from "@/features/auth/signout";
+import Signout from "@/features/auth/signout";
 import Link from "next/link";
 
 export default async function AdminHomePage() {
@@ -15,9 +15,7 @@ export default async function AdminHomePage() {
       <Button>
         <Link href="/admin/store">店舗管理画面へ</Link>
       </Button>
-      <Button>
-        <Link href="/signout">サインアウト</Link>
-      </Button>
+      <Signout />
     </div>
   );
 }

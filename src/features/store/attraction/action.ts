@@ -24,7 +24,7 @@ export async function createAttractionWithFrom(
     return {
       success: false,
       message: "サーバーエラーが発生しました",
-      error: error instanceof Error ? error.message : String(error),
+      error: "サーバーエラーが発生しました。",
     };
   }
 }

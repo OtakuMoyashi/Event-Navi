@@ -4,8 +4,8 @@ import { auth } from "@/lib/auth";
 import prisma from "@/lib/prisma";
 
 export async function proxy(request: NextRequest) {
-  const adminAuthPaths = ["/admin/signin", "/admin/signup", "/admin/signout"];
-  const staffAuthPaths = ["/staff/signin", "/staff/signup", "/staff/signout"];
+  const adminAuthPaths = ["/admin/signin", "/admin/signup"];
+  const staffAuthPaths = ["/staff/signin", "/staff/signup"];
   const url = new URL(request.url);
 
   // 公式ドキュメントサンプル通り: headersを渡す

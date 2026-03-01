@@ -5,7 +5,6 @@ import prisma from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import z from "zod";
 import { passwordSchema } from "@/lib/schema/auth";
-import { redirect } from "next/navigation";
 
 const SignUpSchema = z.object({
   loginId: z.string(),
@@ -57,7 +56,7 @@ export async function createStaff(prevState: any, formData: FormData) {
     return {
       success: false,
       message: "サーバーエラーが発生しました",
-      error: error instanceof Error ? error.message : String(error),
+      error: "サーバーエラーが発生しました。",
     };
   }
 }
@@ -104,21 +103,20 @@ export async function signInStaff(prevState: any, formData: FormData) {
     }
 
     const userId: string = data.user.id;
-    // Admin権限確認
-    const admin = await prisma.admin.findUnique({
+    const staff = await prisma.staff.findUnique({
       where: { userId },
     });
 
-    if (!admin) {
-      // サインアウト処理
+    if (!staff) {
       return {
         success: false,
         message: "管理者権限が見つかりません",
       };
     }
-
-    // セッション情報をクッキーに設定（better-authが自動処理）
-    redirect("/staff");
+    return {
+      success: true,
+      message: "操作が完了しました。",
+    };
   } catch (error) {
     // Log the full error for server-side debugging
     console.error("[signInAdmin] error:", error);
