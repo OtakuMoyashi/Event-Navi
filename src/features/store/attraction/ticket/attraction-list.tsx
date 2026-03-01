@@ -65,6 +65,7 @@ export default function AttractionTicketList({
     });
   };
 
+  //TODO 整理券のsort順を考える
   return (
     <div className="space-y-4">
       <Select
@@ -119,7 +120,7 @@ export default function AttractionTicketList({
           </TableBody>
         </Table>
       ) : (
-        <NotFoundPrompt contentName="取得した整理券" />
+        <NotFoundPrompt contentName="発行された整理券" />
       )}
     </div>
   );

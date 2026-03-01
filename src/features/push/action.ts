@@ -1,6 +1,6 @@
 "use server";
 
-import { User } from "@/generated/prisma/client";
+import { PushSubscription } from "@/generated/prisma/client";
 import prisma from "@/lib/prisma";
 import webpush from "web-push";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -74,5 +74,37 @@ export async function unsubscribeUser(userId: string) {
       message: "サーバーエラーが発生しました",
       error: "サーバーエラーが発生しました。",
     };
+  }
+}
+
+export async function sendPushNotification(
+  sub: PushSubscription,
+  title: string,
+  message: string,
+) {
+  if (!sub) {
+    throw new Error("No subscription available");
+  }
+  const subscription = {
+    endpoint: sub.endpoint,
+    keys: {
+      p256dh: sub.p256dh,
+      auth: sub.auth,
+    },
+  };
+
+  try {
+    await webpush.sendNotification(
+      subscription,
+      JSON.stringify({
+        title: title,
+        body: message,
+        icon: "/images/icon-192*192.png",
+      }),
+    );
+    return { success: true };
+  } catch (error) {
+    console.error("Push通知の送信に失敗:", error);
+    return { success: false, error: "Push通知の送信に失敗しました。" };
   }
 }
