@@ -4,5 +4,9 @@ export default async function TicketListPage(props: {
   params: Promise<{ store_id: string }>;
 }) {
   const { store_id } = await props.params;
-  return <AttractionTicketList storeId={store_id} />;
+  return (
+    <div className="space-y-4">
+      <AttractionTicketList storeId={store_id} />
+    </div>
+  );
 }

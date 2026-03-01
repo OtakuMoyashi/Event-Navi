@@ -83,6 +83,76 @@ export async function createTicket(
   }
 }
 
+const CallFirstTicketSchema = z.object({
+  count: z.coerce.number(),
+});
+export async function callFirstTicket(
+  attractionId: string,
+  prevState: any,
+  formData: FormData,
+) {
+  const validationResult = CallFirstTicketSchema.safeParse({
+    count: formData.get("count"),
+  });
+
+  if (!validationResult.success) {
+    console.log(validationResult.error);
+    return {
+      success: false,
+      message: "入力形式が正しくありません",
+      error: "入力形式が正しくありません", //仮実装
+    };
+  }
+
+  const { count } = validationResult.data;
+  try {
+    const issuedCount = await prisma.ticket.count({
+      where: {
+        attractionId: attractionId,
+        status: "ISSUED",
+      },
+    });
+    const limitedCount = Math.min(count, issuedCount);
+    if (limitedCount === 0) {
+      return {
+        success: false,
+        message: "呼び出す整理券がありません。",
+      };
+    }
+    const tickets = await prisma.ticket.findMany({
+      where: {
+        attractionId: attractionId,
+        status: "ISSUED",
+      },
+      orderBy: {
+        index: "asc",
+      },
+      take: limitedCount,
+      select: { id: true },
+    });
+    const ids = tickets.map((t) => t.id);
+    await prisma.ticket.updateMany({
+      where: {
+        id: { in: ids },
+      },
+      data: {
+        status: "CALLED",
+      },
+    });
+    return {
+      success: true,
+      message: `${ids.length}件の整理券を呼び出しました。`,
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      success: false,
+      message: "サーバーエラーが発生しました",
+      error: "サーバーエラーが発生しました。",
+    };
+  }
+}
+
 export async function callTicket(ticketId: string) {
   try {
     await prisma.$transaction(async (tx) => {
