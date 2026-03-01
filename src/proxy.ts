@@ -8,21 +8,17 @@ export async function proxy(request: NextRequest) {
   const staffAuthPaths = ["/staff/signin", "/staff/signup"];
   const url = new URL(request.url);
 
-  // 公式ドキュメントサンプル通り: headersを渡す
   const session = await auth.api.getSession({
     headers: await headers(),
   });
 
-  // Admin パスの認可チェック
   if (
     url.pathname.startsWith("/admin") &&
     !adminAuthPaths.includes(url.pathname)
   ) {
     if (!session?.user) {
-      return NextResponse.redirect(new URL("/", request.url));
+      return NextResponse.redirect(new URL("/", request.url)); //TODO 匿名ユーザー作成中のリダイレクト先を考える
     }
-
-    // Admin権限を確認
     const admin = await prisma.admin.findUnique({
       where: { userId: session.user.id },
     });
@@ -34,16 +30,14 @@ export async function proxy(request: NextRequest) {
     return NextResponse.next();
   }
 
-  // Staff Store パスの認可チェック
   if (
     url.pathname.startsWith("/staff") &&
     !staffAuthPaths.includes(url.pathname)
   ) {
     if (!session?.user) {
-      return NextResponse.redirect(new URL("/", request.url));
+      return NextResponse.redirect(new URL("/", request.url)); //TODO 匿名ユーザー作成中のリダイレクト先を考える
     }
 
-    // Staff権限を確認
     const staff = await prisma.staff.findUnique({
       where: { userId: session.user.id },
     });
