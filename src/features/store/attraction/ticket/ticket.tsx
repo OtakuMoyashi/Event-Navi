@@ -76,7 +76,7 @@ export function TicketCard({ ticket, statusLabel }: TicketCardProps) {
           </p>
         </div>
         <Button variant="danger" onClick={handleCancel} disabled={loading}>
-          {loading ? "削除中..." : "削除する"}
+          {loading ? "キャンセル中..." : "キャンセルする"}
         </Button>
       </CardFooter>
     </Card>

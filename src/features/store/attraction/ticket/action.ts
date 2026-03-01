@@ -4,6 +4,8 @@
 import { z } from "zod";
 import prisma from "@/lib/prisma";
 import { TicketStatus } from "@/generated/prisma/enums";
+import { send } from "node:process";
+import { sendPushNotification } from "@/features/push/action";
 
 const RegisterSchema = z.object({
   numberOfPeople: z.coerce.number(),
@@ -73,6 +75,102 @@ export async function createTicket(
       success: true,
       message: "整理券の発行が完了しました。",
     };
+  } catch (error) {
+    console.log(error);
+    return {
+      success: false,
+      message: "サーバーエラーが発生しました",
+      error: "サーバーエラーが発生しました。",
+    };
+  }
+}
+
+const CallFirstTicketSchema = z.object({
+  count: z.coerce.number().int().positive(),
+});
+export async function callFirstTicket(
+  attractionId: string,
+  prevState: any,
+  formData: FormData,
+) {
+  const validationResult = CallFirstTicketSchema.safeParse({
+    count: formData.get("count"),
+  });
+
+  if (!validationResult.success) {
+    console.log(validationResult.error);
+    return {
+      success: false,
+      message: "入力形式が正しくありません",
+      error: "入力形式が正しくありません", //仮実装
+    };
+  }
+
+  const { count } = validationResult.data;
+  try {
+    await prisma.$transaction(async (tx) => {
+      const issuedCount = await tx.ticket.count({
+        where: {
+          attractionId: attractionId,
+          status: "ISSUED",
+        },
+      });
+      const limitedCount = Math.min(count, issuedCount);
+      if (limitedCount === 0) {
+        return {
+          success: false,
+          message: "呼び出す整理券がありません。",
+        };
+      }
+      const tickets = await tx.ticket.findMany({
+        where: {
+          attractionId: attractionId,
+          status: "ISSUED",
+        },
+        orderBy: {
+          index: "asc",
+        },
+        take: limitedCount,
+        select: { id: true },
+      });
+      const ids = tickets.map((t) => t.id);
+
+      const calledTickets = await tx.ticket.findMany({
+        where: {
+          id: { in: ids },
+        },
+        select: { id: true, userId: true, index: true },
+      });
+
+      await tx.ticket.updateMany({
+        where: {
+          id: { in: ids },
+        },
+        data: {
+          status: "CALLED",
+        },
+      });
+
+      for (const ticket of calledTickets) {
+        const sub = await tx.pushSubscription.findFirst({
+          where: {
+            userId: ticket.userId,
+          },
+        });
+        if (sub) {
+          await sendPushNotification(
+            sub,
+            "整理券が呼び出されました",
+            `あなたの整理券（番号: ${ticket.index}）が呼び出されました。順番までお待ちください。`,
+          );
+        }
+      }
+
+      return {
+        success: true,
+        message: `${ids.length}件の整理券を呼び出しました。`,
+      };
+    });
   } catch (error) {
     console.log(error);
     return {
