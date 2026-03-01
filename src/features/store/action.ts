@@ -4,6 +4,7 @@
 import prisma from "@/lib/prisma";
 import z from "zod";
 import { StoreType } from "@/generated/prisma/enums";
+import { is } from "zod/v4/locales";
 
 const RegisterSchema = z.object({
   slug: z.string(),
@@ -64,32 +65,68 @@ export async function createStore(prevState: any, formData: FormData) {
     return {
       success: false,
       message: "サーバーエラーが発生しました",
-      error: error instanceof Error ? error.message : String(error),
+      error: "サーバーエラーが発生しました", //仮実装
     };
   }
 }
 
-export async function updateStoreEventId(
+const storeConfigSchema = z.object({
+  name: z.string(),
+  isActive: z.boolean(),
+  startedAt: z.date().nullable(),
+  finishedAt: z.date().nullable(),
+  description: z.string().nullable(),
+});
+
+export async function updateStoreConfig(
   storeId: string,
   prevState: any,
   formData: FormData,
 ) {
-  const eventId = formData.get("eventId") as string;
-
+  const validationResult = storeConfigSchema.safeParse({
+    name: formData.get("name"),
+    isActive: formData.get("isActive") === "true",
+    startedAt: formData.get("startedAt")
+      ? new Date(formData.get("startedAt") as string)
+      : null,
+    finishedAt: formData.get("finishedAt")
+      ? new Date(formData.get("finishedAt") as string)
+      : null,
+    description: formData.get("description")
+      ? (formData.get("description") as string)
+      : null,
+  });
+  if (!validationResult.success) {
+    console.log(validationResult.error);
+    return {
+      success: false,
+      message: "入力形式が正しくありません",
+      error: "入力形式が正しくありません", //仮実装
+    };
+  }
+  const { name, isActive, startedAt, finishedAt, description } =
+    validationResult.data;
   try {
     await prisma.store.update({
       where: { id: storeId },
-      data: { eventId },
+      data: {
+        name: name,
+        isActive: isActive,
+        startedAt: startedAt,
+        finishedAt: finishedAt,
+        description: description,
+      },
     });
     return {
       success: true,
       message: "操作が完了しました。",
     };
   } catch (error) {
+    console.log(error);
     return {
       success: false,
       message: "サーバーエラーが発生しました",
-      error: error instanceof Error ? error.message : String(error),
+      error: "サーバーエラーが発生しました", //仮実装
     };
   }
 }

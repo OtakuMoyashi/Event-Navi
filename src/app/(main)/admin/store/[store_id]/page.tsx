@@ -1,5 +1,8 @@
 // src/app/store/[store_id]/page.tsx
+import { Button } from "@/components/ui/button";
+import StoreInfo from "@/features/store/info";
 import prisma from "@/lib/prisma";
+import Link from "next/link";
 import { notFound } from "next/navigation";
 
 export default async function StoreDetailPage({
@@ -19,7 +22,10 @@ export default async function StoreDetailPage({
 
   return (
     <div>
-      <p>店舗名：{store.name}</p>
+      <StoreInfo storeId={store_id} />
+      <Button>
+        <Link href={`/admin/store/${store_id}/config`}>店舗情報の設定</Link>
+      </Button>
     </div>
   );
 }

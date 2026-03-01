@@ -182,7 +182,7 @@ model Ticket {
 model Item {
   id  String  @id @default(cuid())
   name  String
-  stock Int  
+  stock Int  @default(0)
 
   stocklog  StockLog?
 
