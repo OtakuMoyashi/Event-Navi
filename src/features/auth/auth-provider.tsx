@@ -10,8 +10,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const syncAuth = async () => {
       const session = await authClient.getSession();
-      console.log("raw session:", JSON.stringify(session, null, 2));
-      console.log("session?.data:", session?.data);
       if (!session?.data) {
         try {
           await authClient.signIn.anonymous();

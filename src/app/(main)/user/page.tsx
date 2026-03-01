@@ -11,9 +11,9 @@ export default async function UserPage() {
   }
   return (
     <div className="space-y-4">
-      <UserInfo user={user} />
-      <PushNotificationManager user={user} />
-      <UserTicketList user={user} />
+      <UserInfo userId={user.id} />
+      <PushNotificationManager userId={user.id} />
+      <UserTicketList userId={user.id} />
     </div>
   );
 }

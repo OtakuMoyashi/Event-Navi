@@ -202,6 +202,7 @@ export const TicketScalarFieldEnum = {
   index: 'index',
   numberOfPeople: 'numberOfPeople',
   status: 'status',
+  isPaper: 'isPaper',
   attractionId: 'attractionId',
   userId: 'userId',
   createdAt: 'createdAt',

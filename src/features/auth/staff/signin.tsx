@@ -1,7 +1,7 @@
 "use client";
 
 import { signInStaff } from "./action";
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
@@ -14,9 +14,17 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { MessagePrompt } from "@/components/prompt/message-prompt";
+import { useRouter } from "next/navigation";
 
 export default function SignInStaff() {
+  const router = useRouter();
   const [state, formAction, isPending] = useActionState(signInStaff, null);
+
+  useEffect(() => {
+    if (state?.success) {
+      router.push("/staff");
+    }
+  }, [state, router]);
   return (
     <Card>
       <CardHeader>

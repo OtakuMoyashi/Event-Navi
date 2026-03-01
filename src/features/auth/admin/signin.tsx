@@ -1,9 +1,10 @@
 "use client";
 
 import { signInAdmin } from "./action";
-import { useActionState } from "react";
+import { useActionState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { useRouter } from "next/navigation";
 import {
   Field,
   FieldDescription,
@@ -16,7 +17,14 @@ import { Input } from "@/components/ui/input";
 import { MessagePrompt } from "@/components/prompt/message-prompt";
 
 export default function SignInAdmin() {
+  const router = useRouter();
   const [state, formAction, isPending] = useActionState(signInAdmin, null);
+
+  useEffect(() => {
+    if (state?.success) {
+      router.push("/admin");
+    }
+  }, [state, router]);
   return (
     <Card>
       <CardHeader>

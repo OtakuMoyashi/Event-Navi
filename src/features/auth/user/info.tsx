@@ -1,17 +1,16 @@
 "use client";
 
 import { Card, CardContent } from "@/components/ui/card";
-import type { User } from "@/generated/prisma/client";
 
 interface UserInfoProps {
-  user: User;
+  userId: string;
 }
 
-export default function UserInfo({ user }: UserInfoProps) {
+export default function UserInfo({ userId }: UserInfoProps) {
   return (
     <Card>
       <CardContent>
-        <p>ユーザーID: {user.id}</p>
+        <p>ユーザーID: {userId}</p>
       </CardContent>
     </Card>
   );

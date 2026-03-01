@@ -3,14 +3,15 @@
 
 import { z } from "zod";
 import prisma from "@/lib/prisma";
-import { User } from "@/generated/prisma/client";
+import { TicketStatus } from "@/generated/prisma/enums";
 
 const RegisterSchema = z.object({
   numberOfPeople: z.coerce.number(),
 });
 
 export async function createTicket(
-  user: User,
+  userId: string,
+  isPaper: boolean,
   prevState: any,
   formData: FormData,
 ) {
@@ -31,13 +32,6 @@ export async function createTicket(
   const storeId = formData.get("storeId") as string;
 
   try {
-    if (!user) {
-      return {
-        success: false,
-        message: "匿名ユーザーが登録されていません。",
-      };
-    }
-
     const attraction = await prisma.attraction.findUnique({
       where: {
         storeId: storeId,
@@ -69,7 +63,8 @@ export async function createTicket(
           numberOfPeople: numberOfPeople,
           status: "ISSUED",
           attractionId: attraction.id,
-          userId: user.id,
+          userId: userId,
+          isPaper: isPaper,
         },
       });
     });
@@ -83,7 +78,7 @@ export async function createTicket(
     return {
       success: false,
       message: "サーバーエラーが発生しました",
-      error: error instanceof Error ? error.message : String(error),
+      error: "サーバーエラーが発生しました。",
     };
   }
 }
@@ -136,7 +131,7 @@ export async function callTicket(ticketId: string) {
     return {
       success: false,
       message: "サーバーエラーが発生しました",
-      error: error instanceof Error ? error.message : String(error),
+      error: "サーバーエラーが発生しました。",
     };
   }
 }
@@ -156,7 +151,43 @@ export async function cancelTicket(ticketId: string) {
     return {
       success: false,
       message: "サーバーエラーが発生しました",
-      error: error instanceof Error ? error.message : String(error),
+      error: "サーバーエラーが発生しました。",
+    };
+  }
+}
+
+export async function fetchTicketsByStatus(
+  storeId: string,
+  status: TicketStatus | null,
+) {
+  try {
+    const attraction = await prisma.attraction.findUnique({
+      where: {
+        storeId: storeId,
+      },
+      select: {
+        id: true,
+      },
+    });
+    if (!attraction) {
+      return;
+    }
+    const tickets = await prisma.ticket.findMany({
+      where: {
+        attractionId: attraction.id,
+        status: status ? status : undefined,
+      },
+    });
+    return {
+      success: true,
+      tickets: tickets,
+    };
+  } catch (error) {
+    console.log(error);
+    return {
+      success: false,
+      message: "サーバーエラーが発生しました",
+      error: "サーバーエラーが発生しました。",
     };
   }
 }

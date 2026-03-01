@@ -61,7 +61,7 @@ export async function createItem(prevState: any, formData: FormData) {
     return {
       success: false,
       message: "サーバーエラーが発生しました",
-      error: error instanceof Error ? error.message : String(error),
+      error: "サーバーエラーが発生しました。",
     };
   }
 }
