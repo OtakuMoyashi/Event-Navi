@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
-import { createAttractionWithFrom } from "./action";
+import { createAttraction } from "./action";
 import { Store } from "@/generated/prisma/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -23,10 +23,7 @@ import {
 import { MessagePrompt } from "@/components/prompt/message-prompt";
 
 export function CreateAttractionForm({ stores }: { stores: Store[] }) {
-  const [state, formAction, isPending] = useActionState(
-    createAttractionWithFrom,
-    null,
-  );
+  const [state, formAction, isPending] = useActionState(createAttraction, null);
 
   return (
     <Card>

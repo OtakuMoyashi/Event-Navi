@@ -1,9 +1,9 @@
 // src/app/store/[store_id]/page.tsx
 import { Button } from "@/components/ui/button";
+import AttractionInfo from "@/features/store/attraction/info";
 import StoreInfo from "@/features/store/info";
 import prisma from "@/lib/prisma";
 import Link from "next/link";
-import { notFound } from "next/navigation";
 
 export default async function StoreDetailPage({
   params,
@@ -14,15 +14,19 @@ export default async function StoreDetailPage({
 
   const store = await prisma.store.findUnique({
     where: { id: store_id },
+    include: { attraction: true },
   });
 
   if (!store) {
-    notFound();
+    return <p>店舗が存在しません。</p>;
   }
 
   return (
-    <div>
+    <div className="space-y-4">
       <StoreInfo storeId={store_id} />
+      {store.storeType === "ATTRACTION" && store.attraction && (
+        <AttractionInfo attractionId={store.attraction.id} />
+      )}
       <Button>
         <Link href={`/admin/store/${store_id}/config`}>店舗情報の設定</Link>
       </Button>
