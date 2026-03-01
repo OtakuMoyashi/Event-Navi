@@ -298,7 +298,7 @@ export type ItemScalarWhereWithAggregatesInput = {
 export type ItemCreateInput = {
   id?: string
   name: string
-  stock: number
+  stock?: number
   price?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -309,7 +309,7 @@ export type ItemCreateInput = {
 export type ItemUncheckedCreateInput = {
   id?: string
   name: string
-  stock: number
+  stock?: number
   foodId: string
   price?: number | null
   createdAt?: Date | string
@@ -342,7 +342,7 @@ export type ItemUncheckedUpdateInput = {
 export type ItemCreateManyInput = {
   id?: string
   name: string
-  stock: number
+  stock?: number
   foodId: string
   price?: number | null
   createdAt?: Date | string
@@ -467,7 +467,7 @@ export type ItemUpdateOneRequiredWithoutStocklogNestedInput = {
 export type ItemCreateWithoutFoodInput = {
   id?: string
   name: string
-  stock: number
+  stock?: number
   price?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -477,7 +477,7 @@ export type ItemCreateWithoutFoodInput = {
 export type ItemUncheckedCreateWithoutFoodInput = {
   id?: string
   name: string
-  stock: number
+  stock?: number
   price?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -523,7 +523,7 @@ export type ItemUncheckedUpdateWithoutFoodInput = {
 export type ItemCreateWithoutStocklogInput = {
   id?: string
   name: string
-  stock: number
+  stock?: number
   price?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -533,7 +533,7 @@ export type ItemCreateWithoutStocklogInput = {
 export type ItemUncheckedCreateWithoutStocklogInput = {
   id?: string
   name: string
-  stock: number
+  stock?: number
   foodId: string
   price?: number | null
   createdAt?: Date | string

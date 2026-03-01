@@ -4,6 +4,8 @@
 import { z } from "zod";
 import prisma from "@/lib/prisma";
 import { TicketStatus } from "@/generated/prisma/enums";
+import { send } from "node:process";
+import { sendPushNotification } from "@/features/push/action";
 
 const RegisterSchema = z.object({
   numberOfPeople: z.coerce.number(),
@@ -131,14 +133,39 @@ export async function callFirstTicket(
       select: { id: true },
     });
     const ids = tickets.map((t) => t.id);
-    await prisma.ticket.updateMany({
-      where: {
-        id: { in: ids },
-      },
-      data: {
-        status: "CALLED",
-      },
+    await prisma.$transaction(async (tx) => {
+      const calledTickets = await tx.ticket.findMany({
+        where: {
+          id: { in: ids },
+        },
+        select: { id: true, userId: true, index: true },
+      });
+
+      await tx.ticket.updateMany({
+        where: {
+          id: { in: ids },
+        },
+        data: {
+          status: "CALLED",
+        },
+      });
+
+      for (const ticket of calledTickets) {
+        const sub = await tx.pushSubscription.findFirst({
+          where: {
+            userId: ticket.userId,
+          },
+        });
+        if (sub) {
+          await sendPushNotification(
+            sub,
+            "整理券が呼び出されました",
+            `あなたの整理券（番号: ${ticket.index}）が呼び出されました。順番までお待ちください。`,
+          );
+        }
+      }
     });
+
     return {
       success: true,
       message: `${ids.length}件の整理券を呼び出しました。`,
