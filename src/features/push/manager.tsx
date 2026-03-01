@@ -33,6 +33,14 @@ export function PushNotificationManager({
   );
   const [isLoading, setIsLoading] = useState(false);
   const isRegistering = useRef(false);
+  const [permission, setPermission] =
+    useState<NotificationPermission>("default");
+
+  useEffect(() => {
+    if ("Notification" in window) {
+      setPermission(Notification.permission);
+    }
+  }, []);
 
   async function registerServiceWorker() {
     if (isRegistering.current) return;
@@ -74,6 +82,14 @@ export function PushNotificationManager({
     setIsLoading(true);
     try {
       const registration = await navigator.serviceWorker.ready;
+      if (permission !== "granted") {
+        const result = await Notification.requestPermission();
+        setPermission(result);
+        if (result !== "granted") {
+          setIsLoading(false);
+          return;
+        }
+      }
       const sub = await registration.pushManager.subscribe({
         userVisibleOnly: true,
         applicationServerKey: urlBase64ToUint8Array(
