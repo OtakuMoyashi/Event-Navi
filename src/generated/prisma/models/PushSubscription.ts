@@ -215,16 +215,16 @@ export type PushSubscriptionOrderByWithRelationInput = {
 export type PushSubscriptionWhereUniqueInput = Prisma.AtLeast<{
   id?: string
   endpoint?: string
+  userId?: string
   AND?: Prisma.PushSubscriptionWhereInput | Prisma.PushSubscriptionWhereInput[]
   OR?: Prisma.PushSubscriptionWhereInput[]
   NOT?: Prisma.PushSubscriptionWhereInput | Prisma.PushSubscriptionWhereInput[]
   p256dh?: Prisma.StringFilter<"PushSubscription"> | string
   auth?: Prisma.StringFilter<"PushSubscription"> | string
-  userId?: Prisma.StringFilter<"PushSubscription"> | string
   createdAt?: Prisma.DateTimeFilter<"PushSubscription"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"PushSubscription"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-}, "id" | "endpoint">
+}, "id" | "endpoint" | "userId">
 
 export type PushSubscriptionOrderByWithAggregationInput = {
   id?: Prisma.SortOrder

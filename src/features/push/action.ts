@@ -19,7 +19,7 @@ export type PushSubscriptionJSONInput = {
 
 export async function getUserSubscription(userId: string) {
   return await prisma.pushSubscription.findMany({
-    where: { id: userId },
+    where: { userId: userId },
   });
 }
 
@@ -29,11 +29,12 @@ export async function subscribeUser(
 ) {
   try {
     await prisma.pushSubscription.upsert({
-      where: { endpoint: sub.endpoint },
+      where: { userId: userId },
       update: {
         p256dh: sub.keys.p256dh,
         auth: sub.keys.auth,
         userId: userId,
+        endpoint: sub.endpoint,
       },
       create: {
         endpoint: sub.endpoint,
