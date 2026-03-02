@@ -20,7 +20,6 @@ self.addEventListener("push", function (event) {
   }
 });
 
-//プッシュ通知をクリックしたときの動作
 self.addEventListener("notificationclick", function (event) {
   console.log("プッシュ通知がクリックされました");
   event.notification.close();
