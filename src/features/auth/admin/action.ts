@@ -23,7 +23,6 @@ export async function signUpAdmin(prevState: any, formData: FormData) {
   if (!validationResult.success) {
     return {
       success: false,
-      message: "入力形式が正しくありません",
     };
   }
 
@@ -96,7 +95,6 @@ export async function signInAdmin(prevState: any, formData: FormData) {
   if (!validationResult.success) {
     return {
       success: false,
-      message: "入力形式が正しくありません",
     };
   }
 

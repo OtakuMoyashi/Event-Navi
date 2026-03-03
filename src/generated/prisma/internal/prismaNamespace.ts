@@ -1638,7 +1638,7 @@ export type ItemScalarFieldEnum = (typeof ItemScalarFieldEnum)[keyof typeof Item
 export const StockLogScalarFieldEnum = {
   id: 'id',
   itemId: 'itemId',
-  change: 'change',
+  difference: 'difference',
   reason: 'reason',
   description: 'description',
   createdAt: 'createdAt',

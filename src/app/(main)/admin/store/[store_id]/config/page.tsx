@@ -1,5 +1,6 @@
 import UpdateAttractionConfig from "@/features/store/attraction/update";
 import { CreateItemForm } from "@/features/store/food/item/create-form";
+import CreateStockLog from "@/features/store/food/stock-log/create";
 import UpdateStoreConfig from "@/features/store/update";
 import prisma from "@/lib/prisma";
 
@@ -24,7 +25,9 @@ export default async function StoreConfigPage(props: {
         <UpdateAttractionConfig attractionId={store.attraction.id} />
       )}
       {store.storeType === "FOOD" && store.food && (
-        <CreateItemForm storeId={store.id} />
+        <>
+          <CreateItemForm storeId={store.id} />
+        </>
       )}
     </div>
   );

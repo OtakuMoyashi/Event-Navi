@@ -178,7 +178,6 @@ model Ticket {
   @@map("tickets")
 }
 
-//TODO  カラムは要検討
 model Item {
   id  String  @id @default(cuid())
   name  String
@@ -200,17 +199,16 @@ model Item {
 
 enum StockChangedReason {
   SELLING
-}
+} 
 
-//TODO  カラムは要検討
 model StockLog  {
   id  String  @id @default(cuid())
   
   itemId  String 
   item  Item  @relation(fields: [itemId], references: [id])
 
-  change  Int
-  reason  StockChangedReason?
+  difference  Int
+  reason  StockChangedReason? //在庫変動の理由（いらないかも）
   description String? @db.Text
 
   createdAt DateTime  @default(now())

@@ -27,17 +27,17 @@ export type AggregateStockLog = {
 }
 
 export type StockLogAvgAggregateOutputType = {
-  change: number | null
+  difference: number | null
 }
 
 export type StockLogSumAggregateOutputType = {
-  change: number | null
+  difference: number | null
 }
 
 export type StockLogMinAggregateOutputType = {
   id: string | null
   itemId: string | null
-  change: number | null
+  difference: number | null
   reason: $Enums.StockChangedReason | null
   description: string | null
   createdAt: Date | null
@@ -47,7 +47,7 @@ export type StockLogMinAggregateOutputType = {
 export type StockLogMaxAggregateOutputType = {
   id: string | null
   itemId: string | null
-  change: number | null
+  difference: number | null
   reason: $Enums.StockChangedReason | null
   description: string | null
   createdAt: Date | null
@@ -57,7 +57,7 @@ export type StockLogMaxAggregateOutputType = {
 export type StockLogCountAggregateOutputType = {
   id: number
   itemId: number
-  change: number
+  difference: number
   reason: number
   description: number
   createdAt: number
@@ -67,17 +67,17 @@ export type StockLogCountAggregateOutputType = {
 
 
 export type StockLogAvgAggregateInputType = {
-  change?: true
+  difference?: true
 }
 
 export type StockLogSumAggregateInputType = {
-  change?: true
+  difference?: true
 }
 
 export type StockLogMinAggregateInputType = {
   id?: true
   itemId?: true
-  change?: true
+  difference?: true
   reason?: true
   description?: true
   createdAt?: true
@@ -87,7 +87,7 @@ export type StockLogMinAggregateInputType = {
 export type StockLogMaxAggregateInputType = {
   id?: true
   itemId?: true
-  change?: true
+  difference?: true
   reason?: true
   description?: true
   createdAt?: true
@@ -97,7 +97,7 @@ export type StockLogMaxAggregateInputType = {
 export type StockLogCountAggregateInputType = {
   id?: true
   itemId?: true
-  change?: true
+  difference?: true
   reason?: true
   description?: true
   createdAt?: true
@@ -194,7 +194,7 @@ export type StockLogGroupByArgs<ExtArgs extends runtime.Types.Extensions.Interna
 export type StockLogGroupByOutputType = {
   id: string
   itemId: string
-  change: number
+  difference: number
   reason: $Enums.StockChangedReason | null
   description: string | null
   createdAt: Date
@@ -227,7 +227,7 @@ export type StockLogWhereInput = {
   NOT?: Prisma.StockLogWhereInput | Prisma.StockLogWhereInput[]
   id?: Prisma.StringFilter<"StockLog"> | string
   itemId?: Prisma.StringFilter<"StockLog"> | string
-  change?: Prisma.IntFilter<"StockLog"> | number
+  difference?: Prisma.IntFilter<"StockLog"> | number
   reason?: Prisma.EnumStockChangedReasonNullableFilter<"StockLog"> | $Enums.StockChangedReason | null
   description?: Prisma.StringNullableFilter<"StockLog"> | string | null
   createdAt?: Prisma.DateTimeFilter<"StockLog"> | Date | string
@@ -238,7 +238,7 @@ export type StockLogWhereInput = {
 export type StockLogOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   itemId?: Prisma.SortOrder
-  change?: Prisma.SortOrder
+  difference?: Prisma.SortOrder
   reason?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -252,7 +252,7 @@ export type StockLogWhereUniqueInput = Prisma.AtLeast<{
   OR?: Prisma.StockLogWhereInput[]
   NOT?: Prisma.StockLogWhereInput | Prisma.StockLogWhereInput[]
   itemId?: Prisma.StringFilter<"StockLog"> | string
-  change?: Prisma.IntFilter<"StockLog"> | number
+  difference?: Prisma.IntFilter<"StockLog"> | number
   reason?: Prisma.EnumStockChangedReasonNullableFilter<"StockLog"> | $Enums.StockChangedReason | null
   description?: Prisma.StringNullableFilter<"StockLog"> | string | null
   createdAt?: Prisma.DateTimeFilter<"StockLog"> | Date | string
@@ -263,7 +263,7 @@ export type StockLogWhereUniqueInput = Prisma.AtLeast<{
 export type StockLogOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   itemId?: Prisma.SortOrder
-  change?: Prisma.SortOrder
+  difference?: Prisma.SortOrder
   reason?: Prisma.SortOrderInput | Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -281,7 +281,7 @@ export type StockLogScalarWhereWithAggregatesInput = {
   NOT?: Prisma.StockLogScalarWhereWithAggregatesInput | Prisma.StockLogScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"StockLog"> | string
   itemId?: Prisma.StringWithAggregatesFilter<"StockLog"> | string
-  change?: Prisma.IntWithAggregatesFilter<"StockLog"> | number
+  difference?: Prisma.IntWithAggregatesFilter<"StockLog"> | number
   reason?: Prisma.EnumStockChangedReasonNullableWithAggregatesFilter<"StockLog"> | $Enums.StockChangedReason | null
   description?: Prisma.StringNullableWithAggregatesFilter<"StockLog"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"StockLog"> | Date | string
@@ -290,7 +290,7 @@ export type StockLogScalarWhereWithAggregatesInput = {
 
 export type StockLogCreateInput = {
   id?: string
-  change: number
+  difference: number
   reason?: $Enums.StockChangedReason | null
   description?: string | null
   createdAt?: Date | string
@@ -301,7 +301,7 @@ export type StockLogCreateInput = {
 export type StockLogUncheckedCreateInput = {
   id?: string
   itemId: string
-  change: number
+  difference: number
   reason?: $Enums.StockChangedReason | null
   description?: string | null
   createdAt?: Date | string
@@ -310,7 +310,7 @@ export type StockLogUncheckedCreateInput = {
 
 export type StockLogUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  change?: Prisma.IntFieldUpdateOperationsInput | number
+  difference?: Prisma.IntFieldUpdateOperationsInput | number
   reason?: Prisma.NullableEnumStockChangedReasonFieldUpdateOperationsInput | $Enums.StockChangedReason | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -321,7 +321,7 @@ export type StockLogUpdateInput = {
 export type StockLogUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   itemId?: Prisma.StringFieldUpdateOperationsInput | string
-  change?: Prisma.IntFieldUpdateOperationsInput | number
+  difference?: Prisma.IntFieldUpdateOperationsInput | number
   reason?: Prisma.NullableEnumStockChangedReasonFieldUpdateOperationsInput | $Enums.StockChangedReason | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -331,7 +331,7 @@ export type StockLogUncheckedUpdateInput = {
 export type StockLogCreateManyInput = {
   id?: string
   itemId: string
-  change: number
+  difference: number
   reason?: $Enums.StockChangedReason | null
   description?: string | null
   createdAt?: Date | string
@@ -340,7 +340,7 @@ export type StockLogCreateManyInput = {
 
 export type StockLogUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  change?: Prisma.IntFieldUpdateOperationsInput | number
+  difference?: Prisma.IntFieldUpdateOperationsInput | number
   reason?: Prisma.NullableEnumStockChangedReasonFieldUpdateOperationsInput | $Enums.StockChangedReason | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -350,7 +350,7 @@ export type StockLogUpdateManyMutationInput = {
 export type StockLogUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   itemId?: Prisma.StringFieldUpdateOperationsInput | string
-  change?: Prisma.IntFieldUpdateOperationsInput | number
+  difference?: Prisma.IntFieldUpdateOperationsInput | number
   reason?: Prisma.NullableEnumStockChangedReasonFieldUpdateOperationsInput | $Enums.StockChangedReason | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -370,7 +370,7 @@ export type StockLogOrderByRelationAggregateInput = {
 export type StockLogCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   itemId?: Prisma.SortOrder
-  change?: Prisma.SortOrder
+  difference?: Prisma.SortOrder
   reason?: Prisma.SortOrder
   description?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -378,13 +378,13 @@ export type StockLogCountOrderByAggregateInput = {
 }
 
 export type StockLogAvgOrderByAggregateInput = {
-  change?: Prisma.SortOrder
+  difference?: Prisma.SortOrder
 }
 
 export type StockLogMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   itemId?: Prisma.SortOrder
-  change?: Prisma.SortOrder
+  difference?: Prisma.SortOrder
   reason?: Prisma.SortOrder
   description?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -394,7 +394,7 @@ export type StockLogMaxOrderByAggregateInput = {
 export type StockLogMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   itemId?: Prisma.SortOrder
-  change?: Prisma.SortOrder
+  difference?: Prisma.SortOrder
   reason?: Prisma.SortOrder
   description?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -402,7 +402,7 @@ export type StockLogMinOrderByAggregateInput = {
 }
 
 export type StockLogSumOrderByAggregateInput = {
-  change?: Prisma.SortOrder
+  difference?: Prisma.SortOrder
 }
 
 export type StockLogCreateNestedManyWithoutItemInput = {
@@ -453,7 +453,7 @@ export type NullableEnumStockChangedReasonFieldUpdateOperationsInput = {
 
 export type StockLogCreateWithoutItemInput = {
   id?: string
-  change: number
+  difference: number
   reason?: $Enums.StockChangedReason | null
   description?: string | null
   createdAt?: Date | string
@@ -462,7 +462,7 @@ export type StockLogCreateWithoutItemInput = {
 
 export type StockLogUncheckedCreateWithoutItemInput = {
   id?: string
-  change: number
+  difference: number
   reason?: $Enums.StockChangedReason | null
   description?: string | null
   createdAt?: Date | string
@@ -501,7 +501,7 @@ export type StockLogScalarWhereInput = {
   NOT?: Prisma.StockLogScalarWhereInput | Prisma.StockLogScalarWhereInput[]
   id?: Prisma.StringFilter<"StockLog"> | string
   itemId?: Prisma.StringFilter<"StockLog"> | string
-  change?: Prisma.IntFilter<"StockLog"> | number
+  difference?: Prisma.IntFilter<"StockLog"> | number
   reason?: Prisma.EnumStockChangedReasonNullableFilter<"StockLog"> | $Enums.StockChangedReason | null
   description?: Prisma.StringNullableFilter<"StockLog"> | string | null
   createdAt?: Prisma.DateTimeFilter<"StockLog"> | Date | string
@@ -510,7 +510,7 @@ export type StockLogScalarWhereInput = {
 
 export type StockLogCreateManyItemInput = {
   id?: string
-  change: number
+  difference: number
   reason?: $Enums.StockChangedReason | null
   description?: string | null
   createdAt?: Date | string
@@ -519,7 +519,7 @@ export type StockLogCreateManyItemInput = {
 
 export type StockLogUpdateWithoutItemInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  change?: Prisma.IntFieldUpdateOperationsInput | number
+  difference?: Prisma.IntFieldUpdateOperationsInput | number
   reason?: Prisma.NullableEnumStockChangedReasonFieldUpdateOperationsInput | $Enums.StockChangedReason | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -528,7 +528,7 @@ export type StockLogUpdateWithoutItemInput = {
 
 export type StockLogUncheckedUpdateWithoutItemInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  change?: Prisma.IntFieldUpdateOperationsInput | number
+  difference?: Prisma.IntFieldUpdateOperationsInput | number
   reason?: Prisma.NullableEnumStockChangedReasonFieldUpdateOperationsInput | $Enums.StockChangedReason | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -537,7 +537,7 @@ export type StockLogUncheckedUpdateWithoutItemInput = {
 
 export type StockLogUncheckedUpdateManyWithoutItemInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  change?: Prisma.IntFieldUpdateOperationsInput | number
+  difference?: Prisma.IntFieldUpdateOperationsInput | number
   reason?: Prisma.NullableEnumStockChangedReasonFieldUpdateOperationsInput | $Enums.StockChangedReason | null
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -549,7 +549,7 @@ export type StockLogUncheckedUpdateManyWithoutItemInput = {
 export type StockLogSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   itemId?: boolean
-  change?: boolean
+  difference?: boolean
   reason?: boolean
   description?: boolean
   createdAt?: boolean
@@ -560,7 +560,7 @@ export type StockLogSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
 export type StockLogSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   itemId?: boolean
-  change?: boolean
+  difference?: boolean
   reason?: boolean
   description?: boolean
   createdAt?: boolean
@@ -571,7 +571,7 @@ export type StockLogSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
 export type StockLogSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   itemId?: boolean
-  change?: boolean
+  difference?: boolean
   reason?: boolean
   description?: boolean
   createdAt?: boolean
@@ -582,14 +582,14 @@ export type StockLogSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
 export type StockLogSelectScalar = {
   id?: boolean
   itemId?: boolean
-  change?: boolean
+  difference?: boolean
   reason?: boolean
   description?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type StockLogOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "itemId" | "change" | "reason" | "description" | "createdAt" | "updatedAt", ExtArgs["result"]["stockLog"]>
+export type StockLogOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "itemId" | "difference" | "reason" | "description" | "createdAt" | "updatedAt", ExtArgs["result"]["stockLog"]>
 export type StockLogInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   item?: boolean | Prisma.ItemDefaultArgs<ExtArgs>
 }
@@ -608,7 +608,7 @@ export type $StockLogPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     itemId: string
-    change: number
+    difference: number
     reason: $Enums.StockChangedReason | null
     description: string | null
     createdAt: Date
@@ -1039,7 +1039,7 @@ export interface Prisma__StockLogClient<T, Null = never, ExtArgs extends runtime
 export interface StockLogFieldRefs {
   readonly id: Prisma.FieldRef<"StockLog", 'String'>
   readonly itemId: Prisma.FieldRef<"StockLog", 'String'>
-  readonly change: Prisma.FieldRef<"StockLog", 'Int'>
+  readonly difference: Prisma.FieldRef<"StockLog", 'Int'>
   readonly reason: Prisma.FieldRef<"StockLog", 'StockChangedReason'>
   readonly description: Prisma.FieldRef<"StockLog", 'String'>
   readonly createdAt: Prisma.FieldRef<"StockLog", 'DateTime'>
