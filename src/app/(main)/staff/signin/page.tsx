@@ -9,11 +9,11 @@ export default function StaffSigninPage() {
       <SignInStaff />
       <Card>
         <CardHeader>
-          <CardTitle>アカウントをお持ちでない場合</CardTitle>
+          <CardTitle>スタッフアカウントをお持ちでない場合</CardTitle>
         </CardHeader>
         <CardContent>
           <Button>
-            <Link href="/staff/signup">アカウントを登録</Link>
+            <Link href="/staff/signup">スタッフアカウントを作成</Link>
           </Button>
         </CardContent>
       </Card>

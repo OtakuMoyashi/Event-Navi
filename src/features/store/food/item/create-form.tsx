@@ -23,8 +23,15 @@ import {
 import { Input } from "@/components/ui/input";
 import { MessagePrompt } from "@/components/prompt/message-prompt";
 
-export function CreateItemForm({ stores }: { stores: Store[] }) {
-  const [state, formAction, isPending] = useActionState(createItem, null);
+interface CreateItemFormProps {
+  storeId: string;
+}
+
+export function CreateItemForm({ storeId }: CreateItemFormProps) {
+  const [state, formAction, isPending] = useActionState(
+    (prevState: unknown, formData: FormData) => createItem(storeId, prevState, formData),
+    null,
+  );
   return (
     <Card>
       <CardHeader>
@@ -36,20 +43,6 @@ export function CreateItemForm({ stores }: { stores: Store[] }) {
             <FieldSet>
               <Field>
                 <FieldLabel>模擬店</FieldLabel>
-                <Select name="storeId" required disabled={isPending}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="模擬店を選択" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectGroup>
-                      {stores.map((store) => (
-                        <SelectItem key={store.id} value={store.id}>
-                          {store.name}
-                        </SelectItem>
-                      ))}
-                    </SelectGroup>
-                  </SelectContent>
-                </Select>
                 <Field>
                   <FieldLabel>商品名</FieldLabel>
                   <Input name="name" required disabled={isPending} />
@@ -58,6 +51,15 @@ export function CreateItemForm({ stores }: { stores: Store[] }) {
                   <FieldLabel>在庫数</FieldLabel>
                   <Input
                     name="stock"
+                    type="number"
+                    required
+                    disabled={isPending}
+                  />
+                </Field>
+                <Field>
+                  <FieldLabel>価格</FieldLabel>
+                  <Input
+                    name="price"
                     type="number"
                     required
                     disabled={isPending}

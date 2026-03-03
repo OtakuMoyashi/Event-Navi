@@ -144,7 +144,7 @@ model Food {
   storeId String @unique
   store Store @relation(fields: [storeId], references: [id], onDelete: Cascade)
 
-  item  Item?
+  items  Item[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -178,18 +178,18 @@ model Ticket {
   @@map("tickets")
 }
 
-//TODO  カラムは要検討
 model Item {
   id  String  @id @default(cuid())
   name  String
   stock Int  @default(0)
+  price Int
 
-  stocklog  StockLog?
+  stocklogs  StockLog[]
 
-  foodId  String @unique
+  foodId  String 
   food  Food  @relation(fields: [foodId], references: [id], onDelete: Cascade)
 
-  price Int? 
+  description String? @db.Text
 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
@@ -199,20 +199,22 @@ model Item {
 
 enum StockChangedReason {
   SELLING
-}
+} 
 
-//TODO  カラムは要検討
 model StockLog  {
   id  String  @id @default(cuid())
   
-  itemId  String @unique
+  itemId  String 
   item  Item  @relation(fields: [itemId], references: [id])
 
-  change  Int
-  reason  StockChangedReason
+  difference  Int
+  reason  StockChangedReason? //在庫変動の理由（いらないかも）
+  description String? @db.Text
 
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
+
+  @@map("stock_logs")
 }
 
 

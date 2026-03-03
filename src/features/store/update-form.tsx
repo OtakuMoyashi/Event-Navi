@@ -22,15 +22,15 @@ import "react-datepicker/dist/react-datepicker.css";
 import { ja } from "date-fns/locale";
 
 interface updateStoreConfigFormProps {
-  store: Store;
+  store: Store; //isActiveを取得するためStore型
 }
 
 export default function UpdateStoreConfigForm({
   store,
 }: updateStoreConfigFormProps) {
-  const updateStoreConfigWithStoreId = updateStoreConfig.bind(null, store.id);
   const [state, formAction, isPending] = useActionState(
-    updateStoreConfigWithStoreId,
+    (prevState: unknown, formData: FormData) =>
+      updateStoreConfig(store.id, prevState, formData),
     null,
   );
   const [checked, setChecked] = useState(false);

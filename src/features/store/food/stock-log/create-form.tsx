@@ -1,8 +1,8 @@
 "use client";
 
+import { Item } from "@/generated/prisma/client";
 import { useActionState } from "react";
-import { createTicket } from "./action";
-import { Store } from "@/generated/prisma/client";
+import createStockLog from "./action";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
@@ -24,27 +24,17 @@ import { Input } from "@/components/ui/input";
 import { MessagePrompt } from "@/components/prompt/message-prompt";
 import { ErrorPrompt } from "@/components/prompt/error-prompt";
 
-interface IssueTicketFormProps {
-  stores: Store[];
-  userId: string;
-  isPaper: boolean;
+interface CreateStockLogFormProps {
+  items: Item[];
 }
 
-export function IssueTicketForm({
-  stores,
-  userId,
-  isPaper,
-}: IssueTicketFormProps) {
-  const createTicketWithUser = createTicket.bind(null, userId, isPaper);
-  const [state, formAction, isPending] = useActionState(
-    createTicketWithUser,
-    null,
-  );
+export default function CreateStockLogForm({ items }: CreateStockLogFormProps) {
+  const [state, formAction, isPending] = useActionState(createStockLog, null);
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>整理券を発行</CardTitle>
+        <CardTitle>商品在庫の変動を反映</CardTitle>
       </CardHeader>
       <CardContent>
         <form action={formAction}>
@@ -52,16 +42,16 @@ export function IssueTicketForm({
             <FieldSet>
               <FieldGroup>
                 <Field>
-                  <FieldLabel>発行する企画</FieldLabel>
-                  <Select name="storeId" required disabled={isPending}>
+                  <FieldLabel>商品</FieldLabel>
+                  <Select name="itemId" required disabled={isPending}>
                     <SelectTrigger>
-                      <SelectValue placeholder="企画を選択" />
+                      <SelectValue placeholder="商品を選択" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectGroup>
-                        {stores.map((store) => (
-                          <SelectItem key={store.id} value={store.id}>
-                            {store.name}
+                        {items.map((item) => (
+                          <SelectItem key={item.id} value={item.id}>
+                            {item.name}
                           </SelectItem>
                         ))}
                       </SelectGroup>
@@ -69,9 +59,9 @@ export function IssueTicketForm({
                   </Select>
                 </Field>
                 <Field>
-                  <FieldLabel>人数</FieldLabel>
+                  <FieldLabel>変動数</FieldLabel>
                   <Input
-                    name="numberOfPeople"
+                    name="difference"
                     type="number"
                     required
                     disabled={isPending}
@@ -82,7 +72,7 @@ export function IssueTicketForm({
             <FieldSeparator />
             <Field>
               <Button type="submit" disabled={isPending}>
-                {isPending ? "発行中..." : "整理券を発行"}
+                {isPending ? "反映中..." : "記録を反映"}
               </Button>
             </Field>
           </FieldGroup>

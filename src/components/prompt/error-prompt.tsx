@@ -6,7 +6,6 @@ type ErrorProps = {
   error: any;
 };
 
-//TODO エラー文を人間にわかるように修正
 export const ErrorPrompt = ({ error }: ErrorProps) => {
   return (
     <Alert variant="error">
