@@ -249,21 +249,21 @@ export type EnumTicketStatusWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumTicketStatusFilter<$PrismaModel>
 }
 
-export type EnumStockChangedReasonFilter<$PrismaModel = never> = {
-  equals?: $Enums.StockChangedReason | Prisma.EnumStockChangedReasonFieldRefInput<$PrismaModel>
-  in?: $Enums.StockChangedReason[] | Prisma.ListEnumStockChangedReasonFieldRefInput<$PrismaModel>
-  notIn?: $Enums.StockChangedReason[] | Prisma.ListEnumStockChangedReasonFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumStockChangedReasonFilter<$PrismaModel> | $Enums.StockChangedReason
+export type EnumStockChangedReasonNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.StockChangedReason | Prisma.EnumStockChangedReasonFieldRefInput<$PrismaModel> | null
+  in?: $Enums.StockChangedReason[] | Prisma.ListEnumStockChangedReasonFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.StockChangedReason[] | Prisma.ListEnumStockChangedReasonFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumStockChangedReasonNullableFilter<$PrismaModel> | $Enums.StockChangedReason | null
 }
 
-export type EnumStockChangedReasonWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.StockChangedReason | Prisma.EnumStockChangedReasonFieldRefInput<$PrismaModel>
-  in?: $Enums.StockChangedReason[] | Prisma.ListEnumStockChangedReasonFieldRefInput<$PrismaModel>
-  notIn?: $Enums.StockChangedReason[] | Prisma.ListEnumStockChangedReasonFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumStockChangedReasonWithAggregatesFilter<$PrismaModel> | $Enums.StockChangedReason
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumStockChangedReasonFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumStockChangedReasonFilter<$PrismaModel>
+export type EnumStockChangedReasonNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.StockChangedReason | Prisma.EnumStockChangedReasonFieldRefInput<$PrismaModel> | null
+  in?: $Enums.StockChangedReason[] | Prisma.ListEnumStockChangedReasonFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.StockChangedReason[] | Prisma.ListEnumStockChangedReasonFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumStockChangedReasonNullableWithAggregatesFilter<$PrismaModel> | $Enums.StockChangedReason | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumStockChangedReasonNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumStockChangedReasonNullableFilter<$PrismaModel>
 }
 
 export type EnumAdminRoleFilter<$PrismaModel = never> = {
@@ -531,21 +531,21 @@ export type NestedEnumTicketStatusWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedEnumTicketStatusFilter<$PrismaModel>
 }
 
-export type NestedEnumStockChangedReasonFilter<$PrismaModel = never> = {
-  equals?: $Enums.StockChangedReason | Prisma.EnumStockChangedReasonFieldRefInput<$PrismaModel>
-  in?: $Enums.StockChangedReason[] | Prisma.ListEnumStockChangedReasonFieldRefInput<$PrismaModel>
-  notIn?: $Enums.StockChangedReason[] | Prisma.ListEnumStockChangedReasonFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumStockChangedReasonFilter<$PrismaModel> | $Enums.StockChangedReason
+export type NestedEnumStockChangedReasonNullableFilter<$PrismaModel = never> = {
+  equals?: $Enums.StockChangedReason | Prisma.EnumStockChangedReasonFieldRefInput<$PrismaModel> | null
+  in?: $Enums.StockChangedReason[] | Prisma.ListEnumStockChangedReasonFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.StockChangedReason[] | Prisma.ListEnumStockChangedReasonFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumStockChangedReasonNullableFilter<$PrismaModel> | $Enums.StockChangedReason | null
 }
 
-export type NestedEnumStockChangedReasonWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.StockChangedReason | Prisma.EnumStockChangedReasonFieldRefInput<$PrismaModel>
-  in?: $Enums.StockChangedReason[] | Prisma.ListEnumStockChangedReasonFieldRefInput<$PrismaModel>
-  notIn?: $Enums.StockChangedReason[] | Prisma.ListEnumStockChangedReasonFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumStockChangedReasonWithAggregatesFilter<$PrismaModel> | $Enums.StockChangedReason
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumStockChangedReasonFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumStockChangedReasonFilter<$PrismaModel>
+export type NestedEnumStockChangedReasonNullableWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.StockChangedReason | Prisma.EnumStockChangedReasonFieldRefInput<$PrismaModel> | null
+  in?: $Enums.StockChangedReason[] | Prisma.ListEnumStockChangedReasonFieldRefInput<$PrismaModel> | null
+  notIn?: $Enums.StockChangedReason[] | Prisma.ListEnumStockChangedReasonFieldRefInput<$PrismaModel> | null
+  not?: Prisma.NestedEnumStockChangedReasonNullableWithAggregatesFilter<$PrismaModel> | $Enums.StockChangedReason | null
+  _count?: Prisma.NestedIntNullableFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumStockChangedReasonNullableFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumStockChangedReasonNullableFilter<$PrismaModel>
 }
 
 export type NestedEnumAdminRoleFilter<$PrismaModel = never> = {

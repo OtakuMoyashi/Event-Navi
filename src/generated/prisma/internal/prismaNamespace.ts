@@ -1625,8 +1625,9 @@ export const ItemScalarFieldEnum = {
   id: 'id',
   name: 'name',
   stock: 'stock',
-  foodId: 'foodId',
   price: 'price',
+  foodId: 'foodId',
+  description: 'description',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -1639,6 +1640,7 @@ export const StockLogScalarFieldEnum = {
   itemId: 'itemId',
   change: 'change',
   reason: 'reason',
+  description: 'description',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const

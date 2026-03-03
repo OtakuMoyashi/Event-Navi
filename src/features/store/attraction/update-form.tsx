@@ -23,12 +23,9 @@ interface UpdateAttractionConfigProps {
 export default function UpdateAttractionConfigForm({
   attraction,
 }: UpdateAttractionConfigProps) {
-  const updateAttractionConfigWithId = updateAttractionConfig.bind(
-    null,
-    attraction.id,
-  );
   const [state, formAction, isPending] = useActionState(
-    updateAttractionConfigWithId,
+    (prevState: unknown, formData: FormData) =>
+      updateAttractionConfig(attraction.id, prevState, formData),
     null,
   );
 

@@ -18,7 +18,7 @@ export default async function UserTicketList({ userId }: UserTicketListProps) {
   const tickets = await prisma.ticket.findMany({
     where: {
       userId: userId,
-      status: "ISSUED",
+      OR: [{ status: "ISSUED" }, { status: "CALLED" }],
     },
     include: {
       attraction: {
