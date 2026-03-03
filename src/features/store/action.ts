@@ -21,8 +21,8 @@ export async function createStore(prevState: any, formData: FormData) {
     console.log(validationResult.error);
     return {
       success: false,
-      message: "入力形式が正しくありません",
-      error: "入力形式が正しくありません", //仮実装
+
+      error: "入力形式が正しくありません",
     };
   }
 
@@ -65,7 +65,7 @@ export async function createStore(prevState: any, formData: FormData) {
     return {
       success: false,
       message: "サーバーエラーが発生しました",
-      error: "サーバーエラーが発生しました", //仮実装
+      error: "サーバーエラーが発生しました",
     };
   }
 }
@@ -100,8 +100,8 @@ export async function updateStoreConfig(
     console.log(validationResult.error);
     return {
       success: false,
-      message: "入力形式が正しくありません",
-      error: "入力形式が正しくありません", //仮実装
+
+      error: "入力形式が正しくありません",
     };
   }
   const { name, isActive, startedAt, finishedAt, description } =
@@ -126,7 +126,7 @@ export async function updateStoreConfig(
     return {
       success: false,
       message: "サーバーエラーが発生しました",
-      error: "サーバーエラーが発生しました", //仮実装
+      error: "サーバーエラーが発生しました",
     };
   }
 }

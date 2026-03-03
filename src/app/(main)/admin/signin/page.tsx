@@ -9,11 +9,11 @@ export default function AdminSigninPage() {
       <SignInAdmin />
       <Card>
         <CardHeader>
-          <CardTitle>アカウントをお持ちでない場合</CardTitle>
+          <CardTitle>管理者アカウントをお持ちでない場合</CardTitle>
         </CardHeader>
         <CardContent>
           <Button>
-            <Link href="/admin/signup">アカウントを登録</Link>
+            <Link href="/admin/signup">管理者アカウントを作成</Link>
           </Button>
         </CardContent>
       </Card>

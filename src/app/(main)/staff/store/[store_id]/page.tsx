@@ -36,6 +36,15 @@ export default async function StoreStaffHomePage(props: {
           </Button>
         </>
       )}
+      {store.storeType === "FOOD" && (
+        <>
+          <Button>
+            <Link href={`/staff/store/${store_id}/register`}>
+              会計ページ（仮）
+            </Link>
+          </Button>
+        </>
+      )}
     </div>
   );
 }
