@@ -9,14 +9,14 @@ import Link from "next/link";
 
 type Props = {
   children: React.ReactNode;
-  params: Promise<{ event_id: string }>;
+  params: Promise<{ event_slug: string }>;
 };
 
 export default async function EventLayout({ children, params }: Props) {
-  const { event_id } = await params;
+  const { event_slug } = await params;
 
   const event = await prisma.event.findUnique({
-    where: { id: event_id },
+    where: { slug: event_slug },
     select: {
       id: true,
       name: true,
@@ -35,7 +35,7 @@ export default async function EventLayout({ children, params }: Props) {
           <NavigationMenuList>
             <NavigationMenuItem>
               <Link
-                href={`/event/${event.id}`}
+                href={`/event/${event.slug}`}
                 className={`${navigationMenuTriggerStyle()} bg-transparent text-xl`}
               >
                 {event.name}

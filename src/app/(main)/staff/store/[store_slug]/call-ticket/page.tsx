@@ -3,12 +3,12 @@ import FirstCallTicketForm from "@/features/store/attraction/ticket/first-call-f
 import prisma from "@/lib/prisma";
 
 export default async function CallTicketPage(props: {
-  params: Promise<{ store_id: string }>;
+  params: Promise<{ store_slug: string }>;
 }) {
-  const { store_id } = await props.params;
+  const { store_slug } = await props.params;
   const store = await prisma.store.findUnique({
     where: {
-      id: store_id,
+      slug: store_slug,
     },
     select: {
       attraction: true,

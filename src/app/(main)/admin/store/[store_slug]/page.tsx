@@ -8,12 +8,12 @@ import Link from "next/link";
 export default async function StoreDetailPage({
   params,
 }: {
-  params: Promise<{ store_id: string }>;
+  params: Promise<{ store_slug: string }>;
 }) {
-  const { store_id } = await params;
+  const { store_slug } = await params;
 
   const store = await prisma.store.findUnique({
-    where: { id: store_id },
+    where: { slug: store_slug },
     include: { attraction: true, food: true },
   });
 
@@ -23,7 +23,7 @@ export default async function StoreDetailPage({
 
   return (
     <div className="space-y-4">
-      <StoreInfo storeId={store_id} />
+      <StoreInfo storeId={store.id} />
       {store.storeType === "ATTRACTION" && store.attraction && (
         <AttractionInfo attractionId={store.attraction.id} />
       )}
@@ -31,7 +31,7 @@ export default async function StoreDetailPage({
         <FoodItemList storeId={store.id} />
       )}
       <Button>
-        <Link href={`/admin/store/${store_id}/config`}>店舗情報の設定</Link>
+        <Link href={`/admin/store/${store_slug}/config`}>店舗情報の設定</Link>
       </Button>
     </div>
   );
