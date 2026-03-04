@@ -25,7 +25,7 @@ export async function createItem(
     console.log(validationResult.error);
     return {
       success: false,
-
+      message: null,
       error: "入力形式が正しくありません",
     };
   }
@@ -66,6 +66,7 @@ export async function createItem(
     console.log(error);
     return {
       success: false,
+      message: null,
       error: "サーバーエラーが発生しました。",
     };
   }

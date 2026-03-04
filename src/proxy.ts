@@ -8,6 +8,7 @@ export async function proxy(request: NextRequest) {
   const staffAuthPaths = ["/staff/signin", "/staff/signup"];
   const url = new URL(request.url);
 
+  //TODO サインアウト後に毎回匿名ユーザーが作成されてしまうのを防ぐようにする
   const session = await auth.api.getSession({
     headers: await headers(),
   });
