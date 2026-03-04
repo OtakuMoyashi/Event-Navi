@@ -19,7 +19,7 @@ export default function TicketQrCodeReader() {
       // 読み取り後に自動で呼び出し
       startTransition(async () => {
         const res = await callTicket(id);
-        setResult(res.message);
+        setResult(res.message ?? null);
       });
     },
     paused: !isScanning,

@@ -10,7 +10,7 @@ export default async function EventAdminHomePage() {
         events.map((event) => (
           <div key={event.id}>
             <Button>
-              <Link href={`/admin/event/${event.id}`}>{event.name}</Link>
+              <Link href={`/admin/event/${event.slug}`}>{event.name}</Link>
             </Button>
           </div>
         ))

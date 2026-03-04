@@ -3,12 +3,12 @@ import prisma from "@/lib/prisma";
 import Link from "next/link";
 
 export default async function StoreStaffHomePage(props: {
-  params: Promise<{ store_id: string }>;
+  params: Promise<{ store_slug: string }>;
 }) {
-  const { store_id } = await props.params;
+  const { store_slug } = await props.params;
 
   const store = await prisma.store.findUnique({
-    where: { id: store_id },
+    where: { slug: store_slug },
   });
 
   if (!store) {
@@ -20,17 +20,17 @@ export default async function StoreStaffHomePage(props: {
       {store.storeType === "ATTRACTION" && (
         <>
           <Button>
-            <Link href={`/staff/store/${store_id}/ticket-list`}>
+            <Link href={`/staff/store/${store_slug}/ticket-list`}>
               整理券の一覧
             </Link>
           </Button>
           <Button>
-            <Link href={`/staff/store/${store_id}/call-ticket`}>
+            <Link href={`/staff/store/${store_slug}/call-ticket`}>
               整理券を読み取る
             </Link>
           </Button>
           <Button>
-            <Link href={`/staff/store/${store_id}/issue-ticket`}>
+            <Link href={`/staff/store/${store_slug}/issue-ticket`}>
               整理券を発行する（紙）
             </Link>
           </Button>
@@ -39,7 +39,7 @@ export default async function StoreStaffHomePage(props: {
       {store.storeType === "FOOD" && (
         <>
           <Button>
-            <Link href={`/staff/store/${store_id}/register`}>
+            <Link href={`/staff/store/${store_slug}/register`}>
               会計ページ（仮）
             </Link>
           </Button>

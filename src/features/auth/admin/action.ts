@@ -137,12 +137,11 @@ export async function signInAdmin(prevState: any, formData: FormData) {
       message: "ログイン成功",
     };
   } catch (error) {
-    // Log the full error for server-side debugging
     console.error("[signInAdmin] error:", error);
     return {
       success: false,
-      message: "サーバーエラーが発生しました",
-      errorCode: "INTERNAL_ERROR", // 非公開のエラーコードやフラグのみ返す
+      message: null,
+      error: "サーバーエラーが発生しました",
     };
   }
 }

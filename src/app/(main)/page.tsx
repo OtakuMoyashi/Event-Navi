@@ -40,7 +40,7 @@ export default async function Home() {
                   </CardContent>
                   <CardFooter>
                     <Button asChild className="w-full">
-                      <Link href={`/event/${event.id}`}>イベントページ</Link>
+                      <Link href={`/event/${event.slug}`}>イベントページ</Link>
                     </Button>
                   </CardFooter>
                 </Card>

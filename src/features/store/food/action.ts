@@ -20,6 +20,7 @@ export async function createFoodWithForm(prevState: any, formData: FormData) {
     console.log(error);
     return {
       success: false,
+      message: null,
       error: "サーバーエラーが発生しました。",
     };
   }

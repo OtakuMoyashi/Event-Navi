@@ -17,12 +17,18 @@ export default async function StaffHomePage() {
   if (!staff) {
     return <p>スタッフが存在しません。</p>;
   }
+  const store = await prisma.store.findUnique({
+    where: { id: staff.storeId },
+  });
+  if (!store) {
+    return <p>店舗が存在しません。</p>;
+  }
 
   return (
     <div className="space-y-4">
       <p>スタッフトップページ</p>
       <Button>
-        <Link href={`/staff/store/${staff.storeId}`}>店舗画面へ</Link>
+        <Link href={`/staff/store/${store.slug}`}>店舗画面へ</Link>
       </Button>
       <Signout />
     </div>

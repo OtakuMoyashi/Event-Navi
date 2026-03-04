@@ -13,12 +13,12 @@ import Link from "next/link";
 import { STORE_TYPE_MAP } from "@/lib/type";
 
 export default async function EventTopPage(props: {
-  params: Promise<{ event_id: string }>;
+  params: Promise<{ event_slug: string }>;
 }) {
-  const { event_id } = await props.params;
+  const { event_slug } = await props.params;
 
   const event = await prisma.event.findUnique({
-    where: { id: event_id },
+    where: { slug: event_slug },
   });
 
   if (!event) {
@@ -26,7 +26,7 @@ export default async function EventTopPage(props: {
   }
 
   const stores = await prisma.store.findMany({
-    where: { eventId: event_id },
+    where: { eventId: event_slug },
     select: { id: true, name: true, slug: true, storeType: true },
   });
 
@@ -70,10 +70,10 @@ export default async function EventTopPage(props: {
         <NotFoundPrompt contentName="店舗" />
       )}
       <Button>
-        <Link href={`/event/${event.id}/issue-ticket`}>整理券を発行</Link>
+        <Link href={`/event/${event.slug}/issue-ticket`}>整理券を発行</Link>
       </Button>
       <Button>
-        <Link href={`/event/${event.id}/attraction/waiting-status`}>
+        <Link href={`/event/${event.slug}/attraction/waiting-status`}>
           企画の待ち状況
         </Link>
       </Button>

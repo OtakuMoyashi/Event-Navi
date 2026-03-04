@@ -21,6 +21,7 @@ export async function createAttraction(prevState: any, formData: FormData) {
     console.log(error);
     return {
       success: false,
+      message: null,
       error: "サーバーエラーが発生しました。",
     };
   }
@@ -45,7 +46,7 @@ export async function updateAttractionConfig(
     console.log(validationResult.error);
     return {
       success: false,
-
+      message: null,
       error: "入力形式が正しくありません",
     };
   }
@@ -70,6 +71,7 @@ export async function updateAttractionConfig(
     console.log(error);
     return {
       success: false,
+      message: null,
       error: "サーバーエラーが発生しました。",
     };
   }

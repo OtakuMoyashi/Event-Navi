@@ -51,6 +51,7 @@ export async function subscribeUser(
     console.log(error);
     return {
       success: false,
+      message: null,
       error: "サーバーエラーが発生しました。",
     };
   }
@@ -71,6 +72,7 @@ export async function unsubscribeUser(userId: string) {
     console.log(error);
     return {
       success: false,
+      message: null,
       error: "サーバーエラーが発生しました。",
     };
   }

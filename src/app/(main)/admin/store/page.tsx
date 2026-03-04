@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default async function StoreAdminPage() {
   const stores = await prisma.store.findMany({
-    select: { id: true, name: true },
+    select: { id: true, name: true, slug: true },
   });
   return (
     <div className="space-y-4">
@@ -12,7 +12,7 @@ export default async function StoreAdminPage() {
         stores.map((store) => (
           <div key={store.id}>
             <Button>
-              <Link href={`/admin/store/${store.id}`}>{store.name}</Link>
+              <Link href={`/admin/store/${store.slug}`}>{store.name}</Link>
             </Button>
           </div>
         ))

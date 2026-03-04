@@ -22,6 +22,7 @@ export default async function createStockLog(
     console.log(validationResult.error);
     return {
       success: false,
+      message: null,
       error: "入力形式が正しくありません",
     };
   }
@@ -52,6 +53,7 @@ export default async function createStockLog(
     console.log(error);
     return {
       success: false,
+      message: null,
       error: "サーバーエラーが発生しました。",
     };
   }
