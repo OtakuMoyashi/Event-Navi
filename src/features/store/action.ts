@@ -21,7 +21,7 @@ export async function createStore(prevState: any, formData: FormData) {
     console.log(validationResult.error);
     return {
       success: false,
-
+      message: null,
       error: "入力形式が正しくありません",
     };
   }
@@ -64,7 +64,7 @@ export async function createStore(prevState: any, formData: FormData) {
     console.log(error);
     return {
       success: false,
-      message: "サーバーエラーが発生しました",
+      message: null,
       error: "サーバーエラーが発生しました",
     };
   }
@@ -100,7 +100,7 @@ export async function updateStoreConfig(
     console.log(validationResult.error);
     return {
       success: false,
-
+      message: null,
       error: "入力形式が正しくありません",
     };
   }
@@ -125,7 +125,7 @@ export async function updateStoreConfig(
     console.log(error);
     return {
       success: false,
-      message: "サーバーエラーが発生しました",
+      message: null,
       error: "サーバーエラーが発生しました",
     };
   }

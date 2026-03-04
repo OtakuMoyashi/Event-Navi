@@ -1,15 +1,14 @@
 import UpdateAttractionConfig from "@/features/store/attraction/update";
 import { CreateItemForm } from "@/features/store/food/item/create-form";
-import CreateStockLog from "@/features/store/food/stock-log/create";
 import UpdateStoreConfig from "@/features/store/update";
 import prisma from "@/lib/prisma";
 
 export default async function StoreConfigPage(props: {
-  params: Promise<{ store_id: string }>;
+  params: Promise<{ store_slug: string }>;
 }) {
-  const { store_id } = await props.params;
+  const { store_slug } = await props.params;
   const store = await prisma.store.findUnique({
-    where: { id: store_id },
+    where: { slug: store_slug },
     include: { attraction: true, food: true },
   });
 
@@ -20,7 +19,7 @@ export default async function StoreConfigPage(props: {
   return (
     <div>
       <h1>店舗情報を更新する</h1>
-      <UpdateStoreConfig storeId={store_id} />
+      <UpdateStoreConfig storeId={store.id} />
       {store.storeType === "ATTRACTION" && store.attraction && (
         <UpdateAttractionConfig attractionId={store.attraction.id} />
       )}

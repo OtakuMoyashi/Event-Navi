@@ -4,12 +4,12 @@ import { notFound } from "next/navigation";
 export default async function eventDetailPage({
   params,
 }: {
-  params: Promise<{ event_id: string }>;
+  params: Promise<{ event_slug: string }>;
 }) {
-  const { event_id } = await params;
+  const { event_slug } = await params;
 
   const event = await prisma.event.findUnique({
-    where: { id: event_id },
+    where: { slug: event_slug },
   });
 
   if (!event) {
