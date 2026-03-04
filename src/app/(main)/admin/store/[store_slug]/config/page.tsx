@@ -1,6 +1,5 @@
 import UpdateAttractionConfig from "@/features/store/attraction/update";
 import { CreateItemForm } from "@/features/store/food/item/create-form";
-import CreateStockLog from "@/features/store/food/stock-log/create";
 import UpdateStoreConfig from "@/features/store/update";
 import prisma from "@/lib/prisma";
 

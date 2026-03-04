@@ -1,5 +1,5 @@
-import AttracionWatingStatus from "@/features/store/attraction/wating-status";
+import AttracionWaitngStatus from "@/features/store/attraction/waitng-status";
 
 export default function AttractionWaitStatusPage() {
-  return <AttracionWatingStatus />;
+  return <AttracionWaitngStatus />;
 }

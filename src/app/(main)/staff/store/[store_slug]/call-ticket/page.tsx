@@ -22,7 +22,7 @@ export default async function CallTicketPage(props: {
   }
   return (
     <div className="space-y-4">
-      <FirstCallTicketForm attractionId={store.attraction?.id} />
+      <FirstCallTicketForm attractionId={store.attraction.id} />
       <TicketQrCodeReader />
     </div>
   );

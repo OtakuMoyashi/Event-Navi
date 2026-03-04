@@ -8,7 +8,7 @@ import {
 } from "@/components/ui/table";
 import prisma from "@/lib/prisma";
 
-export default async function AttracionWatingStatus() {
+export default async function AttracionWaitngStatus() {
   const attractions = await prisma.attraction.findMany({
     include: {
       store: true,
