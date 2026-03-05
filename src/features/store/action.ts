@@ -78,11 +78,7 @@ const storeConfigSchema = z.object({
   description: z.string().nullable(),
 });
 
-export async function updateStoreConfig(
-  storeId: string,
-  prevState: any,
-  formData: FormData,
-) {
+export async function updateStoreConfig(prevState: any, formData: FormData) {
   const validationResult = storeConfigSchema.safeParse({
     name: formData.get("name"),
     isActive: formData.get("isActive") === "true",
@@ -106,6 +102,8 @@ export async function updateStoreConfig(
   }
   const { name, isActive, startedAt, finishedAt, description } =
     validationResult.data;
+
+  const storeId = formData.get("storeId") as string;
   try {
     await prisma.store.update({
       where: { id: storeId },

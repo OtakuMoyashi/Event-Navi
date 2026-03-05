@@ -9,7 +9,7 @@ export default function SystemAdminCreatePage() {
         <Link href="/admin/system/create/event">イベント作成</Link>
       </Button>
       <Button>
-        <Link href="/admin/system/create/store">店舗作成</Link>
+        <Link href="/super-admin/create/store">店舗作成</Link>
       </Button>
     </div>
   );

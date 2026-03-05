@@ -46,7 +46,7 @@ export default function MainLayout({
                 href="/"
                 className={`${navigationMenuTriggerStyle()} bg-transparent text-xl`}
               >
-                Event-System
+                Gakusai-Hub
               </Link>
             </NavigationMenuItem>
           </NavigationMenuList>

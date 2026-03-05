@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState } from "react";
-import { createItem } from "./action";
+import { createOrganization } from "./action";
 import { Store } from "@/generated/prisma/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -20,57 +20,45 @@ import {
   SelectGroup,
   SelectValue,
 } from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
 import { MessagePrompt } from "@/components/prompt/message-prompt";
+import { Input } from "@/components/ui/input";
 
-interface CreateItemFormProps {
-  storeId: string;
-}
+export function CreateOrganizationForm() {
+  const [state, formAction, isPending] = useActionState(
+    createOrganization,
+    null,
+  );
 
-export function CreateItemForm({ storeId }: CreateItemFormProps) {
-  const [state, formAction, isPending] = useActionState(createItem, null);
   return (
     <Card>
       <CardHeader>
-        <CardTitle>商品を登録</CardTitle>
+        <CardTitle>組織を作成</CardTitle>
       </CardHeader>
       <CardContent>
         <form action={formAction}>
           <FieldGroup>
             <FieldSet>
-              <Field>
-                <FieldLabel>模擬店</FieldLabel>
+              <FieldGroup>
                 <Field>
-                  <FieldLabel>商品名</FieldLabel>
+                  <FieldLabel>識別名</FieldLabel>
+                  <Input name="slug" required disabled={isPending} />
+                </Field>
+                <Field>
+                  <FieldLabel>組織名</FieldLabel>
                   <Input name="name" required disabled={isPending} />
                 </Field>
                 <Field>
-                  <FieldLabel>在庫数</FieldLabel>
-                  <Input
-                    name="stock"
-                    type="number"
-                    required
-                    disabled={isPending}
-                  />
+                  <FieldLabel>招待コード</FieldLabel>
+                  <Input name="inviteCode" required disabled={isPending} />
                 </Field>
-                <Field>
-                  <FieldLabel>価格</FieldLabel>
-                  <Input
-                    name="price"
-                    type="number"
-                    required
-                    disabled={isPending}
-                  />
-                </Field>
-              </Field>
+              </FieldGroup>
             </FieldSet>
             <FieldSeparator />
             <Field>
               <Button type="submit" disabled={isPending}>
-                {isPending ? "登録中..." : "商品を登録"}
+                {isPending ? "作成中..." : "組織を作成"}
               </Button>
             </Field>
-            <input type="hidden" name="storeId" value={storeId} />
           </FieldGroup>
         </form>
         {state?.message && <MessagePrompt message={state.message} />}

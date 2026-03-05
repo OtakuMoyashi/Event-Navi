@@ -10,16 +10,14 @@ const RegisterSchema = z.object({
 });
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export async function createItem(
-  storeId: string,
-  prevState: any,
-  formData: FormData,
-) {
+export async function createItem(prevState: any, formData: FormData) {
   const validationResult = RegisterSchema.safeParse({
     name: formData.get("name"),
     stock: formData.get("stock"),
     price: formData.get("price"),
   });
+
+  const storeId = formData.get("storeId") as string;
 
   if (!validationResult.success) {
     console.log(validationResult.error);

@@ -29,8 +29,7 @@ export default function UpdateStoreConfigForm({
   store,
 }: updateStoreConfigFormProps) {
   const [state, formAction, isPending] = useActionState(
-    (prevState: unknown, formData: FormData) =>
-      updateStoreConfig(store.id, prevState, formData),
+    updateStoreConfig,
     null,
   );
   const [checked, setChecked] = useState(false);
@@ -137,6 +136,7 @@ export default function UpdateStoreConfigForm({
                 {isPending ? "反映中..." : "変更を反映"}
               </Button>
             </Field>
+            <input type="hidden" name="storeId" value={store.id} />
           </FieldGroup>
         </form>
         <div className="space-y-4">

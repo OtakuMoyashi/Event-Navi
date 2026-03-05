@@ -7,9 +7,6 @@ export default async function AdminHomePage() {
     <div className="space-y-4">
       <p>管理者トップページ</p>
       <Button>
-        <Link href="/admin/system">システム管理画面へ</Link>
-      </Button>
-      <Button>
         <Link href="/admin/event">イベント管理画面へ</Link>
       </Button>
       <Button>
