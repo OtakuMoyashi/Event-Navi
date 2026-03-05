@@ -26,10 +26,29 @@ export async function signUpAdmin(prevState: any, formData: FormData) {
     };
   }
 
-  if (validationResult.data.inviteCode !== process.env.INVITE_CODE) {
+  const orgId = formData.get("orgId") as string;
+
+  const org = await prisma.organization.findUnique({
+    where: {
+      id: orgId,
+    },
+    select: {
+      inviteCode: true,
+    },
+  });
+  if (!org) {
     return {
       success: false,
-      message: "招待コードが間違っています",
+      message: null,
+      error: "該当する組織が存在しません。",
+    };
+  }
+
+  if (validationResult.data.inviteCode !== org.inviteCode) {
+    return {
+      success: false,
+      message: null,
+      error: "招待コードが間違っています",
     };
   }
 
@@ -61,9 +80,10 @@ export async function signUpAdmin(prevState: any, formData: FormData) {
     // Adminレコードを作成
     await prisma.admin.create({
       data: {
-        userId,
-        email,
-        role,
+        userId: userId,
+        email: email,
+        role: role,
+        organizationId: orgId,
       },
     });
 

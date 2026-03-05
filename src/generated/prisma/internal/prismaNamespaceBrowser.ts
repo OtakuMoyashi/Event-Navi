@@ -55,6 +55,7 @@ export const ModelName = {
   Session: 'Session',
   Account: 'Account',
   Verification: 'Verification',
+  Organization: 'Organization',
   Event: 'Event',
   Store: 'Store',
   Attraction: 'Attraction',
@@ -143,6 +144,19 @@ export const VerificationScalarFieldEnum = {
 export type VerificationScalarFieldEnum = (typeof VerificationScalarFieldEnum)[keyof typeof VerificationScalarFieldEnum]
 
 
+export const OrganizationScalarFieldEnum = {
+  id: 'id',
+  slug: 'slug',
+  name: 'name',
+  description: 'description',
+  inviteCode: 'inviteCode',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type OrganizationScalarFieldEnum = (typeof OrganizationScalarFieldEnum)[keyof typeof OrganizationScalarFieldEnum]
+
+
 export const EventScalarFieldEnum = {
   id: 'id',
   slug: 'slug',
@@ -151,6 +165,7 @@ export const EventScalarFieldEnum = {
   startedAt: 'startedAt',
   finishedAt: 'finishedAt',
   description: 'description',
+  organizationId: 'organizationId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -258,6 +273,7 @@ export const AdminScalarFieldEnum = {
   email: 'email',
   name: 'name',
   role: 'role',
+  organizationId: 'organizationId',
   eventId: 'eventId',
   storeId: 'storeId',
   createdAt: 'createdAt',

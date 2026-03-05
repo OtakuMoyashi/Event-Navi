@@ -12,6 +12,7 @@ import {
 import { LoadingPrompt } from "@/components/prompt/loading-prompt";
 import { NotFoundPrompt } from "@/components/prompt/not-found-prompt";
 
+//TODO 組織一覧も追加する
 export default async function Home() {
   const events = await prisma.event.findMany({
     select: {

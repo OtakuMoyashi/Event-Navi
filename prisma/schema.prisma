@@ -72,6 +72,22 @@ model Verification {
   @@map("verification")
 }
 
+model Organization {
+  id          String     @id @default(cuid())
+  slug        String   @unique @db.VarChar(20)
+  name        String @db.VarChar(20)
+  description String? @db.Text
+  inviteCode String @db.VarChar(20)
+
+  events Event[]
+  admins Admin[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("organizations")
+}
+
 model Event {
   id          String     @id @default(cuid())
   slug        String   @unique
@@ -80,6 +96,9 @@ model Event {
   startedAt   DateTime?
   finishedAt  DateTime?
   description String? @db.Text
+
+  organizationId String?
+  organization   Organization? @relation(fields: [organizationId], references: [id])
 
   stores  Store[]
   admins  Admin[]
@@ -243,6 +262,9 @@ model Admin {
   email     String    @unique
   name      String? @db.VarChar(20)
   role      AdminRole
+
+  organizationId String?
+  organization   Organization? @relation(fields: [organizationId], references: [id])
 
   eventId   String?   
   event     Event?    @relation(fields: [eventId], references: [id])

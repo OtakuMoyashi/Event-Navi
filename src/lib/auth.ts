@@ -12,26 +12,22 @@ if (!betterAuthSecret) {
 }
 
 export const auth = betterAuth({
-  appName: "kinshi-navi",
+  appName: "Gakusai-Hub",
   database: prismaAdapter(prisma, {
     provider: "postgresql",
   }),
   secret: betterAuthSecret, // validated value
   basePath: "/api/auth",
-  baseURL:
-    process.env.BETTER_AUTH_URL ||
-    "http://localhost:3000" ||
-    process.env.BETTER_AUTH_FEATURE_URL ||
-    process.env.BETTER_AUTH_DEVELOP_URL,
-  allowedOrigins: [
-    process.env.BETTER_AUTH_URL,
-    "http://localhost:3000",
-    process.env.BETTER_AUTH_FEATURE_URL,
-    process.env.BETTER_AUTH_DEVELOP_URL,
-    // 必要なURLをすべて追加
-  ],
+  baseURL: process.env.BETTER_AUTH_URL,
+  allowedOrigins: [process.env.BETTER_AUTH_URL],
   emailAndPassword: {
     enabled: true,
+  },
+  socialProviders: {
+    google: {
+      clientId: process.env.GOOGLE_CLIENT_ID as string,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+    },
   },
   user: {
     additionalFields: {
