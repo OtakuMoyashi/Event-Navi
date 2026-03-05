@@ -9,8 +9,8 @@ const notoSansJp = Noto_Sans_JP({
 });
 
 export const metadata: Metadata = {
-  title: "Kinshi-Navi",
-  description: "金鵄祭の整理券システムです。",
+  title: "Gakusai-Hub",
+  description: "学校の文化祭向けの総合Webサービスです。",
 };
 
 export default function RootLayout({

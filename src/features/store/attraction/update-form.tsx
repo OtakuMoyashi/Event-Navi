@@ -24,8 +24,7 @@ export default function UpdateAttractionConfigForm({
   attraction,
 }: UpdateAttractionConfigProps) {
   const [state, formAction, isPending] = useActionState(
-    (prevState: unknown, formData: FormData) =>
-      updateAttractionConfig(attraction.id, prevState, formData),
+    updateAttractionConfig,
     null,
   );
 
@@ -67,6 +66,7 @@ export default function UpdateAttractionConfigForm({
                 {isPending ? "反映中..." : "変更を反映"}
               </Button>
             </Field>
+            <input type="hidden" name="attractionId" value={attraction.id} />
           </FieldGroup>
         </form>
         <div className="space-y-4">

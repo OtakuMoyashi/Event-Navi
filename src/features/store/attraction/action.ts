@@ -33,7 +33,6 @@ const updateAttractionConfigSchema = z.object({
 });
 
 export async function updateAttractionConfig(
-  attractionId: string,
   prevState: any,
   formData: FormData,
 ) {
@@ -52,6 +51,7 @@ export async function updateAttractionConfig(
   }
 
   const { playTime, peopleCapacity } = validationResult.data;
+  const attractionId = formData.get("attractionId") as string;
 
   try {
     await prisma.attraction.update({
