@@ -21,6 +21,19 @@ export default async function StaffIssueTicketPage() {
     return <p>イベント情報が取得できません。</p>;
   }
 
+  const attraction = await prisma.attraction.findUnique({
+    where: { storeId: staff.storeId },
+    select: { id: true },
+  });
+
+  const initialTickets = attraction
+    ? await prisma.ticket.findMany({
+        where: {
+          attractionId: attraction.id,
+        },
+      })
+    : [];
+
   return (
     <div>
       <h1>スタッフ用整理券発行ページ</h1>
@@ -30,7 +43,10 @@ export default async function StaffIssueTicketPage() {
         eventId={staff.store.eventId}
         isPaper={true}
       />
-      <AttractionTicketList storeId={staff.storeId} />
+      <AttractionTicketList
+        storeId={staff.storeId}
+        initialTickets={initialTickets}
+      />
     </div>
   );
 }

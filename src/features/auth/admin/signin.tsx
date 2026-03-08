@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { MessagePrompt } from "@/components/prompt/message-prompt";
+import { GoogleSignInButton } from "@/features/auth/components/google-signin-button";
 
 export default function SignInAdmin() {
   const router = useRouter();
@@ -61,6 +62,10 @@ export default function SignInAdmin() {
               <Button type="submit" disabled={isPending}>
                 {isPending ? "ログイン中..." : "ログイン"}
               </Button>
+            </Field>
+            <FieldSeparator />
+            <Field>
+              <GoogleSignInButton callbackURL="/admin" disabled={isPending} />
             </Field>
           </FieldGroup>
         </form>

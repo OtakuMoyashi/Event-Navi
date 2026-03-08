@@ -10,7 +10,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { useState, useTransition, useEffect } from "react";
+import { useState, useTransition } from "react";
 
 import { TicketStatus } from "@/generated/prisma/enums";
 import { Ticket } from "@/generated/prisma/client";
@@ -24,6 +24,7 @@ import {
 
 interface AttractionTicketListProps {
   storeId: string;
+  initialTickets: Ticket[];
 }
 
 const STATUS_OPTIONS: { value: TicketStatus | null; label: string }[] = [
@@ -36,21 +37,11 @@ const STATUS_OPTIONS: { value: TicketStatus | null; label: string }[] = [
 
 export default function AttractionTicketList({
   storeId,
+  initialTickets,
 }: AttractionTicketListProps) {
   const [status, setStatus] = useState<TicketStatus | null>(null);
-  const [tickets, setTickets] = useState<Ticket[]>([]);
+  const [tickets, setTickets] = useState<Ticket[]>(initialTickets);
   const [isPending, startTransition] = useTransition();
-
-  useEffect(() => {
-    startTransition(async () => {
-      const res = await fetchTicketsByStatus(storeId, null);
-      if (res?.success && Array.isArray(res.tickets)) {
-        setTickets(res.tickets);
-      } else {
-        setTickets([]);
-      }
-    });
-  }, [storeId]);
 
   const handleStatusChange = (value: string) => {
     const newStatus = value === "null" ? null : (value as TicketStatus);

@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Noto_Sans_JP } from "next/font/google";
 import "./globals.css";
-import { AuthProvider } from "@/features/auth/auth-provider";
 
 const notoSansJp = Noto_Sans_JP({
   variable: "--font-noto-sans-jp",
@@ -27,9 +26,7 @@ export default function RootLayout({
         <link rel="apple-touch-icon" href="/icon-192x192.png" />
       </head>
       <body className="font-sans antialiased">
-        <main>
-          <AuthProvider>{children}</AuthProvider>
-        </main>
+        <main>{children}</main>
       </body>
     </html>
   );

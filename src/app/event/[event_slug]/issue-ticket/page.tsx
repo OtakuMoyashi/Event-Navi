@@ -1,4 +1,5 @@
 import { getCurrentUser } from "@/features/auth/user/action";
+import CreateAnonymousUser from "@/features/auth/user/create";
 import IssueTicket from "@/features/store/attraction/ticket/issue";
 import prisma from "@/lib/prisma";
 
@@ -17,7 +18,7 @@ export default async function TicketIssuePage(props: {
   const user = await getCurrentUser();
 
   if (!user) {
-    return <p>ユーザーが存在しません。</p>;
+    return <CreateAnonymousUser />;
   }
 
   return (

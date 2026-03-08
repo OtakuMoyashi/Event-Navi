@@ -15,6 +15,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { MessagePrompt } from "@/components/prompt/message-prompt";
 import { useRouter } from "next/navigation";
+import { GoogleSignInButton } from "@/features/auth/components/google-signin-button";
 
 export default function SignInStaff() {
   const router = useRouter();
@@ -56,6 +57,10 @@ export default function SignInStaff() {
               <Button type="submit" disabled={isPending}>
                 {isPending ? "ログイン中..." : "ログイン"}
               </Button>
+            </Field>
+            <FieldSeparator />
+            <Field>
+              <GoogleSignInButton callbackURL="/staff" disabled={isPending} />
             </Field>
           </FieldGroup>
         </form>

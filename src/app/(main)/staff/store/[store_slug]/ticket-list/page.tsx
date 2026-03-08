@@ -13,9 +13,26 @@ export default async function TicketListPage(props: {
   if (!store) {
     return <p>店舗が存在しません。</p>;
   }
+
+  const attraction = await prisma.attraction.findUnique({
+    where: { storeId: store.id },
+    select: { id: true },
+  });
+
+  const initialTickets = attraction
+    ? await prisma.ticket.findMany({
+        where: {
+          attractionId: attraction.id,
+        },
+      })
+    : [];
+
   return (
     <div className="space-y-4">
-      <AttractionTicketList storeId={store.id} />
+      <AttractionTicketList
+        storeId={store.id}
+        initialTickets={initialTickets}
+      />
     </div>
   );
 }
