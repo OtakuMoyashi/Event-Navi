@@ -1,14 +1,16 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { headers } from "next/headers";
 import { auth } from "@/lib/auth";
-import prisma from "@/lib/prisma";
+
+import { db } from "@/index";
+import { staffs, admins, type AdminRole } from "@/lib/db/schema";
+import { and, desc, eq, inArray, sql } from "drizzle-orm";
 
 export async function proxy(request: NextRequest) {
   const adminAuthPaths = ["/admin/signin", "/admin/signup"];
   const staffAuthPaths = ["/staff/signin", "/staff/signup"];
   const url = new URL(request.url);
 
-  //TODO サインアウト後に毎回匿名ユーザーが作成されてしまうのを防ぐようにする
   const session = await auth.api.getSession({
     headers: await headers(),
   });
@@ -18,13 +20,15 @@ export async function proxy(request: NextRequest) {
     !adminAuthPaths.includes(url.pathname)
   ) {
     if (!session?.user) {
-      return NextResponse.redirect(new URL("/", request.url)); //TODO 匿名ユーザー作成中のリダイレクト先を考える
+      return NextResponse.redirect(new URL("/admin/signin", request.url));
     }
-    const admin = await prisma.admin.findUnique({
-      where: { userId: session.user.id },
-    });
+    const admin = await db
+      .select()
+      .from(admins)
+      .where(eq(admins.userId, session.user.id))
+      .limit(1);
 
-    if (!admin) {
+    if (admin.length === 0) {
       return NextResponse.redirect(new URL("/admin/signin", request.url));
     }
 
@@ -36,14 +40,16 @@ export async function proxy(request: NextRequest) {
     !staffAuthPaths.includes(url.pathname)
   ) {
     if (!session?.user) {
-      return NextResponse.redirect(new URL("/", request.url)); //TODO 匿名ユーザー作成中のリダイレクト先を考える
+      return NextResponse.redirect(new URL("/", request.url));
     }
 
-    const staff = await prisma.staff.findUnique({
-      where: { userId: session.user.id },
-    });
+    const staff = await db
+      .select()
+      .from(staffs)
+      .where(eq(staffs.userId, session.user.id))
+      .limit(1);
 
-    if (!staff) {
+    if (staff.length === 0) {
       return NextResponse.redirect(new URL("/staff/signin", request.url));
     }
 

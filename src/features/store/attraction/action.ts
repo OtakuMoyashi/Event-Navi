@@ -1,17 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
-import prisma from "@/lib/prisma";
+import { db } from "@/index";
+import { attractions } from "@/lib/db/schema";
+import { eq } from "drizzle-orm";
 import z from "zod";
 
 export async function createAttraction(prevState: any, formData: FormData) {
   const storeId = formData.get("storeId") as string;
 
   try {
-    await prisma.attraction.create({
-      data: {
-        storeId: storeId,
-      },
+    await db.insert(attractions).values({
+      storeId: storeId,
     });
     return {
       success: true,
@@ -54,15 +54,13 @@ export async function updateAttractionConfig(
   const attractionId = formData.get("attractionId") as string;
 
   try {
-    await prisma.attraction.update({
-      where: {
-        id: attractionId,
-      },
-      data: {
+    await db
+      .update(attractions)
+      .set({
         playTime: playTime,
         peopleCapacity: peopleCapacity,
-      },
-    });
+      })
+      .where(eq(attractions.id, attractionId));
     return {
       success: true,
       message: "操作が完了しました。",

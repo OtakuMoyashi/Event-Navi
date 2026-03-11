@@ -13,7 +13,9 @@ export default function StaffSigninPage() {
         </CardHeader>
         <CardContent>
           <Button>
-            <Link href="/staff/signup">スタッフアカウントを作成</Link>
+            <Link href="/staff/signup" prefetch={false}>
+              スタッフアカウントを作成
+            </Link>
           </Button>
         </CardContent>
       </Card>

@@ -1,4 +1,6 @@
-import prisma from "@/lib/prisma";
+import { db } from "@/index";
+import { foods, items } from "@/lib/db/schema";
+import { eq } from "drizzle-orm";
 import CreateStockLogForm from "./create-form";
 
 interface CreateStockLogProps {
@@ -6,23 +8,23 @@ interface CreateStockLogProps {
 }
 
 export default async function CreateStockLog({ storeId }: CreateStockLogProps) {
-  const food = await prisma.food.findUnique({
-    where: {
-      storeId: storeId,
-    },
-  });
+  const foodRows = await db
+    .select()
+    .from(foods)
+    .where(eq(foods.storeId, storeId))
+    .limit(1);
+  const food = foodRows[0];
   if (!food) {
     return <p>模擬店が存在しません。</p>;
   }
-  const items = await prisma.item.findMany({
-    where: {
-      foodId: food.id,
-    },
-  });
+  const itemList = await db
+    .select()
+    .from(items)
+    .where(eq(items.foodId, food.id));
 
-  if (items.length === 0) {
+  if (itemList.length === 0) {
     return <p>商品が存在しません。</p>;
   }
 
-  return <CreateStockLogForm items={items} />;
+  return <CreateStockLogForm items={itemList} />;
 }

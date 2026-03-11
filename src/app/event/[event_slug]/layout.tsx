@@ -4,7 +4,9 @@ import {
   NavigationMenuItem,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import prisma from "@/lib/prisma";
+import { db } from "@/index";
+import { events } from "@/lib/db/schema";
+import { eq } from "drizzle-orm";
 import Link from "next/link";
 
 type Props = {
@@ -15,14 +17,12 @@ type Props = {
 export default async function EventLayout({ children, params }: Props) {
   const { event_slug } = await params;
 
-  const event = await prisma.event.findUnique({
-    where: { slug: event_slug },
-    select: {
-      id: true,
-      name: true,
-      slug: true,
-    },
-  });
+  const eventRows = await db
+    .select({ id: events.id, name: events.name, slug: events.slug })
+    .from(events)
+    .where(eq(events.slug, event_slug))
+    .limit(1);
+  const event = eventRows[0];
 
   if (!event) {
     return <p>イベントが存在しません。</p>;

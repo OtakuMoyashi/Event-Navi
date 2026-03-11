@@ -2,7 +2,8 @@
 
 import { auth } from "@/lib/auth";
 import { revalidatePath } from "next/cache";
-import prisma from "@/lib/prisma";
+import { db } from "@/index";
+import { admins, staffs } from "@/lib/db/schema";
 
 export async function signOut() {
   try {
@@ -21,32 +22,36 @@ export async function postSignInByIntent(intent: string | null) {
 
   const userId = session.user.id;
   const email = session.user.email ?? "";
-
+  //TODO storeIdを引数で受け取る
   if (intent === "staff") {
-    await prisma.staff.upsert({
-      where: { userId },
-      update: { email },
-      create: {
+    await db
+      .insert(staffs)
+      .values({
         userId,
         email,
         storeId: "YOUR_DEFAULT_STORE_ID",
-      },
-    });
-    return { success: true, redirectTo: "/staff" };
+      })
+      .onConflictDoUpdate({
+        target: staffs.userId,
+        set: { email },
+      });
+    return { ok: true, redirectTo: "/staff" };
   }
 
   if (intent === "admin") {
-    await prisma.admin.upsert({
-      where: { userId },
-      update: { email },
-      create: {
+    await db
+      .insert(admins)
+      .values({
         userId,
         email,
         role: "STORE_ADMIN",
-      },
-    });
-    return { success: true, redirectTo: "/admin" };
+      })
+      .onConflictDoUpdate({
+        target: admins.userId,
+        set: { email },
+      });
+    return { ok: true, redirectTo: "/admin" };
   }
 
-  return { success: false, message: "intent が不正です" };
+  return { ok: false, message: "intent が不正です" };
 }

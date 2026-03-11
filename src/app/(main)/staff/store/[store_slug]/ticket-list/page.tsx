@@ -1,30 +1,34 @@
 import AttractionTicketList from "@/features/store/attraction/ticket/attraction-list";
-import prisma from "@/lib/prisma";
+import { db } from "@/index";
+import { stores, attractions, tickets } from "@/lib/db/schema";
+import { eq } from "drizzle-orm";
 
 export default async function TicketListPage(props: {
   params: Promise<{ store_slug: string }>;
 }) {
   const { store_slug } = await props.params;
-  const store = await prisma.store.findUnique({
-    where: {
-      slug: store_slug,
-    },
-  });
+  const storeRows = await db
+    .select()
+    .from(stores)
+    .where(eq(stores.slug, store_slug))
+    .limit(1);
+  const store = storeRows[0];
   if (!store) {
     return <p>店舗が存在しません。</p>;
   }
 
-  const attraction = await prisma.attraction.findUnique({
-    where: { storeId: store.id },
-    select: { id: true },
-  });
+  const attractionRows = await db
+    .select({ id: attractions.id })
+    .from(attractions)
+    .where(eq(attractions.storeId, store.id))
+    .limit(1);
+  const attraction = attractionRows[0];
 
   const initialTickets = attraction
-    ? await prisma.ticket.findMany({
-        where: {
-          attractionId: attraction.id,
-        },
-      })
+    ? await db
+        .select()
+        .from(tickets)
+        .where(eq(tickets.attractionId, attraction.id))
     : [];
 
   return (

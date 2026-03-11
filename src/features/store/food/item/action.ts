@@ -1,7 +1,9 @@
 "use server";
 
 import z, { success } from "zod";
-import prisma from "@/lib/prisma";
+import { db } from "@/index";
+import { foods, items } from "@/lib/db/schema";
+import { eq } from "drizzle-orm";
 
 const RegisterSchema = z.object({
   name: z.string(),
@@ -31,14 +33,12 @@ export async function createItem(prevState: any, formData: FormData) {
   const { name, stock, price } = validationResult.data;
 
   try {
-    const food = await prisma.food.findUnique({
-      where: {
-        storeId: storeId,
-      },
-      select: {
-        id: true,
-      },
-    });
+    const foodRows = await db
+      .select({ id: foods.id })
+      .from(foods)
+      .where(eq(foods.storeId, storeId))
+      .limit(1);
+    const food = foodRows[0];
 
     if (!food) {
       return {
@@ -47,13 +47,11 @@ export async function createItem(prevState: any, formData: FormData) {
       };
     }
 
-    await prisma.item.create({
-      data: {
-        name: name,
-        stock: stock,
-        foodId: food.id,
-        price: price,
-      },
+    await db.insert(items).values({
+      name: name,
+      stock: stock,
+      foodId: food.id,
+      price: price,
     });
 
     return {

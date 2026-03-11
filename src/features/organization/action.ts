@@ -1,6 +1,7 @@
 "use server";
 
-import prisma from "@/lib/prisma";
+import { db } from "@/index";
+import { organizations } from "@/lib/db/schema";
 import z from "zod";
 
 const createOrganizationSchema = z.object({
@@ -25,12 +26,10 @@ export async function createOrganization(prevState: any, formData: FormData) {
       };
     }
     const { slug, name, inviteCode } = validationResult.data;
-    await prisma.organization.create({
-      data: {
-        slug: slug,
-        name: name,
-        inviteCode: inviteCode,
-      },
+    await db.insert(organizations).values({
+      slug: slug,
+      name: name,
+      inviteCode: inviteCode,
     });
     return {
       success: true,

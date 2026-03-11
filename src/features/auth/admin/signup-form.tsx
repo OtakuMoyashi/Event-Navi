@@ -2,7 +2,6 @@
 
 import { useActionState, useEffect } from "react";
 import { signUpAdmin } from "./action";
-import { AdminRole } from "@/generated/prisma/enums";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
@@ -24,7 +23,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { MessagePrompt } from "@/components/prompt/message-prompt";
 import { useRouter } from "next/navigation";
-import { Organization } from "@/generated/prisma/client";
+import type { Organization } from "@/lib/db/schema";
+import { adminRoleEnum } from "@/lib/db/schema";
 
 interface SignUpAdminFormProps {
   orgs: Organization[];
@@ -33,7 +33,6 @@ interface SignUpAdminFormProps {
 export default function SignUpAdminForm({ orgs }: SignUpAdminFormProps) {
   const router = useRouter();
   const [state, formAction, isPending] = useActionState(signUpAdmin, null);
-  const adminRoles = Object.values(AdminRole);
 
   useEffect(() => {
     if (state?.success) {
@@ -101,7 +100,7 @@ export default function SignUpAdminForm({ orgs }: SignUpAdminFormProps) {
                     </SelectTrigger>
                     <SelectContent>
                       <SelectGroup>
-                        {adminRoles.map((role) => (
+                        {adminRoleEnum.enumValues.map((role) => (
                           <SelectItem key={role} value={role}>
                             {role}
                           </SelectItem>

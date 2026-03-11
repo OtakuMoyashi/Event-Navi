@@ -1,5 +1,4 @@
 import { Suspense } from "react";
-import prisma from "@/lib/prisma";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import {
@@ -11,25 +10,21 @@ import {
 } from "@/components/ui/card";
 import { LoadingPrompt } from "@/components/prompt/loading-prompt";
 import { NotFoundPrompt } from "@/components/prompt/not-found-prompt";
+import { db } from "@/index";
+import { events } from "@/lib/db/schema";
 
 //TODO 組織一覧も追加する
 export default async function Home() {
-  const events = await prisma.event.findMany({
-    select: {
-      id: true,
-      name: true,
-      slug: true,
-    },
-  });
+  const fetchedEvents = await db.select().from(events);
   return (
     <div className="space-y-4">
       <Suspense fallback={<LoadingPrompt contentName="イベント一覧" />}>
         <div className="space-y-6">
           <h2 className="text-xl font-bold px-1">イベント一覧</h2>
 
-          {events.length > 0 ? (
+          {fetchedEvents.length > 0 ? (
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {events.map((event) => (
+              {fetchedEvents.map((event) => (
                 <Card key={event.id} className="flex flex-col">
                   <CardHeader>
                     <CardTitle>{event.name}</CardTitle>

@@ -1,6 +1,8 @@
 "use server";
 
-import prisma from "@/lib/prisma";
+import { db } from "@/index";
+import { items, stockLogs } from "@/lib/db/schema";
+import { eq, sql } from "drizzle-orm";
 import z from "zod";
 
 const CreateStockLogSchema = z.object({
@@ -30,19 +32,16 @@ export default async function createStockLog(
   const { itemId, difference } = validationResult.data;
 
   try {
-    await prisma.$transaction(async (tx) => {
-      await tx.stockLog.create({
-        data: {
-          itemId: itemId,
-          difference: difference,
-        },
+    await db.transaction(async (tx) => {
+      await tx.insert(stockLogs).values({
+        itemId: itemId,
+        difference: difference,
       });
-      await tx.item.update({
-        where: { id: itemId },
-        data: {
-          stock: { increment: difference },
-        },
-      });
+
+      await tx
+        .update(items)
+        .set({ stock: sql`${items.stock} + ${difference}` })
+        .where(eq(items.id, itemId));
     });
 
     return {

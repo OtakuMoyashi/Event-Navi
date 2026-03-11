@@ -1,7 +1,6 @@
 "use client";
 
 import { useActionState } from "react";
-import { StoreType } from "@/generated/prisma/enums";
 import { createStore } from "./action";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import {
@@ -24,7 +23,8 @@ import { Button } from "@/components/ui/button";
 import { MessagePrompt } from "@/components/prompt/message-prompt";
 import { SuccessPrompt } from "@/components/prompt/success-prompt";
 import { ErrorPrompt } from "@/components/prompt/error-prompt";
-import { Event } from "@/generated/prisma/client";
+import { Event } from "@/lib/db/schema";
+import { storeTypeEnum } from "@/lib/db/schema";
 
 interface CreateStoreFormProps {
   events: Event[];
@@ -32,7 +32,6 @@ interface CreateStoreFormProps {
 
 export default function CreateStoreForm({ events }: CreateStoreFormProps) {
   const [state, formAction, isPending] = useActionState(createStore, null);
-  const storeTypes = Object.values(StoreType);
 
   return (
     <Card>
@@ -60,7 +59,7 @@ export default function CreateStoreForm({ events }: CreateStoreFormProps) {
                     </SelectTrigger>
                     <SelectContent>
                       <SelectGroup>
-                        {storeTypes.map((type) => (
+                        {storeTypeEnum.enumValues.map((type) => (
                           <SelectItem key={type} value={type}>
                             {type}
                           </SelectItem>
@@ -100,7 +99,7 @@ export default function CreateStoreForm({ events }: CreateStoreFormProps) {
           {state?.message && <MessagePrompt message={state.message} />}
           {state?.error && <ErrorPrompt error={state.error} />}
           {state?.success === true && (
-            <SuccessPrompt redirectLink="/admin/system/create" />
+            <SuccessPrompt redirectLink="/admin/super-user/create" />
           )}
         </div>
       </CardContent>

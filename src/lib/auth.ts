@@ -1,8 +1,9 @@
 import { betterAuth } from "better-auth";
-import { prismaAdapter } from "better-auth/adapters/prisma";
-import prisma from "@/lib/prisma";
+import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { anonymous } from "better-auth/plugins";
 import { nextCookies } from "better-auth/next-js";
+import { db } from "@/index";
+import * as schema from "@/lib/db/schema";
 
 const betterAuthSecret = process.env.BETTER_AUTH_SECRET;
 if (!betterAuthSecret) {
@@ -13,8 +14,11 @@ if (!betterAuthSecret) {
 
 export const auth = betterAuth({
   appName: "Gakusai-Hub",
-  database: prismaAdapter(prisma, {
-    provider: "postgresql",
+  database: drizzleAdapter(db, {
+    provider: "pg",
+    schema,
+    usePlural: true,
+    camelCase: true,
   }),
   secret: betterAuthSecret, // validated value
   basePath: "/api/auth",

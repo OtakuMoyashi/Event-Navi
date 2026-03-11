@@ -24,7 +24,6 @@ export default function CreateAnonymousUser() {
         return;
       }
 
-      // Cookie更新後にServer Componentを再評価して、チケット発行画面へ進める。
       router.refresh();
     } catch (e) {
       setError(

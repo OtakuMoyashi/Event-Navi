@@ -1,5 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import prisma from "@/lib/prisma";
+import { db } from "@/index";
+import { events, stores } from "@/lib/db/schema";
+import { eq } from "drizzle-orm";
 import {
   Carousel,
   CarouselContent,
@@ -17,18 +19,26 @@ export default async function EventTopPage(props: {
 }) {
   const { event_slug } = await props.params;
 
-  const event = await prisma.event.findUnique({
-    where: { slug: event_slug },
-  });
+  const eventRows = await db
+    .select()
+    .from(events)
+    .where(eq(events.slug, event_slug))
+    .limit(1);
+  const event = eventRows[0];
 
   if (!event) {
     return <p>イベントが存在しません</p>;
   }
 
-  const stores = await prisma.store.findMany({
-    where: { eventId: event_slug },
-    select: { id: true, name: true, slug: true, storeType: true },
-  });
+  const storeList = await db
+    .select({
+      id: stores.id,
+      name: stores.name,
+      slug: stores.slug,
+      storeType: stores.storeType,
+    })
+    .from(stores)
+    .where(eq(stores.eventId, event.id));
 
   return (
     <div className="space-y-4">
@@ -40,10 +50,10 @@ export default async function EventTopPage(props: {
           <p>イベント名：{event.name}</p>
         </CardContent>
       </Card>
-      {stores.length > 0 ? (
+      {storeList.length > 0 ? (
         <Carousel className="w-full  sm:max-w-xs">
           <CarouselContent>
-            {stores.map((store, index) => {
+            {storeList.map((store, index) => {
               const typeLabel =
                 STORE_TYPE_MAP[store.storeType as keyof typeof STORE_TYPE_MAP]
                   ?.label ?? store.storeType;

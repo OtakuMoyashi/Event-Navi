@@ -1,5 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import prisma from "@/lib/prisma";
+import { db } from "@/index";
+import { attractions } from "@/lib/db/schema";
+import { eq } from "drizzle-orm";
 
 interface AttractionInfoProps {
   attractionId: string;
@@ -8,9 +10,12 @@ interface AttractionInfoProps {
 export default async function AttractionInfo({
   attractionId,
 }: AttractionInfoProps) {
-  const attraction = await prisma.attraction.findUnique({
-    where: { id: attractionId },
-  });
+  const rows = await db
+    .select()
+    .from(attractions)
+    .where(eq(attractions.id, attractionId))
+    .limit(1);
+  const attraction = rows[0];
   if (!attraction) {
     return <p>店舗が存在しません。</p>;
   }

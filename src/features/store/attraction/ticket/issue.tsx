@@ -1,5 +1,6 @@
-import { Store, User } from "@/generated/prisma/client";
-import prisma from "@/lib/prisma";
+import { db } from "@/index";
+import { stores } from "@/lib/db/schema";
+import { and, eq } from "drizzle-orm";
 import { IssueTicketForm } from "./issue-form";
 
 interface IssueTicketProps {
@@ -13,16 +14,18 @@ export default async function IssueTicket({
   userId,
   isPaper,
 }: IssueTicketProps) {
-  const stores: Store[] = await prisma.store.findMany({
-    where: {
-      eventId: eventId,
-      storeType: "ATTRACTION",
-    },
-  });
+  const storeList = await db
+    .select()
+    .from(stores)
+    .where(
+      and(eq(stores.eventId, eventId), eq(stores.storeType, "ATTRACTION")),
+    );
 
-  if (stores.length === 0) {
+  if (storeList.length === 0) {
     return <p>企画が存在しません</p>;
   }
 
-  return <IssueTicketForm userId={userId} stores={stores} isPaper={isPaper} />;
+  return (
+    <IssueTicketForm userId={userId} stores={storeList} isPaper={isPaper} />
+  );
 }

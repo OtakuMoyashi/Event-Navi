@@ -1,4 +1,6 @@
-import prisma from "@/lib/prisma";
+import { db } from "@/index";
+import { attractions } from "@/lib/db/schema";
+import { eq } from "drizzle-orm";
 import UpdateAttractionConfigForm from "./update-form";
 
 interface UpdateAttractionConfigProps {
@@ -8,11 +10,12 @@ interface UpdateAttractionConfigProps {
 export default async function UpdateAttractionConfig({
   attractionId,
 }: UpdateAttractionConfigProps) {
-  const attraction = await prisma.attraction.findUnique({
-    where: {
-      id: attractionId,
-    },
-  });
+  const rows = await db
+    .select()
+    .from(attractions)
+    .where(eq(attractions.id, attractionId))
+    .limit(1);
+  const attraction = rows[0];
   if (!attraction) {
     return <p>企画が存在しません。</p>;
   }

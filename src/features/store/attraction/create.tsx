@@ -1,15 +1,17 @@
 import { CreateAttractionForm } from "./create-form";
-import { Store } from "@/generated/prisma/client";
-import prisma from "@/lib/prisma";
+import { db } from "@/index";
+import { stores } from "@/lib/db/schema";
+import { eq } from "drizzle-orm";
 
 export default async function CreateAttraction() {
-  const stores: Store[] = await prisma.store.findMany({
-    where: { storeType: "ATTRACTION" },
-  });
+  const storeList = await db
+    .select()
+    .from(stores)
+    .where(eq(stores.storeType, "ATTRACTION"));
 
-  if (stores.length === 0) {
+  if (storeList.length === 0) {
     return <p>企画が存在しません</p>;
   }
 
-  return <CreateAttractionForm stores={stores} />;
+  return <CreateAttractionForm stores={storeList} />;
 }

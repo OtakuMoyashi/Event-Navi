@@ -1,16 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
-import prisma from "@/lib/prisma";
+import { db } from "@/index";
+import { foods } from "@/lib/db/schema";
 
 export async function createFoodWithForm(prevState: any, formData: FormData) {
   const storeId = formData.get("storeId") as string;
 
   try {
-    await prisma.food.create({
-      data: {
-        storeId: storeId,
-      },
+    await db.insert(foods).values({
+      storeId: storeId,
     });
     return {
       success: true,

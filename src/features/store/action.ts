@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
-import prisma from "@/lib/prisma";
+import { db } from "@/index";
+import { attractions, foods, stores, type StoreType } from "@/lib/db/schema";
+import { eq } from "drizzle-orm";
 import z from "zod";
-import { StoreType } from "@/generated/prisma/enums";
-import { is } from "zod/v4/locales";
 
 const RegisterSchema = z.object({
   slug: z.string(),
@@ -31,28 +31,33 @@ export async function createStore(prevState: any, formData: FormData) {
   const eventId = formData.get("eventId") as string;
 
   try {
-    await prisma.$transaction(async (tx) => {
-      const createdStore = await tx.store.create({
-        data: {
+    await db.transaction(async (tx) => {
+      const createdStoreRows = await tx
+        .insert(stores)
+        .values({
           slug: slug,
           name: name,
           storeType: storeType,
           eventId: eventId,
-        },
-      });
+        })
+        .returning({ id: stores.id, storeType: stores.storeType });
+
+      const createdStore = createdStoreRows[0];
+      if (!createdStore) {
+        throw new Error("店舗の作成に失敗しました");
+      }
+
       switch (createdStore.storeType) {
         case "ATTRACTION":
-          await tx.attraction.create({
-            data: {
-              storeId: createdStore.id,
-            },
+          await tx.insert(attractions).values({
+            storeId: createdStore.id,
           });
+          break;
         case "FOOD":
-          await tx.food.create({
-            data: {
-              storeId: createdStore.id,
-            },
+          await tx.insert(foods).values({
+            storeId: createdStore.id,
           });
+          break;
       }
     });
 
@@ -105,16 +110,16 @@ export async function updateStoreConfig(prevState: any, formData: FormData) {
 
   const storeId = formData.get("storeId") as string;
   try {
-    await prisma.store.update({
-      where: { id: storeId },
-      data: {
+    await db
+      .update(stores)
+      .set({
         name: name,
         isActive: isActive,
         startedAt: startedAt,
         finishedAt: finishedAt,
         description: description,
-      },
-    });
+      })
+      .where(eq(stores.id, storeId));
     return {
       success: true,
       message: "操作が完了しました。",

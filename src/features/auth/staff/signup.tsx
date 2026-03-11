@@ -1,10 +1,13 @@
-import prisma from "@/lib/prisma";
+import { db } from "@/index";
+import { stores } from "@/lib/db/schema";
+import { asc } from "drizzle-orm";
 import { SignUpStaffForm } from "./signup-form";
 
 export default async function SignUpStaff() {
-  const stores = await prisma.store.findMany({
-    orderBy: { createdAt: "asc" },
-  });
+  const storeList = await db
+    .select()
+    .from(stores)
+    .orderBy(asc(stores.createdAt));
 
-  return <SignUpStaffForm stores={stores} />;
+  return <SignUpStaffForm stores={storeList} />;
 }

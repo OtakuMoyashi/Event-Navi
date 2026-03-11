@@ -2,20 +2,34 @@ import { Button } from "@/components/ui/button";
 import AttractionInfo from "@/features/store/attraction/info";
 import FoodItemList from "@/features/store/food/item/food-list";
 import StoreInfo from "@/features/store/info";
-import prisma from "@/lib/prisma";
+import { db } from "@/index";
+import { attractions, foods, stores } from "@/lib/db/schema";
+import { eq } from "drizzle-orm";
 import Link from "next/link";
 
 export default async function StoreDetailPage({
   params,
 }: {
-  params: Promise<{ store_slug: string }>;
+  params: { store_slug: string };
 }) {
-  const { store_slug } = await params;
+  const { store_slug } = params;
 
-  const store = await prisma.store.findUnique({
-    where: { slug: store_slug },
-    include: { attraction: true, food: true },
-  });
+  const rows = await db
+    .select({
+      store: stores,
+      attraction: attractions,
+      food: foods,
+    })
+    .from(stores)
+    .leftJoin(attractions, eq(attractions.storeId, stores.id))
+    .leftJoin(foods, eq(foods.storeId, stores.id))
+    .where(eq(stores.slug, store_slug))
+    .limit(1);
+
+  const row = rows[0];
+  const store = row?.store;
+  const attraction = row?.attraction;
+  const food = row?.food;
 
   if (!store) {
     return <p>店舗が存在しません。</p>;
@@ -24,14 +38,16 @@ export default async function StoreDetailPage({
   return (
     <div className="space-y-4">
       <StoreInfo storeId={store.id} />
-      {store.storeType === "ATTRACTION" && store.attraction && (
-        <AttractionInfo attractionId={store.attraction.id} />
+      {store.storeType === "ATTRACTION" && attraction && (
+        <AttractionInfo attractionId={attraction.id} />
       )}
-      {store.storeType === "FOOD" && store.food && (
+      {store.storeType === "FOOD" && food && (
         <FoodItemList storeId={store.id} />
       )}
       <Button>
-        <Link href={`/admin/store/${store_slug}/config`}>店舗情報の設定</Link>
+        <Link href={`/admin/store/${store_slug}/config`} prefetch={false}>
+          店舗情報の設定
+        </Link>
       </Button>
     </div>
   );

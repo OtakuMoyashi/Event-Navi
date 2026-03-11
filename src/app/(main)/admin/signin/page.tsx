@@ -13,7 +13,9 @@ export default function AdminSigninPage() {
         </CardHeader>
         <CardContent>
           <Button>
-            <Link href="/admin/signup">管理者アカウントを作成</Link>
+            <Link href="/admin/signup" prefetch={false}>
+              管理者アカウントを作成
+            </Link>
           </Button>
         </CardContent>
       </Card>

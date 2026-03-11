@@ -1,5 +1,7 @@
 import { Button } from "@/components/ui/button";
-import prisma from "@/lib/prisma";
+import { db } from "@/index";
+import { stores } from "@/lib/db/schema";
+import { eq } from "drizzle-orm";
 import Link from "next/link";
 
 export default async function StoreStaffHomePage(props: {
@@ -7,9 +9,12 @@ export default async function StoreStaffHomePage(props: {
 }) {
   const { store_slug } = await props.params;
 
-  const store = await prisma.store.findUnique({
-    where: { slug: store_slug },
-  });
+  const storeRows = await db
+    .select()
+    .from(stores)
+    .where(eq(stores.slug, store_slug))
+    .limit(1);
+  const store = storeRows[0];
 
   if (!store) {
     return <p>店舗が存在しません。</p>;
@@ -20,17 +25,26 @@ export default async function StoreStaffHomePage(props: {
       {store.storeType === "ATTRACTION" && (
         <>
           <Button>
-            <Link href={`/staff/store/${store_slug}/ticket-list`}>
+            <Link
+              href={`/staff/store/${store_slug}/ticket-list`}
+              prefetch={false}
+            >
               整理券の一覧
             </Link>
           </Button>
           <Button>
-            <Link href={`/staff/store/${store_slug}/call-ticket`}>
+            <Link
+              href={`/staff/store/${store_slug}/call-ticket`}
+              prefetch={false}
+            >
               整理券を読み取る
             </Link>
           </Button>
           <Button>
-            <Link href={`/staff/store/${store_slug}/issue-ticket`}>
+            <Link
+              href={`/staff/store/${store_slug}/issue-ticket`}
+              prefetch={false}
+            >
               整理券を発行する（紙）
             </Link>
           </Button>
@@ -39,7 +53,7 @@ export default async function StoreStaffHomePage(props: {
       {store.storeType === "FOOD" && (
         <>
           <Button>
-            <Link href={`/staff/store/${store_slug}/register`}>
+            <Link href={`/staff/store/${store_slug}/register`} prefetch={false}>
               会計ページ（仮）
             </Link>
           </Button>

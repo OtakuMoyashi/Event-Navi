@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
-import prisma from "@/lib/prisma";
+import { db } from "@/index";
+import { staffs } from "@/lib/db/schema";
+import { eq } from "drizzle-orm";
 import { auth } from "@/lib/auth";
 import z from "zod";
 import { passwordSchema } from "@/lib/schema/auth";
@@ -38,12 +40,10 @@ export async function createStaff(prevState: any, formData: FormData) {
 
     const userId = data.user.id;
 
-    await prisma.staff.create({
-      data: {
-        userId,
-        email,
-        storeId,
-      },
+    await db.insert(staffs).values({
+      userId,
+      email,
+      storeId,
     });
 
     return {
@@ -101,9 +101,12 @@ export async function signInStaff(prevState: any, formData: FormData) {
     }
 
     const userId: string = data.user.id;
-    const staff = await prisma.staff.findUnique({
-      where: { userId },
-    });
+    const staffRows = await db
+      .select()
+      .from(staffs)
+      .where(eq(staffs.userId, userId))
+      .limit(1);
+    const staff = staffRows[0];
 
     if (!staff) {
       return {

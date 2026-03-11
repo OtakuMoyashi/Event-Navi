@@ -15,12 +15,16 @@ function ListItem({
   title,
   children,
   href,
+  prefetch,
   ...props
-}: React.ComponentPropsWithoutRef<"li"> & { href: string }) {
+}: React.ComponentPropsWithoutRef<"li"> & {
+  href: string;
+  prefetch?: boolean;
+}) {
   return (
     <li {...props}>
       <NavigationMenuLink asChild>
-        <Link href={href}>
+        <Link href={href} prefetch={prefetch}>
           <div className="flex flex-col gap-1 text-sm">
             <div className="leading-none font-medium">{title}</div>
             <div className="text-muted-foreground line-clamp-2">{children}</div>
@@ -57,8 +61,16 @@ export default function MainLayout({
               <NavigationMenuTrigger>メニュー</NavigationMenuTrigger>
               <NavigationMenuContent>
                 <ul className="w-48">
-                  <ListItem href="/admin" title="管理者ページ" />
-                  <ListItem href="/staff" title="スタッフページ" />
+                  <ListItem
+                    href="/admin"
+                    title="管理者ページ"
+                    prefetch={false}
+                  />
+                  <ListItem
+                    href="/staff"
+                    title="スタッフページ"
+                    prefetch={false}
+                  />
                   <ListItem href="/user" title="ユーザーページ" />
                 </ul>
               </NavigationMenuContent>
@@ -70,6 +82,7 @@ export default function MainLayout({
             <NavigationMenuItem>
               <Link
                 href="/admin"
+                prefetch={false}
                 className={`${navigationMenuTriggerStyle()} bg-transparent`}
               >
                 管理者ページ
@@ -78,6 +91,7 @@ export default function MainLayout({
             <NavigationMenuItem>
               <Link
                 href="/staff"
+                prefetch={false}
                 className={`${navigationMenuTriggerStyle()} bg-transparent`}
               >
                 スタッフページ

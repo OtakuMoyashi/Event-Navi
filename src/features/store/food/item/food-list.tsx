@@ -1,4 +1,6 @@
-import prisma from "@/lib/prisma";
+import { db } from "@/index";
+import { foods, items } from "@/lib/db/schema";
+import { eq } from "drizzle-orm";
 import {
   Table,
   TableBody,
@@ -14,23 +16,23 @@ interface FoodItemListProps {
 }
 
 export default async function FoodItemList({ storeId }: FoodItemListProps) {
-  const food = await prisma.food.findUnique({
-    where: {
-      storeId: storeId,
-    },
-  });
+  const foodRows = await db
+    .select()
+    .from(foods)
+    .where(eq(foods.storeId, storeId))
+    .limit(1);
+  const food = foodRows[0];
   if (!food) {
     return <p>模擬店が存在しません。</p>;
   }
-  const items = await prisma.item.findMany({
-    where: {
-      foodId: food.id,
-    },
-  });
+  const itemList = await db
+    .select()
+    .from(items)
+    .where(eq(items.foodId, food.id));
   return (
     <div className="space-y-4">
       <h1>商品一覧</h1>
-      {items.length > 0 ? (
+      {itemList.length > 0 ? (
         <Table>
           <TableHeader>
             <TableRow>
@@ -40,7 +42,7 @@ export default async function FoodItemList({ storeId }: FoodItemListProps) {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {items.map((item) => (
+            {itemList.map((item) => (
               <TableRow key={item.id}>
                 <TableCell>{item.name}</TableCell>
                 <TableCell>{item.price}</TableCell>

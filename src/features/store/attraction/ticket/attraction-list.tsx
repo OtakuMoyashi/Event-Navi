@@ -12,8 +12,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { useState, useTransition } from "react";
 
-import { TicketStatus } from "@/generated/prisma/enums";
-import { Ticket } from "@/generated/prisma/client";
+import { TicketStatus, tickets as ticketsTable } from "@/lib/db/schema";
 import { fetchTicketsByStatus } from "./action";
 import {
   Select,
@@ -24,7 +23,7 @@ import {
 
 interface AttractionTicketListProps {
   storeId: string;
-  initialTickets: Ticket[];
+  initialTickets: (typeof ticketsTable.$inferSelect)[];
 }
 
 const STATUS_OPTIONS: { value: TicketStatus | null; label: string }[] = [
@@ -40,7 +39,8 @@ export default function AttractionTicketList({
   initialTickets,
 }: AttractionTicketListProps) {
   const [status, setStatus] = useState<TicketStatus | null>(null);
-  const [tickets, setTickets] = useState<Ticket[]>(initialTickets);
+  const [tickets, setTickets] =
+    useState<(typeof ticketsTable.$inferSelect)[]>(initialTickets);
   const [isPending, startTransition] = useTransition();
 
   const handleStatusChange = (value: string) => {

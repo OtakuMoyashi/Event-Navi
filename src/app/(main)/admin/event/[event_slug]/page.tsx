@@ -1,4 +1,6 @@
-import prisma from "@/lib/prisma";
+import { db } from "@/index";
+import { events } from "@/lib/db/schema";
+import { eq } from "drizzle-orm";
 import { notFound } from "next/navigation";
 
 export default async function eventDetailPage({
@@ -8,17 +10,20 @@ export default async function eventDetailPage({
 }) {
   const { event_slug } = await params;
 
-  const event = await prisma.event.findUnique({
-    where: { slug: event_slug },
-  });
+  const event = await db
+    .select({
+      name: events.name,
+    })
+    .from(events)
+    .where(eq(events.slug, event_slug));
 
-  if (!event) {
-    notFound();
+  if (event.length === 0) {
+    return notFound();
   }
 
   return (
     <div>
-      <p>イベント名：{event.name}</p>
+      <p>イベント名：{event[0].name}</p>
     </div>
   );
 }

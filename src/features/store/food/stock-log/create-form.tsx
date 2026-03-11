@@ -1,6 +1,6 @@
 "use client";
 
-import { Item } from "@/generated/prisma/client";
+import { Item } from "@/lib/db/schema";
 import { useActionState } from "react";
 import createStockLog from "./action";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";

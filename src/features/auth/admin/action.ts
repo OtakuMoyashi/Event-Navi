@@ -1,11 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
-import prisma from "@/lib/prisma";
+import { db } from "@/index";
+import { admins, organizations } from "@/lib/db/schema";
+import { eq } from "drizzle-orm";
 import { auth } from "@/lib/auth";
 import { passwordSchema } from "@/lib/schema/auth";
 import z from "zod";
-import { AdminRole } from "@/generated/prisma/enums";
+import { AdminRole } from "@/lib/db/schema";
 
 const SignUpSchema = z.object({
   email: z.email(),
@@ -28,14 +30,12 @@ export async function signUpAdmin(prevState: any, formData: FormData) {
 
   const orgId = formData.get("orgId") as string;
 
-  const org = await prisma.organization.findUnique({
-    where: {
-      id: orgId,
-    },
-    select: {
-      inviteCode: true,
-    },
-  });
+  const orgRows = await db
+    .select({ inviteCode: organizations.inviteCode })
+    .from(organizations)
+    .where(eq(organizations.id, orgId))
+    .limit(1);
+  const org = orgRows[0];
   if (!org) {
     return {
       success: false,
@@ -56,7 +56,6 @@ export async function signUpAdmin(prevState: any, formData: FormData) {
   const role = formData.get("role") as AdminRole;
 
   try {
-    // Better-authでユーザーを作成
     const response = await auth.api.signUpEmail({
       body: {
         email,
@@ -65,10 +64,8 @@ export async function signUpAdmin(prevState: any, formData: FormData) {
       },
       asResponse: true,
     });
-    // レスポンスをJSONパース
     const data = await response.json();
 
-    // レスポンスのOK判定
     if (!response.ok || !data || !data.user || !data.user.id) {
       return {
         success: false,
@@ -77,14 +74,11 @@ export async function signUpAdmin(prevState: any, formData: FormData) {
     }
 
     const userId: string = data.user.id;
-    // Adminレコードを作成
-    await prisma.admin.create({
-      data: {
-        userId: userId,
-        email: email,
-        role: role,
-        organizationId: orgId,
-      },
+    await db.insert(admins).values({
+      userId: userId,
+      email: email,
+      role: role,
+      organizationId: orgId,
     });
 
     return {
@@ -96,7 +90,7 @@ export async function signUpAdmin(prevState: any, formData: FormData) {
     return {
       success: false,
       message: "サーバーエラーが発生しました",
-      errorCode: "サーバーエラー", // 非公開のエラーコードやフラグのみ返す
+      errorCode: "サーバーエラー",
     };
   }
 }
@@ -142,9 +136,12 @@ export async function signInAdmin(prevState: any, formData: FormData) {
 
     const userId: string = data.user.id;
     // Admin権限確認
-    const admin = await prisma.admin.findUnique({
-      where: { userId },
-    });
+    const adminRows = await db
+      .select()
+      .from(admins)
+      .where(eq(admins.userId, userId))
+      .limit(1);
+    const admin = adminRows[0];
 
     if (!admin) {
       return {

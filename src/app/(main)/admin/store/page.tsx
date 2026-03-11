@@ -1,18 +1,25 @@
 import { Button } from "@/components/ui/button";
-import prisma from "@/lib/prisma";
+import { db } from "@/index";
+import { stores } from "@/lib/db/schema";
 import Link from "next/link";
 
 export default async function StoreAdminPage() {
-  const stores = await prisma.store.findMany({
-    select: { id: true, name: true, slug: true },
-  });
+  const fetchedStores = await db
+    .select({
+      id: stores.id,
+      name: stores.name,
+      slug: stores.slug,
+    })
+    .from(stores);
   return (
     <div className="space-y-4">
-      {stores.length > 0 ? (
-        stores.map((store) => (
+      {fetchedStores.length > 0 ? (
+        fetchedStores.map((store) => (
           <div key={store.id}>
             <Button>
-              <Link href={`/admin/store/${store.slug}`}>{store.name}</Link>
+              <Link href={`/admin/store/${store.slug}`} prefetch={false}>
+                {store.name}
+              </Link>
             </Button>
           </div>
         ))

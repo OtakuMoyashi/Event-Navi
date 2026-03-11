@@ -14,7 +14,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { ErrorPrompt } from "@/components/prompt/error-prompt";
 import { MessagePrompt } from "@/components/prompt/message-prompt";
-import { Attraction } from "@/generated/prisma/client";
+import { Attraction } from "@/lib/db/schema";
 
 interface UpdateAttractionConfigProps {
   attraction: Attraction;

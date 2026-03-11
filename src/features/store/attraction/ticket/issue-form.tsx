@@ -2,7 +2,7 @@
 
 import { useActionState } from "react";
 import { createTicket } from "./action";
-import { Store } from "@/generated/prisma/client";
+import { Store } from "@/lib/db/schema";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {

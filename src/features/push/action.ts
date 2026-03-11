@@ -1,7 +1,8 @@
 "use server";
 
-import { PushSubscription } from "@/generated/prisma/client";
-import prisma from "@/lib/prisma";
+import { db } from "@/index";
+import { pushSubscriptions } from "@/lib/db/schema";
+import { eq } from "drizzle-orm";
 import webpush from "web-push";
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 
@@ -18,9 +19,10 @@ export type PushSubscriptionJSONInput = {
 };
 
 export async function getUserSubscription(userId: string) {
-  return await prisma.pushSubscription.findMany({
-    where: { userId: userId },
-  });
+  return await db
+    .select()
+    .from(pushSubscriptions)
+    .where(eq(pushSubscriptions.userId, userId));
 }
 
 export async function subscribeUser(
@@ -28,21 +30,22 @@ export async function subscribeUser(
   userId: string,
 ) {
   try {
-    await prisma.pushSubscription.upsert({
-      where: { userId: userId },
-      update: {
-        p256dh: sub.keys.p256dh,
-        auth: sub.keys.auth,
-        userId: userId,
-        endpoint: sub.endpoint,
-      },
-      create: {
+    await db
+      .insert(pushSubscriptions)
+      .values({
         endpoint: sub.endpoint,
         p256dh: sub.keys.p256dh,
         auth: sub.keys.auth,
         userId: userId,
-      },
-    });
+      })
+      .onConflictDoUpdate({
+        target: pushSubscriptions.userId,
+        set: {
+          p256dh: sub.keys.p256dh,
+          auth: sub.keys.auth,
+          endpoint: sub.endpoint,
+        },
+      });
     return {
       success: true,
       message: "操作が完了しました。",
@@ -59,11 +62,9 @@ export async function subscribeUser(
 
 export async function unsubscribeUser(userId: string) {
   try {
-    await prisma.pushSubscription.deleteMany({
-      where: {
-        userId: userId,
-      },
-    });
+    await db
+      .delete(pushSubscriptions)
+      .where(eq(pushSubscriptions.userId, userId));
     return {
       success: true,
       message: "操作が完了しました。",
@@ -79,7 +80,7 @@ export async function unsubscribeUser(userId: string) {
 }
 
 export async function sendPushNotification(
-  sub: PushSubscription,
+  sub: typeof pushSubscriptions.$inferSelect,
   title: string,
   message: string,
 ) {

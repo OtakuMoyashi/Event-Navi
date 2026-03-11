@@ -5,12 +5,13 @@ export default function SystemAdminCreatePage() {
   return (
     <div>
       <p>テストデータ作成</p>
-      <Button>
-        <Link href="/admin/system/create/event">イベント作成</Link>
-      </Button>
-      <Button>
-        <Link href="/super-admin/create/store">店舗作成</Link>
-      </Button>
+
+      <Link href="/super-admin/create/event" prefetch={false}>
+        <Button>イベント作成</Button>
+      </Link>
+      <Link href="/super-admin/create/store" prefetch={false}>
+        <Button>店舗作成</Button>
+      </Link>
     </div>
   );
 }

@@ -2,9 +2,14 @@
 "use server";
 
 import { z } from "zod";
-import prisma from "@/lib/prisma";
-import { TicketStatus } from "@/generated/prisma/enums";
-import { send } from "node:process";
+import { db } from "@/index";
+import {
+  attractions,
+  pushSubscriptions,
+  tickets,
+  type TicketStatus,
+} from "@/lib/db/schema";
+import { and, asc, eq, gt, inArray, lte, sql } from "drizzle-orm";
 import { sendPushNotification } from "@/features/push/action";
 
 const RegisterSchema = z.object({
@@ -34,14 +39,12 @@ export async function createTicket(
   const storeId = formData.get("storeId") as string;
 
   try {
-    const attraction = await prisma.attraction.findUnique({
-      where: {
-        storeId: storeId,
-      },
-      select: {
-        id: true,
-      },
-    });
+    const attractionRows = await db
+      .select({ id: attractions.id })
+      .from(attractions)
+      .where(eq(attractions.storeId, storeId))
+      .limit(1);
+    const attraction = attractionRows[0];
 
     if (!attraction) {
       return {
@@ -50,24 +53,23 @@ export async function createTicket(
       };
     }
 
-    await prisma.$transaction(async (tx) => {
-      const ticketCount: number = await tx.ticket.count({
-        where: {
-          attractionId: attraction.id,
-        },
-      });
+    await db.transaction(async (tx) => {
+      const countRows = await tx
+        .select({ count: sql<number>`count(*)` })
+        .from(tickets)
+        .where(eq(tickets.attractionId, attraction.id));
+
+      const ticketCount: number = Number(countRows[0]?.count ?? 0);
 
       const nextIndex: number = ticketCount + 1;
 
-      await tx.ticket.create({
-        data: {
-          index: nextIndex,
-          numberOfPeople: numberOfPeople,
-          status: "ISSUED",
-          attractionId: attraction.id,
-          userId: userId,
-          isPaper: isPaper,
-        },
+      await tx.insert(tickets).values({
+        index: nextIndex,
+        numberOfPeople: numberOfPeople,
+        status: "ISSUED",
+        attractionId: attraction.id,
+        userId: userId,
+        isPaper: isPaper,
       });
     });
 
@@ -108,55 +110,55 @@ export async function callFirstTicket(
 
   const { count } = validationResult.data;
   try {
-    await prisma.$transaction(async (tx) => {
-      const issuedCount = await tx.ticket.count({
-        where: {
-          attractionId: attractionId,
-          status: "ISSUED",
-        },
-      });
+    const result = await db.transaction(async (tx) => {
+      const issuedCountRows = await tx
+        .select({ count: sql<number>`count(*)` })
+        .from(tickets)
+        .where(
+          and(
+            eq(tickets.attractionId, attractionId),
+            eq(tickets.status, "ISSUED"),
+          ),
+        );
+
+      const issuedCount = Number(issuedCountRows[0]?.count ?? 0);
       const limitedCount = Math.min(count, issuedCount);
       if (limitedCount === 0) {
-        return {
-          success: false,
-          message: "呼び出す整理券がありません。",
-        };
+        return { calledCount: 0 };
       }
-      const tickets = await tx.ticket.findMany({
-        where: {
-          attractionId: attractionId,
-          status: "ISSUED",
-        },
-        orderBy: {
-          index: "asc",
-        },
-        take: limitedCount,
-        select: { id: true },
-      });
-      const ids = tickets.map((t) => t.id);
+      const issuedTickets = await tx
+        .select({
+          id: tickets.id,
+          userId: tickets.userId,
+          index: tickets.index,
+        })
+        .from(tickets)
+        .where(
+          and(
+            eq(tickets.attractionId, attractionId),
+            eq(tickets.status, "ISSUED"),
+          ),
+        )
+        .orderBy(asc(tickets.index))
+        .limit(limitedCount);
 
-      const calledTickets = await tx.ticket.findMany({
-        where: {
-          id: { in: ids },
-        },
-        select: { id: true, userId: true, index: true },
-      });
+      const ids = issuedTickets.map((t) => t.id);
+      if (ids.length === 0) {
+        return { calledCount: 0 };
+      }
 
-      await tx.ticket.updateMany({
-        where: {
-          id: { in: ids },
-        },
-        data: {
-          status: "CALLED",
-        },
-      });
+      await tx
+        .update(tickets)
+        .set({ status: "CALLED" })
+        .where(inArray(tickets.id, ids));
 
-      for (const ticket of calledTickets) {
-        const sub = await tx.pushSubscription.findFirst({
-          where: {
-            userId: ticket.userId,
-          },
-        });
+      for (const ticket of issuedTickets) {
+        const subRows = await tx
+          .select()
+          .from(pushSubscriptions)
+          .where(eq(pushSubscriptions.userId, ticket.userId))
+          .limit(1);
+        const sub = subRows[0];
         if (sub) {
           await sendPushNotification(
             sub,
@@ -166,11 +168,20 @@ export async function callFirstTicket(
         }
       }
 
-      return {
-        success: true,
-        message: `${ids.length}件の整理券を呼び出しました。`,
-      };
+      return { calledCount: ids.length };
     });
+
+    if (result.calledCount === 0) {
+      return {
+        success: false,
+        message: "呼び出す整理券がありません。",
+      };
+    }
+
+    return {
+      success: true,
+      message: `${result.calledCount}件の整理券を呼び出しました。`,
+    };
   } catch (error) {
     console.log(error);
     return {
@@ -183,43 +194,51 @@ export async function callFirstTicket(
 
 export async function callTicket(ticketId: string) {
   try {
-    await prisma.$transaction(async (tx) => {
-      const fetchedTicket = await tx.ticket.findUnique({
-        where: { id: ticketId },
-      });
+    const result = await db.transaction(async (tx) => {
+      const fetchedRows = await tx
+        .select()
+        .from(tickets)
+        .where(eq(tickets.id, ticketId))
+        .limit(1);
+      const fetchedTicket = fetchedRows[0];
 
       if (!fetchedTicket) {
-        return {
-          success: false,
-          message: "整理券が存在しません",
-        };
+        return { ok: false as const, message: "整理券が存在しません" };
       }
 
       if (fetchedTicket.status != "CALLED") {
         return {
-          success: false,
+          ok: false as const,
           message: "整理券は呼び出されていません",
         };
       }
-      await tx.ticket.update({
-        where: { id: ticketId },
-        data: { status: "COMPLETED" },
-      });
+      await tx
+        .update(tickets)
+        .set({ status: "COMPLETED" })
+        .where(eq(tickets.id, ticketId));
 
-      await tx.ticket.updateMany({
-        where: {
-          attractionId: fetchedTicket.attractionId,
-          status: "ISSUED",
-          index: {
-            gt: fetchedTicket.index,
-            lte: fetchedTicket.index + 3,
-          },
-        },
-        data: {
-          status: "CALLED",
-        },
-      });
+      await tx
+        .update(tickets)
+        .set({ status: "CALLED" })
+        .where(
+          and(
+            eq(tickets.attractionId, fetchedTicket.attractionId),
+            eq(tickets.status, "ISSUED"),
+            gt(tickets.index, fetchedTicket.index),
+            lte(tickets.index, fetchedTicket.index + 3),
+          ),
+        );
+
+      return { ok: true as const };
     });
+
+    if (!result.ok) {
+      return {
+        success: false,
+        message: result.message,
+      };
+    }
+
     return {
       success: true,
       message: "操作が完了しました。",
@@ -236,10 +255,10 @@ export async function callTicket(ticketId: string) {
 
 export async function cancelTicket(ticketId: string) {
   try {
-    await prisma.ticket.update({
-      where: { id: ticketId },
-      data: { status: "CANCELED" },
-    });
+    await db
+      .update(tickets)
+      .set({ status: "CANCELED" })
+      .where(eq(tickets.id, ticketId));
     return {
       success: true,
       message: "操作が完了しました。",
@@ -259,26 +278,34 @@ export async function fetchTicketsByStatus(
   status: TicketStatus | null,
 ) {
   try {
-    const attraction = await prisma.attraction.findUnique({
-      where: {
-        storeId: storeId,
-      },
-      select: {
-        id: true,
-      },
-    });
+    const attractionRows = await db
+      .select({ id: attractions.id })
+      .from(attractions)
+      .where(eq(attractions.storeId, storeId))
+      .limit(1);
+    const attraction = attractionRows[0];
     if (!attraction) {
       return;
     }
-    const tickets = await prisma.ticket.findMany({
-      where: {
-        attractionId: attraction.id,
-        status: status ? status : undefined,
-      },
-    });
+
+    const ticketList = status
+      ? await db
+          .select()
+          .from(tickets)
+          .where(
+            and(
+              eq(tickets.attractionId, attraction.id),
+              eq(tickets.status, status),
+            ),
+          )
+      : await db
+          .select()
+          .from(tickets)
+          .where(eq(tickets.attractionId, attraction.id));
+
     return {
       success: true,
-      tickets: tickets,
+      tickets: ticketList,
     };
   } catch (error) {
     console.log(error);

@@ -7,10 +7,14 @@ export default async function AdminHomePage() {
     <div className="space-y-4">
       <p>管理者トップページ</p>
       <Button>
-        <Link href="/admin/event">イベント管理画面へ</Link>
+        <Link href="/admin/event" prefetch={false}>
+          イベント管理画面へ
+        </Link>
       </Button>
       <Button>
-        <Link href="/admin/store">店舗管理画面へ</Link>
+        <Link href="/admin/store" prefetch={false}>
+          店舗管理画面へ
+        </Link>
       </Button>
       <Signout />
     </div>

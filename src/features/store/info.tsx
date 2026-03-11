@@ -1,15 +1,20 @@
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import prisma from "@/lib/prisma";
+import { db } from "@/index";
+import { stores } from "@/lib/db/schema";
+import { eq } from "drizzle-orm";
 
 interface StoreInfoProps {
   storeId: string;
 }
 
 export default async function StoreInfo({ storeId }: StoreInfoProps) {
-  const store = await prisma.store.findUnique({
-    where: { id: storeId },
-  });
+  const rows = await db
+    .select()
+    .from(stores)
+    .where(eq(stores.id, storeId))
+    .limit(1);
+  const store = rows[0];
   if (!store) {
     return <p>店舗が存在しません。</p>;
   }

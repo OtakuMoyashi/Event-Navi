@@ -1,8 +1,9 @@
-import prisma from "@/lib/prisma";
+import { db } from "@/index";
+import { events } from "@/lib/db/schema";
 import CreateStoreForm from "./create-form";
 
 export default async function CreateStore() {
-  const events = await prisma.event.findMany();
+  const eventList = await db.select().from(events);
 
-  return <CreateStoreForm events={events} />;
+  return <CreateStoreForm events={eventList} />;
 }

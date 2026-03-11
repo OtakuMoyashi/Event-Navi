@@ -1,6 +1,8 @@
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
-import prisma from "@/lib/prisma";
+import { db } from "@/index";
+import { users } from "@/lib/db/schema";
+import { eq } from "drizzle-orm";
 
 export async function getCurrentUser() {
   const session = await auth.api.getSession({
@@ -11,9 +13,13 @@ export async function getCurrentUser() {
     return null;
   }
 
-  const user = await prisma.user.findUnique({
-    where: { id: session.user.id },
-  });
+  const rows = await db
+    .select()
+    .from(users)
+    .where(eq(users.id, session.user.id))
+    .limit(1);
+
+  const user = rows[0] ?? null;
 
   return user;
 }

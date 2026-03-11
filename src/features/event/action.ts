@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
-import prisma from "@/lib/prisma";
+import { db } from "@/index";
+import { events } from "@/lib/db/schema";
 import z from "zod";
 
 const CreateEventSchema = z.object({
@@ -26,11 +27,9 @@ export async function createEvent(prevState: any, formData: FormData) {
 
     const { slug, name } = validationResult.data;
 
-    await prisma.event.create({
-      data: {
-        slug: slug,
-        name: name,
-      },
+    await db.insert(events).values({
+      slug: slug,
+      name: name,
     });
     return {
       success: true,
