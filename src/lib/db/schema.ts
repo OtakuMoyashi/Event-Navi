@@ -17,7 +17,7 @@ export const stockChangedReasonValues = ["SELLING"] as const;
 export type StockChangedReason = (typeof stockChangedReasonValues)[number];
 
 export const adminRoleValues = [
-  "SYSTEM_ADMIN",
+  "SUPER_ADMIN",
   "ORGANIZATION_ADMIN",
   "EVENT_ADMIN",
   "STORE_ADMIN",
