@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { getDB } from "@/lib/db";
+import { getDb } from "@/lib/db";
 import { stores } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 import Link from "next/link";
@@ -9,7 +9,7 @@ export default async function StoreStaffHomePage(props: {
 }) {
   const { store_slug } = await props.params;
 
-  const db = await getDB();
+  const db = await getDb();
   const storeRows = await db
     .select()
     .from(stores)

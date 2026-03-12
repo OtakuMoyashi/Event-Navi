@@ -2,7 +2,7 @@
 
 import { getAuth } from "@/lib/auth";
 import { revalidatePath } from "next/cache";
-import { getDB } from "@/lib/db";
+import { getDb } from "@/lib/db";
 
 import { admins, staffs } from "@/lib/db/schema";
 import { headers } from "next/headers";
@@ -19,7 +19,7 @@ export async function signOut() {
 
 export async function postSignInByIntent(intent: string | null) {
   const auth = await getAuth();
-  const db = await getDB();
+  const db = await getDb();
 
   const session = await auth.api.getSession({ headers: await headers() });
   if (!session?.user) {

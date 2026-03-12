@@ -1,10 +1,10 @@
 import { Button } from "@/components/ui/button";
-import { getDB } from "@/lib/db";
+import { getDbAsync } from "@/lib/db";
 import { stores } from "@/lib/db/schema";
 import Link from "next/link";
 
 export default async function StoreAdminPage() {
-  const db = await getDB();
+  const db = await getDbAsync();
   const fetchedStores = await db
     .select({
       id: stores.id,

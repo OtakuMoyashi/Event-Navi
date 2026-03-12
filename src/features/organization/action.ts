@@ -1,6 +1,6 @@
 "use server";
 
-import { getDB } from "@/lib/db";
+import { getDb } from "@/lib/db";
 import { organizations } from "@/lib/db/schema";
 import z from "zod";
 
@@ -27,7 +27,7 @@ export async function createOrganization(prevState: any, formData: FormData) {
       };
     }
     const { slug, name, inviteCode } = validationResult.data;
-    const db = await getDB();
+    const db = await getDb();
 
     await db.insert(organizations).values({
       slug: slug,

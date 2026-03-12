@@ -1,13 +1,13 @@
 import TicketQrCodeReader from "@/features/store/attraction/ticket/call";
 import FirstCallTicketForm from "@/features/store/attraction/ticket/first-call-form";
-import { getDB } from "@/lib/db";
+import { getDb } from "@/lib/db";
 import { stores, attractions } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 
 export default async function CallTicketPage(props: {
   params: Promise<{ store_slug: string }>;
 }) {
-  const db = await getDB();
+  const db = await getDb();
   const { store_slug } = await props.params;
   const rows = await db
     .select({ attraction: attractions })

@@ -11,11 +11,11 @@ import {
 import { LoadingPrompt } from "@/components/prompt/loading-prompt";
 import { NotFoundPrompt } from "@/components/prompt/not-found-prompt";
 import { events } from "@/lib/db/schema";
-import { getDB } from "@/lib/db";
+import { getDbAsync } from "@/lib/db";
 
 //TODO 組織一覧も追加する
 export default async function Home() {
-  const db = await getDB();
+  const db = await getDbAsync();
   const fetchedEvents = await db.select().from(events);
   return (
     <div className="space-y-4">

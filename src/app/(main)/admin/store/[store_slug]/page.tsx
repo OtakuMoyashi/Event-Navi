@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import AttractionInfo from "@/features/store/attraction/info";
 import FoodItemList from "@/features/store/food/item/food-list";
 import StoreInfo from "@/features/store/info";
-import { getDB } from "@/lib/db";
+import { getDb } from "@/lib/db";
 import { attractions, foods, stores } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 import Link from "next/link";
@@ -13,7 +13,7 @@ export default async function StoreDetailPage({
   params: Promise<{ store_slug: string }>;
 }) {
   const { store_slug } = await params;
-  const db = await getDB();
+  const db = await getDb();
   const rows = await db
     .select({
       store: stores,

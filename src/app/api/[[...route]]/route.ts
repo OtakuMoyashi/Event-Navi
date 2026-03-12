@@ -1,7 +1,7 @@
 import { Hono } from "hono";
 import { handle } from "hono/vercel";
 import { getAuth } from "@/lib/auth";
-import { getDB } from "@/lib/db";
+import { getDb } from "@/lib/db";
 import { admins, staffs, users } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 
@@ -21,7 +21,7 @@ app.get("/authz", async (c) => {
   }
 
   const auth = await getAuth();
-  const db = await getDB();
+  const db = await getDb();
 
   const session = await auth.api.getSession({ headers: c.req.raw.headers });
   if (!session?.user) {
@@ -58,7 +58,7 @@ app.get("/authz", async (c) => {
 // User info
 app.get("/user", async (c) => {
   const auth = await getAuth();
-  const db = await getDB();
+  const db = await getDb();
 
   const session = await auth.api.getSession({ headers: c.req.raw.headers });
   if (!session?.user) {

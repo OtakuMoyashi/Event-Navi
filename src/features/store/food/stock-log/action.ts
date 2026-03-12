@@ -3,7 +3,7 @@
 import { items, stockLogs } from "@/lib/db/schema";
 import { eq, sql } from "drizzle-orm";
 import z from "zod";
-import { getDB } from "@/lib/db";
+import { getDb } from "@/lib/db";
 
 const CreateStockLogSchema = z.object({
   itemId: z.string(),
@@ -31,7 +31,7 @@ export default async function createStockLog(
   }
 
   const { itemId, difference } = validationResult.data;
-  const db = await getDB();
+  const db = await getDb();
   try {
     await db.transaction(async (tx) => {
       await tx.insert(stockLogs).values({

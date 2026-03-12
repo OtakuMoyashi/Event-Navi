@@ -4,7 +4,7 @@ import {
   NavigationMenuItem,
   navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import { getDB } from "@/lib/db";
+import { getDb } from "@/lib/db";
 import { events } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 import Link from "next/link";
@@ -16,7 +16,7 @@ type Props = {
 
 export default async function EventLayout({ children, params }: Props) {
   const { event_slug } = await params;
-  const db = await getDB();
+  const db = await getDb();
   const eventRows = await db
     .select({ id: events.id, name: events.name, slug: events.slug })
     .from(events)

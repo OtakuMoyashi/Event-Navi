@@ -4,12 +4,12 @@ import { anonymous } from "better-auth/plugins";
 import { nextCookies } from "better-auth/next-js";
 import * as schema from "@/lib/db/schema";
 
-import { getDB } from "./db";
+import { getDb } from "./db";
 
 export const getAuth = async () => {
   return betterAuth({
     appName: "Gakusai-Hub",
-    database: drizzleAdapter(await getDB(), {
+    database: drizzleAdapter(await getDb(), {
       provider: "sqlite",
       schema,
       usePlural: true,

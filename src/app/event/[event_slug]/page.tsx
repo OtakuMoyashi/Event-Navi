@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { getDB } from "@/lib/db";
+import { getDb } from "@/lib/db";
 import { events, stores } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 import {
@@ -18,7 +18,7 @@ export default async function EventTopPage(props: {
   params: Promise<{ event_slug: string }>;
 }) {
   const { event_slug } = await props.params;
-  const db = await getDB();
+  const db = await getDb();
   const eventRows = await db
     .select()
     .from(events)

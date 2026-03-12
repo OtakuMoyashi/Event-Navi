@@ -1,4 +1,4 @@
-import { getDB } from "@/lib/db";
+import { getDb } from "@/lib/db";
 import { events } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 import { notFound } from "next/navigation";
@@ -9,7 +9,7 @@ export default async function eventDetailPage({
   params: Promise<{ event_slug: string }>;
 }) {
   const { event_slug } = await params;
-  const db = await getDB();
+  const db = await getDb();
   const event = await db
     .select({
       name: events.name,

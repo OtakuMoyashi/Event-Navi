@@ -1,4 +1,4 @@
-import { getDB } from "@/lib/db";
+import { getDb } from "@/lib/db";
 import { attractions } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 import UpdateAttractionConfigForm from "./update-form";
@@ -10,7 +10,7 @@ interface UpdateAttractionConfigProps {
 export default async function UpdateAttractionConfig({
   attractionId,
 }: UpdateAttractionConfigProps) {
-  const db = await getDB();
+  const db = await getDb();
   const rows = await db
     .select()
     .from(attractions)

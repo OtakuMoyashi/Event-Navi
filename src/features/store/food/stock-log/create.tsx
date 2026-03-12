@@ -1,4 +1,4 @@
-import { getDB } from "@/lib/db";
+import { getDb } from "@/lib/db";
 import { foods, items } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 import CreateStockLogForm from "./create-form";
@@ -8,7 +8,7 @@ interface CreateStockLogProps {
 }
 
 export default async function CreateStockLog({ storeId }: CreateStockLogProps) {
-  const db = await getDB();
+  const db = await getDb();
   const foodRows = await db
     .select()
     .from(foods)

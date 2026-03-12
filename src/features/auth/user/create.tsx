@@ -25,7 +25,7 @@ export default function CreateAnonymousUser() {
       }
 
       router.refresh();
-    } catch (e) {
+    } catch (error) {
       setError(
         "ゲストユーザーの作成に失敗しました。時間をおいて再度お試しください。",
       );

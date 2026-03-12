@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
-import { getDB } from "@/lib/db";
+import { getDb } from "@/lib/db";
 import { attractions, foods, stores, type StoreType } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 import z from "zod";
@@ -29,7 +29,7 @@ export async function createStore(prevState: any, formData: FormData) {
   const { slug, name } = validationResult.data;
   const storeType = formData.get("storeType") as StoreType;
   const eventId = formData.get("eventId") as string;
-  const db = await getDB();
+  const db = await getDb();
 
   try {
     await db.transaction(async (tx) => {
@@ -110,7 +110,7 @@ export async function updateStoreConfig(prevState: any, formData: FormData) {
     validationResult.data;
 
   const storeId = formData.get("storeId") as string;
-  const db = await getDB();
+  const db = await getDb();
   try {
     await db
       .update(stores)

@@ -1,4 +1,4 @@
-import { getDB } from "@/lib/db";
+import { getDb } from "@/lib/db";
 import { stores } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 import UpdateStoreConfigForm from "./update-form";
@@ -10,7 +10,7 @@ interface updateStoreConfigProps {
 export default async function UpdateStoreConfig({
   storeId,
 }: updateStoreConfigProps) {
-  const db = await getDB();
+  const db = await getDb();
   const rows = await db
     .select()
     .from(stores)

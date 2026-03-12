@@ -1,12 +1,12 @@
 import { getCurrentUser } from "@/features/auth/user/action";
 import AttractionTicketList from "@/features/store/attraction/ticket/attraction-list";
 import IssueTicket from "@/features/store/attraction/ticket/issue";
-import { getDB } from "@/lib/db";
+import { getDb } from "@/lib/db";
 import { staffs, stores, attractions, tickets } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 
 export default async function StaffIssueTicketPage() {
-  const db = await getDB();
+  const db = await getDb();
   const user = await getCurrentUser();
   if (!user) {
     return <p>ユーザーが存在しません。</p>;

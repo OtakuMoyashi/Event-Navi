@@ -3,7 +3,7 @@
 import z from "zod";
 import { foods, items } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
-import { getDB } from "@/lib/db";
+import { getDb } from "@/lib/db";
 
 const RegisterSchema = z.object({
   name: z.string(),
@@ -33,7 +33,7 @@ export async function createItem(prevState: any, formData: FormData) {
   const { name, stock, price } = validationResult.data;
 
   try {
-    const db = await getDB();
+    const db = await getDb();
     const foodRows = await db
       .select({ id: foods.id })
       .from(foods)

@@ -2,11 +2,11 @@
 "use server";
 
 import { foods } from "@/lib/db/schema";
-import { getDB } from "@/lib/db";
+import { getDb } from "@/lib/db";
 
 export async function createFoodWithForm(prevState: any, formData: FormData) {
   const storeId = formData.get("storeId") as string;
-  const db = await getDB();
+  const db = await getDb();
   try {
     await db.insert(foods).values({
       storeId: storeId,

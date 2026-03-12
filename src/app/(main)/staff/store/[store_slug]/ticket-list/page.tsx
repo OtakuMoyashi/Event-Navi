@@ -1,5 +1,5 @@
 import AttractionTicketList from "@/features/store/attraction/ticket/attraction-list";
-import { getDB } from "@/lib/db";
+import { getDb } from "@/lib/db";
 import { stores, attractions, tickets } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 
@@ -7,7 +7,7 @@ export default async function TicketListPage(props: {
   params: Promise<{ store_slug: string }>;
 }) {
   const { store_slug } = await props.params;
-  const db = await getDB();
+  const db = await getDb();
   const storeRows = await db
     .select()
     .from(stores)

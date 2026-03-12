@@ -1,6 +1,6 @@
 "use server";
 
-import { getDB } from "@/lib/db";
+import { getDb } from "@/lib/db";
 import { pushSubscriptions } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 import webpush from "web-push";
@@ -18,7 +18,7 @@ export type PushSubscriptionJSONInput = {
 };
 
 export async function getUserSubscription(userId: string) {
-  const db = await getDB();
+  const db = await getDb();
   return await db
     .select()
     .from(pushSubscriptions)
@@ -30,7 +30,7 @@ export async function subscribeUser(
   userId: string,
 ) {
   try {
-    const db = await getDB();
+    const db = await getDb();
     await db
       .insert(pushSubscriptions)
       .values({
@@ -63,7 +63,7 @@ export async function subscribeUser(
 
 export async function unsubscribeUser(userId: string) {
   try {
-    const db = await getDB();
+    const db = await getDb();
     await db
       .delete(pushSubscriptions)
       .where(eq(pushSubscriptions.userId, userId));

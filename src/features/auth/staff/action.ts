@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
-import { getDB } from "@/lib/db";
+import { getDb } from "@/lib/db";
 import { staffs } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 import { getAuth } from "@/lib/auth";
@@ -40,7 +40,7 @@ export async function createStaff(prevState: any, formData: FormData) {
   const storeId = formData.get("storeId") as string;
 
   const auth = await getAuth();
-  const db = await getDB();
+  const db = await getDb();
 
   try {
     const response = await auth.api.signUpEmail({
@@ -104,7 +104,7 @@ export async function signInStaff(prevState: any, formData: FormData) {
   const email = `${loginId}@example.com`;
 
   const auth = await getAuth();
-  const db = await getDB();
+  const db = await getDb();
 
   try {
     // Better-authでサインイン

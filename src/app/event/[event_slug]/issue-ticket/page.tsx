@@ -1,7 +1,7 @@
 import { getCurrentUser } from "@/features/auth/user/action";
 import CreateAnonymousUser from "@/features/auth/user/create";
 import IssueTicket from "@/features/store/attraction/ticket/issue";
-import { getDB } from "@/lib/db";
+import { getDb } from "@/lib/db";
 import { events } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 
@@ -9,7 +9,7 @@ export default async function TicketIssuePage(props: {
   params: Promise<{ event_slug: string }>;
 }) {
   const { event_slug } = await props.params;
-  const db = await getDB();
+  const db = await getDb();
   const eventRows = await db
     .select()
     .from(events)
