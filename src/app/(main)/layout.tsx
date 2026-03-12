@@ -43,7 +43,7 @@ export default function MainLayout({
   return (
     <>
       <header className="bg-main/70 w-full flex h-16 justify-between items-center gap-8 px-4 sm:px-6 lg:px-8 backdrop-blur-none ">
-        <NavigationMenu>
+        <NavigationMenu viewport={false}>
           <NavigationMenuList>
             <NavigationMenuItem>
               <Link
@@ -55,7 +55,7 @@ export default function MainLayout({
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
-        <NavigationMenu className="lg:hidden relative ">
+        <NavigationMenu viewport={false} className="lg:hidden relative ">
           <NavigationMenuList>
             <NavigationMenuItem>
               <NavigationMenuTrigger>メニュー</NavigationMenuTrigger>
@@ -77,7 +77,7 @@ export default function MainLayout({
             </NavigationMenuItem>
           </NavigationMenuList>
         </NavigationMenu>
-        <NavigationMenu className="hidden lg:block">
+        <NavigationMenu viewport={false} className="hidden lg:block">
           <NavigationMenuList>
             <NavigationMenuItem>
               <Link

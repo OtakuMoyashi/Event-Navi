@@ -5,7 +5,6 @@ import { useState, useEffect, useRef } from "react";
 import { getUserSubscription, subscribeUser, unsubscribeUser } from "./action";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardContent, CardTitle } from "@/components/ui/card";
-import type { User } from "@/generated/prisma/client";
 
 function urlBase64ToUint8Array(base64String: string) {
   const padding = "=".repeat((4 - (base64String.length % 4)) % 4);

@@ -1,7 +1,7 @@
 import UpdateAttractionConfig from "@/features/store/attraction/update";
 import { CreateItemForm } from "@/features/store/food/item/create-form";
 import UpdateStoreConfig from "@/features/store/update";
-import { db } from "@/index";
+import { getDB } from "@/lib/db";
 import { attractions, foods, stores } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 
@@ -9,7 +9,7 @@ export default async function StoreConfigPage(props: {
   params: Promise<{ store_slug: string }>;
 }) {
   const { store_slug } = await props.params;
-
+  const db = await getDB();
   const rows = await db
     .select({
       store: stores,

@@ -2,7 +2,6 @@
 "use server";
 
 import { z } from "zod";
-import { db } from "@/index";
 import {
   attractions,
   pushSubscriptions,
@@ -11,6 +10,7 @@ import {
 } from "@/lib/db/schema";
 import { and, asc, eq, gt, inArray, lte, sql } from "drizzle-orm";
 import { sendPushNotification } from "@/features/push/action";
+import { getDB } from "@/lib/db";
 
 const RegisterSchema = z.object({
   numberOfPeople: z.coerce.number(),
@@ -39,6 +39,7 @@ export async function createTicket(
   const storeId = formData.get("storeId") as string;
 
   try {
+    const db = await getDB();
     const attractionRows = await db
       .select({ id: attractions.id })
       .from(attractions)
@@ -110,6 +111,7 @@ export async function callFirstTicket(
 
   const { count } = validationResult.data;
   try {
+    const db = await getDB();
     const result = await db.transaction(async (tx) => {
       const issuedCountRows = await tx
         .select({ count: sql<number>`count(*)` })
@@ -194,6 +196,7 @@ export async function callFirstTicket(
 
 export async function callTicket(ticketId: string) {
   try {
+    const db = await getDB();
     const result = await db.transaction(async (tx) => {
       const fetchedRows = await tx
         .select()
@@ -255,6 +258,7 @@ export async function callTicket(ticketId: string) {
 
 export async function cancelTicket(ticketId: string) {
   try {
+    const db = await getDB();
     await db
       .update(tickets)
       .set({ status: "CANCELED" })
@@ -277,6 +281,7 @@ export async function fetchTicketsByStatus(
   storeId: string,
   status: TicketStatus | null,
 ) {
+  const db = await getDB();
   try {
     const attractionRows = await db
       .select({ id: attractions.id })

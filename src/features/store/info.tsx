@@ -1,6 +1,6 @@
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { db } from "@/index";
+import { getDB } from "@/lib/db";
 import { stores } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 
@@ -9,6 +9,7 @@ interface StoreInfoProps {
 }
 
 export default async function StoreInfo({ storeId }: StoreInfoProps) {
+  const db = await getDB();
   const rows = await db
     .select()
     .from(stores)

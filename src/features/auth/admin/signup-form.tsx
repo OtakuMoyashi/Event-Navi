@@ -24,7 +24,7 @@ import { Input } from "@/components/ui/input";
 import { MessagePrompt } from "@/components/prompt/message-prompt";
 import { useRouter } from "next/navigation";
 import type { Organization } from "@/lib/db/schema";
-import { adminRoleEnum } from "@/lib/db/schema";
+import { adminRoleValues } from "@/lib/db/schema";
 
 interface SignUpAdminFormProps {
   orgs: Organization[];
@@ -100,7 +100,7 @@ export default function SignUpAdminForm({ orgs }: SignUpAdminFormProps) {
                     </SelectTrigger>
                     <SelectContent>
                       <SelectGroup>
-                        {adminRoleEnum.enumValues.map((role) => (
+                        {adminRoleValues.map((role) => (
                           <SelectItem key={role} value={role}>
                             {role}
                           </SelectItem>

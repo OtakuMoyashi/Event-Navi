@@ -1,9 +1,9 @@
 "use server";
 
-import { db } from "@/index";
 import { items, stockLogs } from "@/lib/db/schema";
 import { eq, sql } from "drizzle-orm";
 import z from "zod";
+import { getDB } from "@/lib/db";
 
 const CreateStockLogSchema = z.object({
   itemId: z.string(),
@@ -12,6 +12,7 @@ const CreateStockLogSchema = z.object({
 
 //TODO stockが負になるときの実装する
 export default async function createStockLog(
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   prevState: any,
   formData: FormData,
 ) {
@@ -30,7 +31,7 @@ export default async function createStockLog(
   }
 
   const { itemId, difference } = validationResult.data;
-
+  const db = await getDB();
   try {
     await db.transaction(async (tx) => {
       await tx.insert(stockLogs).values({

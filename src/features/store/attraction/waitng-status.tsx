@@ -6,11 +6,12 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { db } from "@/index";
+import { getDB } from "@/lib/db";
 import { attractions, stores, tickets } from "@/lib/db/schema";
 import { and, eq } from "drizzle-orm";
 
 export default async function AttracionWaitngStatus() {
+  const db = await getDB();
   const rows = await db
     .select({
       attractionId: attractions.id,

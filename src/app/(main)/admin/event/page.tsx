@@ -1,9 +1,10 @@
 import { Button } from "@/components/ui/button";
-import { db } from "@/index";
+import { getDB } from "@/lib/db";
 import { events } from "@/lib/db/schema";
 import Link from "next/link";
 
 export default async function EventAdminHomePage() {
+  const db = await getDB();
   const fetchedEvents = await db
     .select({ id: events.id, name: events.name, slug: events.slug })
     .from(events);

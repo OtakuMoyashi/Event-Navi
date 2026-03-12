@@ -23,8 +23,7 @@ import { Button } from "@/components/ui/button";
 import { MessagePrompt } from "@/components/prompt/message-prompt";
 import { SuccessPrompt } from "@/components/prompt/success-prompt";
 import { ErrorPrompt } from "@/components/prompt/error-prompt";
-import { Event } from "@/lib/db/schema";
-import { storeTypeEnum } from "@/lib/db/schema";
+import { Event, storeTypeValues } from "@/lib/db/schema";
 
 interface CreateStoreFormProps {
   events: Event[];
@@ -59,7 +58,7 @@ export default function CreateStoreForm({ events }: CreateStoreFormProps) {
                     </SelectTrigger>
                     <SelectContent>
                       <SelectGroup>
-                        {storeTypeEnum.enumValues.map((type) => (
+                        {storeTypeValues.map((type) => (
                           <SelectItem key={type} value={type}>
                             {type}
                           </SelectItem>

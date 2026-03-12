@@ -1,9 +1,9 @@
 "use server";
 
-import z, { success } from "zod";
-import { db } from "@/index";
+import z from "zod";
 import { foods, items } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
+import { getDB } from "@/lib/db";
 
 const RegisterSchema = z.object({
   name: z.string(),
@@ -33,6 +33,7 @@ export async function createItem(prevState: any, formData: FormData) {
   const { name, stock, price } = validationResult.data;
 
   try {
+    const db = await getDB();
     const foodRows = await db
       .select({ id: foods.id })
       .from(foods)

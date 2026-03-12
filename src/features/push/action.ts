@@ -1,10 +1,9 @@
 "use server";
 
-import { db } from "@/index";
+import { getDB } from "@/lib/db";
 import { pushSubscriptions } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 import webpush from "web-push";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 
 webpush.setVapidDetails(
   "mailto:your-name@example.com",
@@ -19,6 +18,7 @@ export type PushSubscriptionJSONInput = {
 };
 
 export async function getUserSubscription(userId: string) {
+  const db = await getDB();
   return await db
     .select()
     .from(pushSubscriptions)
@@ -30,6 +30,7 @@ export async function subscribeUser(
   userId: string,
 ) {
   try {
+    const db = await getDB();
     await db
       .insert(pushSubscriptions)
       .values({
@@ -62,6 +63,7 @@ export async function subscribeUser(
 
 export async function unsubscribeUser(userId: string) {
   try {
+    const db = await getDB();
     await db
       .delete(pushSubscriptions)
       .where(eq(pushSubscriptions.userId, userId));

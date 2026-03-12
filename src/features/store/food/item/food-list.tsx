@@ -1,4 +1,4 @@
-import { db } from "@/index";
+import { getDB } from "@/lib/db";
 import { foods, items } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 import {
@@ -16,6 +16,7 @@ interface FoodItemListProps {
 }
 
 export default async function FoodItemList({ storeId }: FoodItemListProps) {
+  const db = await getDB();
   const foodRows = await db
     .select()
     .from(foods)

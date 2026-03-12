@@ -1,73 +1,55 @@
 import { createId } from "@paralleldrive/cuid2";
 import { relations } from "drizzle-orm";
-import {
-  boolean,
-  integer,
-  pgEnum,
-  pgTable,
-  text,
-  timestamp,
-  unique,
-  varchar,
-} from "drizzle-orm/pg-core";
+import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
 
-export const storeTypeEnum = pgEnum("StoreType", ["ATTRACTION", "FOOD"]);
-export type StoreType = (typeof storeTypeEnum.enumValues)[number];
+export const storeTypeValues = ["ATTRACTION", "FOOD"] as const;
+export type StoreType = (typeof storeTypeValues)[number];
 
-export const ticketStatusEnum = pgEnum("TicketStatus", [
+export const ticketStatusValues = [
   "ISSUED",
   "CALLED",
   "COMPLETED",
   "CANCELED",
-]);
-export type TicketStatus = (typeof ticketStatusEnum.enumValues)[number];
+] as const;
+export type TicketStatus = (typeof ticketStatusValues)[number];
 
-export const stockChangedReasonEnum = pgEnum("StockChangedReason", ["SELLING"]);
-export type StockChangedReason =
-  (typeof stockChangedReasonEnum.enumValues)[number];
+export const stockChangedReasonValues = ["SELLING"] as const;
+export type StockChangedReason = (typeof stockChangedReasonValues)[number];
 
-export const adminRoleEnum = pgEnum("AdminRole", [
+export const adminRoleValues = [
   "SYSTEM_ADMIN",
   "ORGANIZATION_ADMIN",
   "EVENT_ADMIN",
   "STORE_ADMIN",
-]);
-export type AdminRole = (typeof adminRoleEnum.enumValues)[number];
+] as const;
+export type AdminRole = (typeof adminRoleValues)[number];
 
-export const users = pgTable(
-  "user",
-  {
-    id: text("id").primaryKey(),
-    name: text("name"),
-    email: text("email").notNull(),
-    emailVerified: boolean("emailVerified").notNull(),
-    image: text("image"),
-    isAnonymous: boolean("isAnonymous"),
-    role: text("role").notNull().default("user"),
-    createdAt: timestamp("createdAt", { mode: "date" }).notNull(),
-    updatedAt: timestamp("updatedAt", { mode: "date" }).notNull(),
-  },
-  (table) => [unique("user_email_key").on(table.email)],
-);
+export const users = sqliteTable("user", {
+  id: text("id").primaryKey(),
+  name: text("name"),
+  email: text("email").notNull().unique(),
+  emailVerified: integer("emailVerified", { mode: "boolean" }).notNull(),
+  image: text("image"),
+  isAnonymous: integer("isAnonymous", { mode: "boolean" }),
+  role: text("role").notNull().default("user"),
+  createdAt: integer("createdAt", { mode: "timestamp_ms" }).notNull(),
+  updatedAt: integer("updatedAt", { mode: "timestamp_ms" }).notNull(),
+});
 
-export const sessions = pgTable(
-  "session",
-  {
-    id: text("id").primaryKey(),
-    expiresAt: timestamp("expiresAt", { mode: "date" }).notNull(),
-    token: text("token").notNull(),
-    createdAt: timestamp("createdAt", { mode: "date" }).notNull(),
-    updatedAt: timestamp("updatedAt", { mode: "date" }).notNull(),
-    ipAddress: text("ipAddress"),
-    userAgent: text("userAgent"),
-    userId: text("userId")
-      .notNull()
-      .references(() => users.id, { onDelete: "cascade" }),
-  },
-  (table) => [unique("session_token_key").on(table.token)],
-);
+export const sessions = sqliteTable("session", {
+  id: text("id").primaryKey(),
+  expiresAt: integer("expiresAt", { mode: "timestamp_ms" }).notNull(),
+  token: text("token").notNull().unique(),
+  createdAt: integer("createdAt", { mode: "timestamp_ms" }).notNull(),
+  updatedAt: integer("updatedAt", { mode: "timestamp_ms" }).notNull(),
+  ipAddress: text("ipAddress"),
+  userAgent: text("userAgent"),
+  userId: text("userId")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+});
 
-export const accounts = pgTable("account", {
+export const accounts = sqliteTable("account", {
   id: text("id").primaryKey(),
   accountId: text("accountId").notNull(),
   providerId: text("providerId").notNull(),
@@ -77,72 +59,90 @@ export const accounts = pgTable("account", {
   accessToken: text("accessToken"),
   refreshToken: text("refreshToken"),
   idToken: text("idToken"),
-  accessTokenExpiresAt: timestamp("accessTokenExpiresAt", { mode: "date" }),
-  refreshTokenExpiresAt: timestamp("refreshTokenExpiresAt", { mode: "date" }),
+  accessTokenExpiresAt: integer("accessTokenExpiresAt", {
+    mode: "timestamp_ms",
+  }),
+  refreshTokenExpiresAt: integer("refreshTokenExpiresAt", {
+    mode: "timestamp_ms",
+  }),
   scope: text("scope"),
   password: text("password"),
-  createdAt: timestamp("createdAt", { mode: "date" }).notNull(),
-  updatedAt: timestamp("updatedAt", { mode: "date" }).notNull(),
+  createdAt: integer("createdAt", { mode: "timestamp_ms" }).notNull(),
+  updatedAt: integer("updatedAt", { mode: "timestamp_ms" }).notNull(),
 });
 
-export const verifications = pgTable("verification", {
+export const verifications = sqliteTable("verification", {
   id: text("id").primaryKey(),
   identifier: text("identifier").notNull(),
   value: text("value").notNull(),
-  expiresAt: timestamp("expiresAt", { mode: "date" }).notNull(),
-  createdAt: timestamp("createdAt", { mode: "date" }),
-  updatedAt: timestamp("updatedAt", { mode: "date" }),
+  expiresAt: integer("expiresAt", { mode: "timestamp_ms" }).notNull(),
+  createdAt: integer("createdAt", { mode: "timestamp_ms" }),
+  updatedAt: integer("updatedAt", { mode: "timestamp_ms" }),
 });
 
-export const organizations = pgTable("organizations", {
-  id: text("id")
-    .primaryKey()
-    .$defaultFn(() => createId()),
-  slug: varchar("slug", { length: 20 }).notNull().unique(),
-  name: varchar("name", { length: 20 }).notNull(),
-  description: text("description"),
-  inviteCode: varchar("inviteCode", { length: 20 }).notNull(),
-  createdAt: timestamp("createdAt", { mode: "date" }).notNull().defaultNow(),
-  updatedAt: timestamp("updatedAt", { mode: "date" }).notNull().defaultNow(),
-});
-export type Organization = typeof organizations.$inferSelect;
-
-export const events = pgTable("events", {
+export const organizations = sqliteTable("organizations", {
   id: text("id")
     .primaryKey()
     .$defaultFn(() => createId()),
   slug: text("slug").notNull().unique(),
-  name: varchar("name", { length: 20 }).notNull(),
-  isActive: boolean("isActive").notNull().default(false),
-  startedAt: timestamp("startedAt", { mode: "date" }),
-  finishedAt: timestamp("finishedAt", { mode: "date" }),
+  name: text("name").notNull(),
+  description: text("description"),
+  inviteCode: text("inviteCode").notNull(),
+  createdAt: integer("createdAt", { mode: "timestamp_ms" })
+    .notNull()
+    .$defaultFn(() => new Date()),
+  updatedAt: integer("updatedAt", { mode: "timestamp_ms" })
+    .notNull()
+    .$defaultFn(() => new Date()),
+});
+export type Organization = typeof organizations.$inferSelect;
+
+export const events = sqliteTable("events", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => createId()),
+  slug: text("slug").notNull().unique(),
+  name: text("name").notNull(),
+  isActive: integer("isActive", { mode: "boolean" }).notNull().default(false),
+  startedAt: integer("startedAt", { mode: "timestamp_ms" }),
+  finishedAt: integer("finishedAt", { mode: "timestamp_ms" }),
   description: text("description"),
   organizationId: text("organizationId").references(() => organizations.id),
-  createdAt: timestamp("createdAt", { mode: "date" }).notNull().defaultNow(),
-  updatedAt: timestamp("updatedAt", { mode: "date" }).notNull().defaultNow(),
+  createdAt: integer("createdAt", { mode: "timestamp_ms" })
+    .notNull()
+    .$defaultFn(() => new Date()),
+  updatedAt: integer("updatedAt", { mode: "timestamp_ms" })
+    .notNull()
+    .$defaultFn(() => new Date()),
 });
 
 export type Event = typeof events.$inferSelect;
 
-export const stores = pgTable("stores", {
+export const stores = sqliteTable("stores", {
   id: text("id")
     .primaryKey()
     .$defaultFn(() => createId()),
-  slug: varchar("slug", { length: 20 }).notNull().unique(),
-  name: varchar("name", { length: 20 }).notNull(),
-  isActive: boolean("isActive").notNull().default(false),
-  startedAt: timestamp("startedAt", { mode: "date" }),
-  finishedAt: timestamp("finishedAt", { mode: "date" }),
+  slug: text("slug").notNull().unique(),
+  name: text("name").notNull(),
+  isActive: integer("isActive", { mode: "boolean" }).notNull().default(false),
+  startedAt: integer("startedAt", { mode: "timestamp_ms" }),
+  finishedAt: integer("finishedAt", { mode: "timestamp_ms" }),
   description: text("description"),
-  storeType: storeTypeEnum("storeType").notNull(),
+  storeType: text("storeType", { enum: storeTypeValues })
+    .$type<StoreType>()
+    .notNull(),
   eventId: text("eventId").references(() => events.id),
-  createdAt: timestamp("createdAt", { mode: "date" }).notNull().defaultNow(),
-  updatedAt: timestamp("updatedAt", { mode: "date" }).notNull().defaultNow(),
+  createdAt: integer("createdAt", { mode: "timestamp_ms" })
+    .notNull()
+    .$defaultFn(() => new Date()),
+  updatedAt: integer("updatedAt", { mode: "timestamp_ms" })
+    .notNull()
+    .$defaultFn(() => new Date()),
 });
 
 export type Store = typeof stores.$inferSelect;
 
-export const attractions = pgTable("attracions", {
+export const attractions = sqliteTable("attracions", {
   id: text("id")
     .primaryKey()
     .$defaultFn(() => createId()),
@@ -152,13 +152,17 @@ export const attractions = pgTable("attracions", {
     .notNull()
     .unique()
     .references(() => stores.id, { onDelete: "cascade" }),
-  createdAt: timestamp("createdAt", { mode: "date" }).notNull().defaultNow(),
-  updatedAt: timestamp("updatedAt", { mode: "date" }).notNull().defaultNow(),
+  createdAt: integer("createdAt", { mode: "timestamp_ms" })
+    .notNull()
+    .$defaultFn(() => new Date()),
+  updatedAt: integer("updatedAt", { mode: "timestamp_ms" })
+    .notNull()
+    .$defaultFn(() => new Date()),
 });
 
 export type Attraction = typeof attractions.$inferSelect;
 
-export const foods = pgTable("foods", {
+export const foods = sqliteTable("foods", {
   id: text("id")
     .primaryKey()
     .$defaultFn(() => createId()),
@@ -166,33 +170,44 @@ export const foods = pgTable("foods", {
     .notNull()
     .unique()
     .references(() => stores.id, { onDelete: "cascade" }),
-  createdAt: timestamp("createdAt", { mode: "date" }).notNull().defaultNow(),
-  updatedAt: timestamp("updatedAt", { mode: "date" }).notNull().defaultNow(),
+  createdAt: integer("createdAt", { mode: "timestamp_ms" })
+    .notNull()
+    .$defaultFn(() => new Date()),
+  updatedAt: integer("updatedAt", { mode: "timestamp_ms" })
+    .notNull()
+    .$defaultFn(() => new Date()),
 });
 
 export type Food = typeof foods.$inferSelect;
 
-export const tickets = pgTable("tickets", {
+export const tickets = sqliteTable("tickets", {
   id: text("id")
     .primaryKey()
     .$defaultFn(() => createId()),
   index: integer("index").notNull(),
   numberOfPeople: integer("numberOfPeople").notNull(),
-  status: ticketStatusEnum("status").notNull().default("ISSUED"),
-  isPaper: boolean("isPaper").notNull().default(false),
+  status: text("status", { enum: ticketStatusValues })
+    .$type<TicketStatus>()
+    .notNull()
+    .default("ISSUED"),
+  isPaper: integer("isPaper", { mode: "boolean" }).notNull().default(false),
   attractionId: text("attractionId")
     .notNull()
     .references(() => attractions.id),
   userId: text("userId")
     .notNull()
     .references(() => users.id),
-  createdAt: timestamp("createdAt", { mode: "date" }).notNull().defaultNow(),
-  updatedAt: timestamp("updatedAt", { mode: "date" }).notNull().defaultNow(),
+  createdAt: integer("createdAt", { mode: "timestamp_ms" })
+    .notNull()
+    .$defaultFn(() => new Date()),
+  updatedAt: integer("updatedAt", { mode: "timestamp_ms" })
+    .notNull()
+    .$defaultFn(() => new Date()),
 });
 
 export type Ticket = typeof tickets.$inferSelect;
 
-export const items = pgTable("items", {
+export const items = sqliteTable("items", {
   id: text("id")
     .primaryKey()
     .$defaultFn(() => createId()),
@@ -203,13 +218,17 @@ export const items = pgTable("items", {
     .notNull()
     .references(() => foods.id, { onDelete: "cascade" }),
   description: text("description"),
-  createdAt: timestamp("createdAt", { mode: "date" }).notNull().defaultNow(),
-  updatedAt: timestamp("updatedAt", { mode: "date" }).notNull().defaultNow(),
+  createdAt: integer("createdAt", { mode: "timestamp_ms" })
+    .notNull()
+    .$defaultFn(() => new Date()),
+  updatedAt: integer("updatedAt", { mode: "timestamp_ms" })
+    .notNull()
+    .$defaultFn(() => new Date()),
 });
 
 export type Item = typeof items.$inferSelect;
 
-export const stockLogs = pgTable("stock_logs", {
+export const stockLogs = sqliteTable("stock_logs", {
   id: text("id")
     .primaryKey()
     .$defaultFn(() => createId()),
@@ -217,15 +236,21 @@ export const stockLogs = pgTable("stock_logs", {
     .notNull()
     .references(() => items.id),
   difference: integer("difference").notNull(),
-  reason: stockChangedReasonEnum("reason"),
+  reason: text("reason", {
+    enum: stockChangedReasonValues,
+  }).$type<StockChangedReason>(),
   description: text("description"),
-  createdAt: timestamp("createdAt", { mode: "date" }).notNull().defaultNow(),
-  updatedAt: timestamp("updatedAt", { mode: "date" }).notNull().defaultNow(),
+  createdAt: integer("createdAt", { mode: "timestamp_ms" })
+    .notNull()
+    .$defaultFn(() => new Date()),
+  updatedAt: integer("updatedAt", { mode: "timestamp_ms" })
+    .notNull()
+    .$defaultFn(() => new Date()),
 });
 
 export type StockLog = typeof stockLogs.$inferSelect;
 
-export const pushSubscriptions = pgTable("push_subscriptions", {
+export const pushSubscriptions = sqliteTable("push_subscriptions", {
   id: text("id")
     .primaryKey()
     .$defaultFn(() => createId()),
@@ -236,13 +261,17 @@ export const pushSubscriptions = pgTable("push_subscriptions", {
     .notNull()
     .unique()
     .references(() => users.id, { onDelete: "cascade" }),
-  createdAt: timestamp("createdAt", { mode: "date" }).notNull().defaultNow(),
-  updatedAt: timestamp("updatedAt", { mode: "date" }).notNull().defaultNow(),
+  createdAt: integer("createdAt", { mode: "timestamp_ms" })
+    .notNull()
+    .$defaultFn(() => new Date()),
+  updatedAt: integer("updatedAt", { mode: "timestamp_ms" })
+    .notNull()
+    .$defaultFn(() => new Date()),
 });
 
 export type PushSubscription = typeof pushSubscriptions.$inferSelect;
 
-export const admins = pgTable("admins", {
+export const admins = sqliteTable("admins", {
   id: text("id")
     .primaryKey()
     .$defaultFn(() => createId()),
@@ -251,18 +280,22 @@ export const admins = pgTable("admins", {
     .unique()
     .references(() => users.id, { onDelete: "cascade" }),
   email: text("email").notNull().unique(),
-  name: varchar("name", { length: 20 }),
-  role: adminRoleEnum("role").notNull(),
+  name: text("name"),
+  role: text("role", { enum: adminRoleValues }).$type<AdminRole>().notNull(),
   organizationId: text("organizationId").references(() => organizations.id),
   eventId: text("eventId").references(() => events.id),
   storeId: text("storeId").references(() => stores.id),
-  createdAt: timestamp("createdAt", { mode: "date" }).notNull().defaultNow(),
-  updatedAt: timestamp("updatedAt", { mode: "date" }).notNull().defaultNow(),
+  createdAt: integer("createdAt", { mode: "timestamp_ms" })
+    .notNull()
+    .$defaultFn(() => new Date()),
+  updatedAt: integer("updatedAt", { mode: "timestamp_ms" })
+    .notNull()
+    .$defaultFn(() => new Date()),
 });
 
 export type Admin = typeof admins.$inferSelect;
 
-export const staffs = pgTable("staffs", {
+export const staffs = sqliteTable("staffs", {
   id: text("id")
     .primaryKey()
     .$defaultFn(() => createId()),
@@ -271,12 +304,16 @@ export const staffs = pgTable("staffs", {
     .unique()
     .references(() => users.id, { onDelete: "cascade" }),
   email: text("email").notNull().unique(),
-  name: varchar("name", { length: 20 }),
+  name: text("name"),
   storeId: text("storeId")
     .notNull()
     .references(() => stores.id, { onDelete: "cascade" }),
-  createdAt: timestamp("createdAt", { mode: "date" }).notNull().defaultNow(),
-  updatedAt: timestamp("updatedAt", { mode: "date" }).notNull().defaultNow(),
+  createdAt: integer("createdAt", { mode: "timestamp_ms" })
+    .notNull()
+    .$defaultFn(() => new Date()),
+  updatedAt: integer("updatedAt", { mode: "timestamp_ms" })
+    .notNull()
+    .$defaultFn(() => new Date()),
 });
 
 export type Staff = typeof staffs.$inferSelect;

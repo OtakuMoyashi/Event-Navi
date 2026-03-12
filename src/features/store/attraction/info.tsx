@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { db } from "@/index";
+import { getDB } from "@/lib/db";
 import { attractions } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 
@@ -10,6 +10,7 @@ interface AttractionInfoProps {
 export default async function AttractionInfo({
   attractionId,
 }: AttractionInfoProps) {
+  const db = await getDB();
   const rows = await db
     .select()
     .from(attractions)

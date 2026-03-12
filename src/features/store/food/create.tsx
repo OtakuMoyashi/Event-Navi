@@ -1,9 +1,10 @@
 import { CreateFoodForm } from "./create-form";
-import { db } from "@/index";
+import { getDB } from "@/lib/db";
 import { stores } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 
 export default async function CreateAttraction() {
+  const db = await getDB();
   const storeList = await db
     .select()
     .from(stores)

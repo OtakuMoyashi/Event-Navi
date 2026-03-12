@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
-import { db } from "@/index";
+import { getDB } from "@/lib/db";
 import { events } from "@/lib/db/schema";
 import z from "zod";
 
@@ -26,6 +26,7 @@ export async function createEvent(prevState: any, formData: FormData) {
     }
 
     const { slug, name } = validationResult.data;
+    const db = await getDB();
 
     await db.insert(events).values({
       slug: slug,

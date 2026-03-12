@@ -1,4 +1,4 @@
-import { db } from "@/index";
+import { getDB } from "@/lib/db";
 import { stores } from "@/lib/db/schema";
 import { and, eq } from "drizzle-orm";
 import { IssueTicketForm } from "./issue-form";
@@ -14,6 +14,7 @@ export default async function IssueTicket({
   userId,
   isPaper,
 }: IssueTicketProps) {
+  const db = await getDB();
   const storeList = await db
     .select()
     .from(stores)

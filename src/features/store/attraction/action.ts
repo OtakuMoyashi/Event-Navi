@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
-import { db } from "@/index";
+import { getDB } from "@/lib/db";
 import { attractions } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 import z from "zod";
@@ -10,6 +10,7 @@ export async function createAttraction(prevState: any, formData: FormData) {
   const storeId = formData.get("storeId") as string;
 
   try {
+    const db = await getDB();
     await db.insert(attractions).values({
       storeId: storeId,
     });
@@ -54,6 +55,7 @@ export async function updateAttractionConfig(
   const attractionId = formData.get("attractionId") as string;
 
   try {
+    const db = await getDB();
     await db
       .update(attractions)
       .set({

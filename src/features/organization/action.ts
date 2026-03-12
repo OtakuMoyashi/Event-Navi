@@ -1,6 +1,6 @@
 "use server";
 
-import { db } from "@/index";
+import { getDB } from "@/lib/db";
 import { organizations } from "@/lib/db/schema";
 import z from "zod";
 
@@ -10,6 +10,7 @@ const createOrganizationSchema = z.object({
   inviteCode: z.string().max(20),
 });
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export async function createOrganization(prevState: any, formData: FormData) {
   try {
     const validationResult = createOrganizationSchema.safeParse({
@@ -26,6 +27,8 @@ export async function createOrganization(prevState: any, formData: FormData) {
       };
     }
     const { slug, name, inviteCode } = validationResult.data;
+    const db = await getDB();
+
     await db.insert(organizations).values({
       slug: slug,
       name: name,

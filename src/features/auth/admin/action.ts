@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
-import { db } from "@/index";
+import { getDB } from "@/lib/db";
 import { admins, organizations } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
-import { auth } from "@/lib/auth";
+import { getAuth } from "@/lib/auth";
 import { passwordSchema } from "@/lib/schema/auth";
 import z from "zod";
 import { AdminRole } from "@/lib/db/schema";
@@ -14,6 +14,16 @@ const SignUpSchema = z.object({
   password: passwordSchema,
   inviteCode: z.string(),
 });
+
+const hasUserId = (data: unknown): data is { user: { id: string } } => {
+  if (!data || typeof data !== "object") return false;
+
+  const user = (data as { user?: unknown }).user;
+  if (!user || typeof user !== "object") return false;
+
+  const id = (user as { id?: unknown }).id;
+  return typeof id === "string" && id.length > 0;
+};
 
 export async function signUpAdmin(prevState: any, formData: FormData) {
   const validationResult = SignUpSchema.safeParse({
@@ -29,6 +39,9 @@ export async function signUpAdmin(prevState: any, formData: FormData) {
   }
 
   const orgId = formData.get("orgId") as string;
+
+  const auth = await getAuth();
+  const db = await getDB();
 
   const orgRows = await db
     .select({ inviteCode: organizations.inviteCode })
@@ -64,9 +77,9 @@ export async function signUpAdmin(prevState: any, formData: FormData) {
       },
       asResponse: true,
     });
-    const data = await response.json();
+    const data: unknown = await response.json();
 
-    if (!response.ok || !data || !data.user || !data.user.id) {
+    if (!response.ok || !hasUserId(data)) {
       return {
         success: false,
         message: "ユーザー作成に失敗しました",
@@ -114,6 +127,9 @@ export async function signInAdmin(prevState: any, formData: FormData) {
 
   const { email, password } = validationResult.data;
 
+  const auth = await getAuth();
+  const db = await getDB();
+
   try {
     // Better-authでサインイン
     const response = await auth.api.signInEmail({
@@ -124,10 +140,10 @@ export async function signInAdmin(prevState: any, formData: FormData) {
       asResponse: true,
     });
 
-    const data = await response.json();
+    const data: unknown = await response.json();
 
     // レスポンスのOK判定
-    if (!response.ok || !data || !data.user || !data.user.id) {
+    if (!response.ok || !hasUserId(data)) {
       return {
         success: false,
         message: "ユーザー作成に失敗しました",

@@ -1,4 +1,4 @@
-import { db } from "@/index";
+import { getDB } from "@/lib/db";
 import { attractions, events, stores, tickets } from "@/lib/db/schema";
 import { and, asc, eq, inArray } from "drizzle-orm";
 import { NotFoundPrompt } from "@/components/prompt/not-found-prompt";
@@ -17,6 +17,7 @@ interface UserTicketListProps {
 }
 
 export default async function UserTicketList({ userId }: UserTicketListProps) {
+  const db = await getDB();
   const activeTicketRows = await db
     .select({
       id: tickets.id,

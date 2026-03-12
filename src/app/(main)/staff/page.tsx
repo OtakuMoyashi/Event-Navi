@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import Signout from "@/features/auth/signout";
 import { getCurrentUser } from "@/features/auth/user/action";
-import { db } from "@/index";
+import { getDB } from "@/lib/db";
 import { staffs, stores } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 import Link from "next/link";
@@ -11,6 +11,7 @@ export default async function StaffHomePage() {
   if (!user) {
     return <p>ユーザーが存在しません。</p>;
   }
+  const db = await getDB();
   const staffRows = await db
     .select()
     .from(staffs)

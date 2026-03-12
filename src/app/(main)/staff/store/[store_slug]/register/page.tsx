@@ -1,11 +1,12 @@
 import CreateStockLog from "@/features/store/food/stock-log/create";
-import { db } from "@/index";
+import { getDB } from "@/lib/db";
 import { stores } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 
 export default async function FoodRegister(props: {
   params: Promise<{ store_slug: string }>;
 }) {
+  const db = await getDB();
   const { store_slug } = await props.params;
   const storeRows = await db
     .select()

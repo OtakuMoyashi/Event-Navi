@@ -1,21 +1,27 @@
 "use server";
 
-import { auth } from "@/lib/auth";
+import { getAuth } from "@/lib/auth";
 import { revalidatePath } from "next/cache";
-import { db } from "@/index";
+import { getDB } from "@/lib/db";
+
 import { admins, staffs } from "@/lib/db/schema";
+import { headers } from "next/headers";
 
 export async function signOut() {
   try {
-    await auth.api.signOut();
+    const auth = await getAuth();
+    await auth.api.signOut({ headers: await headers() });
     revalidatePath("/");
   } catch (error) {
-    console.log("サーバーエラー");
+    console.log(error);
   }
 }
 
 export async function postSignInByIntent(intent: string | null) {
-  const session = await auth.api.getSession();
+  const auth = await getAuth();
+  const db = await getDB();
+
+  const session = await auth.api.getSession({ headers: await headers() });
   if (!session?.user) {
     return { ok: false, message: "セッションがありません" };
   }
