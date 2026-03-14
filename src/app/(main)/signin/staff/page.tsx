@@ -13,7 +13,7 @@ export default function StaffSigninPage() {
         </CardHeader>
         <CardContent>
           <Button>
-            <Link href="/staff/signup" prefetch={false}>
+            <Link href="/signup/staff" prefetch={false}>
               スタッフアカウントを作成
             </Link>
           </Button>

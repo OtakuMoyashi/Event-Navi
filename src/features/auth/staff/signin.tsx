@@ -61,7 +61,7 @@ export default function SignInStaff() {
             <FieldSeparator />
             <Field>
               <GoogleSignInButton
-                callbackURL="/staff/post-signin?intent=staff"
+                callbackURL="/post-signin?intent=staff"
                 disabled={isPending}
               />
             </Field>

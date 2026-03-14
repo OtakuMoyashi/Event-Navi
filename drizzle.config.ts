@@ -1,16 +1,11 @@
-import { readdirSync } from "fs";
 import { defineConfig } from "drizzle-kit";
 
 const isProduction = process.env.NODE_ENV === "production";
-const sqliteDirPath = ".wrangler/state/v3/d1/miniflare-D1DatabaseObject";
-const sqliteFilePath = readdirSync(sqliteDirPath).find((file) =>
-  file.endsWith(".sqlite"),
-);
 
 const config = isProduction
   ? defineConfig({
       out: "./drizzle/migrations",
-      schema: "./drizzle/schema.ts",
+      schema: "./src/lib/db/schema.ts",
       dialect: "sqlite",
       driver: "d1-http",
       dbCredentials: {
@@ -21,10 +16,10 @@ const config = isProduction
     })
   : defineConfig({
       out: "./drizzle/migrations",
-      schema: "./drizzle/schema.ts",
+      schema: "./src/lib/db/schema.ts",
       dialect: "sqlite",
       dbCredentials: {
-        url: `${sqliteDirPath}/${sqliteFilePath!}`,
+        url: `.wrangler/state/v3/d1/miniflare-D1DatabaseObject/de8195be5d640185e89d8077469f458342761795f95e66aac36fd080e726b5de.sqlite`,
       },
     });
 

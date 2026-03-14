@@ -1,6 +1,6 @@
 "use server";
 
-import { getAuth } from "@/lib/auth";
+import { auth } from "@/lib/auth";
 import { revalidatePath } from "next/cache";
 import { getDb } from "@/lib/db";
 
@@ -9,7 +9,6 @@ import { headers } from "next/headers";
 
 export async function signOut() {
   try {
-    const auth = await getAuth();
     await auth.api.signOut({ headers: await headers() });
     revalidatePath("/");
   } catch (error) {
@@ -18,7 +17,6 @@ export async function signOut() {
 }
 
 export async function postSignInByIntent(intent: string | null) {
-  const auth = await getAuth();
   const db = await getDb();
 
   const session = await auth.api.getSession({ headers: await headers() });

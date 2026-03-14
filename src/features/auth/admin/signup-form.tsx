@@ -36,7 +36,7 @@ export default function SignUpAdminForm({ orgs }: SignUpAdminFormProps) {
 
   useEffect(() => {
     if (state?.success) {
-      router.push("/admin/signin");
+      router.push("/signin/admin");
     }
   }, [state, router]);
 

@@ -3,6 +3,7 @@ import { CreateItemForm } from "@/features/store/food/item/create-form";
 import UpdateStoreConfig from "@/features/store/update";
 import { getDb } from "@/lib/db";
 import { attractions, foods, stores } from "@/lib/db/schema";
+
 import { eq } from "drizzle-orm";
 
 export default async function StoreConfigPage(props: {

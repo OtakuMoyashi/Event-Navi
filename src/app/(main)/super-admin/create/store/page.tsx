@@ -1,6 +1,6 @@
 import CreateStore from "@/features/store/create";
 
-export default function EventCreatePage() {
+export default async function EventCreatePage() {
   return (
     <div>
       <CreateStore />

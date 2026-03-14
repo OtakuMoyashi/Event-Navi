@@ -66,7 +66,7 @@ export default function SignInAdmin() {
             <FieldSeparator />
             <Field>
               <GoogleSignInButton
-                callbackURL="/admin/post-signin?intent=admin"
+                callbackURL="/post-signin?intent=admin"
                 disabled={isPending}
               />
             </Field>

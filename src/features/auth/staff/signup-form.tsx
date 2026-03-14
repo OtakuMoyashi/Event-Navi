@@ -31,7 +31,7 @@ export function SignUpStaffForm({ stores }: { stores: Store[] }) {
 
   useEffect(() => {
     if (state?.success) {
-      router.push("/staff/signin");
+      router.push("/signin/staff");
     }
   }, [state, router]);
 

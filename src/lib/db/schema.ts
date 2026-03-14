@@ -31,7 +31,6 @@ export const users = sqliteTable("user", {
   emailVerified: integer("emailVerified", { mode: "boolean" }).notNull(),
   image: text("image"),
   isAnonymous: integer("isAnonymous", { mode: "boolean" }),
-  role: text("role").notNull().default("user"),
   createdAt: integer("createdAt", { mode: "timestamp_ms" }).notNull(),
   updatedAt: integer("updatedAt", { mode: "timestamp_ms" }).notNull(),
 });
@@ -349,4 +348,60 @@ export const foodsRelations = relations(foods, ({ one, many }) => ({
     references: [stores.id],
   }),
   items: many(items),
+}));
+
+export const ticketsRelations = relations(tickets, ({ one }) => ({
+  attraction: one(attractions, {
+    fields: [tickets.attractionId],
+    references: [attractions.id],
+  }),
+  user: one(users, {
+    fields: [tickets.userId],
+    references: [users.id],
+  }),
+}));
+
+export const itemsRelations = relations(items, ({ one, many }) => ({
+  food: one(foods, {
+    fields: [items.foodId],
+    references: [foods.id],
+  }),
+  stockLogs: many(stockLogs),
+}));
+
+export const stockLogsRelations = relations(stockLogs, ({ one }) => ({
+  item: one(items, {
+    fields: [stockLogs.itemId],
+    references: [items.id],
+  }),
+}));
+
+export const adminsRelations = relations(admins, ({ one }) => ({
+  user: one(users, {
+    fields: [admins.userId],
+    references: [users.id],
+  }),
+  organization: one(organizations, {
+    fields: [admins.organizationId],
+    references: [organizations.id],
+  }),
+  event: one(events, {
+    fields: [admins.eventId],
+    references: [events.id],
+  }),
+  store: one(stores, {
+    fields: [admins.storeId],
+    references: [stores.id],
+  }),
+}));
+
+export const staffsRelations = relations(staffs, ({ one }) => ({
+  user: one(users, {
+    fields: [staffs.userId],
+    references: [users.id],
+  }),
+  store: one(stores, {
+    fields: [staffs.storeId],
+    references: [stores.id],
+  }),
 }));

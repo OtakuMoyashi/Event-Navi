@@ -3,7 +3,6 @@
 import {
   NavigationMenu,
   NavigationMenuList,
-  navigationMenuTriggerStyle,
   NavigationMenuItem,
   NavigationMenuTrigger,
   NavigationMenuContent,
@@ -46,10 +45,7 @@ export default function MainLayout({
         <NavigationMenu viewport={false}>
           <NavigationMenuList>
             <NavigationMenuItem>
-              <Link
-                href="/"
-                className={`${navigationMenuTriggerStyle()} bg-transparent text-xl`}
-              >
+              <Link href="/" className={`bg-transparent text-xl`}>
                 Gakusai-Hub
               </Link>
             </NavigationMenuItem>
@@ -80,28 +76,17 @@ export default function MainLayout({
         <NavigationMenu viewport={false} className="hidden lg:block">
           <NavigationMenuList>
             <NavigationMenuItem>
-              <Link
-                href="/admin"
-                prefetch={false}
-                className={`${navigationMenuTriggerStyle()} bg-transparent`}
-              >
+              <Link href="/admin" prefetch={false} className={`bg-transparent`}>
                 管理者ページ
               </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <Link
-                href="/staff"
-                prefetch={false}
-                className={`${navigationMenuTriggerStyle()} bg-transparent`}
-              >
+              <Link href="/staff" prefetch={false} className={`bg-transparent`}>
                 スタッフページ
               </Link>
             </NavigationMenuItem>
             <NavigationMenuItem>
-              <Link
-                href="/user"
-                className={`${navigationMenuTriggerStyle()} bg-transparent`}
-              >
+              <Link href="/user" className={`bg-transparent`}>
                 ユーザーページ
               </Link>
             </NavigationMenuItem>

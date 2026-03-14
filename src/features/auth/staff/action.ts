@@ -4,7 +4,7 @@
 import { getDb } from "@/lib/db";
 import { staffs } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
-import { getAuth } from "@/lib/auth";
+import { auth } from "@/lib/auth";
 import z from "zod";
 import { passwordSchema } from "@/lib/schema/auth";
 
@@ -39,7 +39,6 @@ export async function createStaff(prevState: any, formData: FormData) {
   const email = `${loginId}@example.com`;
   const storeId = formData.get("storeId") as string;
 
-  const auth = await getAuth();
   const db = await getDb();
 
   try {
@@ -103,7 +102,6 @@ export async function signInStaff(prevState: any, formData: FormData) {
   const { loginId, password } = validationResult.data;
   const email = `${loginId}@example.com`;
 
-  const auth = await getAuth();
   const db = await getDb();
 
   try {

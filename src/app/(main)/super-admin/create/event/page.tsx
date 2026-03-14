@@ -1,6 +1,6 @@
 import CreateEvent from "@/features/event/create";
 
-export default function EventCreatePage() {
+export default async function EventCreatePage() {
   return (
     <div>
       <CreateEvent />

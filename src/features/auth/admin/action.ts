@@ -4,7 +4,7 @@
 import { getDb } from "@/lib/db";
 import { admins, organizations } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
-import { getAuth } from "@/lib/auth";
+import { auth } from "@/lib/auth";
 import { passwordSchema } from "@/lib/schema/auth";
 import z from "zod";
 import { AdminRole } from "@/lib/db/schema";
@@ -40,7 +40,6 @@ export async function signUpAdmin(prevState: any, formData: FormData) {
 
   const orgId = formData.get("orgId") as string;
 
-  const auth = await getAuth();
   const db = await getDb();
 
   const orgRows = await db
@@ -127,7 +126,6 @@ export async function signInAdmin(prevState: any, formData: FormData) {
 
   const { email, password } = validationResult.data;
 
-  const auth = await getAuth();
   const db = await getDb();
 
   try {

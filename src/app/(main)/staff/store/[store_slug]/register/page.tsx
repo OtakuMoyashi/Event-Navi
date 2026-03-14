@@ -1,6 +1,7 @@
 import CreateStockLog from "@/features/store/food/stock-log/create";
 import { getDb } from "@/lib/db";
 import { stores } from "@/lib/db/schema";
+
 import { eq } from "drizzle-orm";
 
 export default async function FoodRegister(props: {

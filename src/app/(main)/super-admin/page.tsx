@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
+
 import Link from "next/link";
 
-export default function SuperAdminHomePage() {
+export default async function SuperAdminHomePage() {
   return (
     <div>
       <Link href="/super-admin/organization" prefetch={false}>

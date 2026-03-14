@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { getDbAsync } from "@/lib/db";
 import { events } from "@/lib/db/schema";
+
 import Link from "next/link";
 
 export default async function EventAdminHomePage() {

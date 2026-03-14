@@ -2,6 +2,7 @@ import TicketQrCodeReader from "@/features/store/attraction/ticket/call";
 import FirstCallTicketForm from "@/features/store/attraction/ticket/first-call-form";
 import { getDb } from "@/lib/db";
 import { stores, attractions } from "@/lib/db/schema";
+
 import { eq } from "drizzle-orm";
 
 export default async function CallTicketPage(props: {

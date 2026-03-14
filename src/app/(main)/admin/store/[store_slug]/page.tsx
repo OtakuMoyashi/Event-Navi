@@ -4,6 +4,7 @@ import FoodItemList from "@/features/store/food/item/food-list";
 import StoreInfo from "@/features/store/info";
 import { getDb } from "@/lib/db";
 import { attractions, foods, stores } from "@/lib/db/schema";
+
 import { eq } from "drizzle-orm";
 import Link from "next/link";
 

@@ -1,5 +1,6 @@
 import { getDb } from "@/lib/db";
 import { events } from "@/lib/db/schema";
+
 import { eq } from "drizzle-orm";
 import { notFound } from "next/navigation";
 

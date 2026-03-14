@@ -2,12 +2,11 @@ import {
   NavigationMenu,
   NavigationMenuList,
   NavigationMenuItem,
-  navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
+import Link from "next/link";
 import { getDb } from "@/lib/db";
 import { events } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
-import Link from "next/link";
 
 type Props = {
   children: React.ReactNode;
@@ -36,7 +35,7 @@ export default async function EventLayout({ children, params }: Props) {
             <NavigationMenuItem>
               <Link
                 href={`/event/${event.slug}`}
-                className={`${navigationMenuTriggerStyle()} bg-transparent text-xl`}
+                className={`bg-transparent text-xl`}
               >
                 {event.name}
               </Link>
@@ -46,10 +45,7 @@ export default async function EventLayout({ children, params }: Props) {
         <NavigationMenu>
           <NavigationMenuList>
             <NavigationMenuItem>
-              <Link
-                href="/user"
-                className={`${navigationMenuTriggerStyle()} bg-transparent`}
-              >
+              <Link href="/user" className={`bg-transparent`}>
                 ユーザー情報
               </Link>
             </NavigationMenuItem>

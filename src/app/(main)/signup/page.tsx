@@ -1,4 +1,4 @@
-import SignUpStaff from "@/features/auth/staff/signup";
+import SignUpStaff from "@/features/auth/staff/signin";
 
 export default function StaffSingUpPage() {
   return (

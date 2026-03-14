@@ -1,11 +1,10 @@
-import { getAuth } from "@/lib/auth";
+import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { getDb } from "@/lib/db";
 import { users } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 
 export async function getCurrentUser() {
-  const auth = await getAuth();
   const db = await getDb();
 
   const session = await auth.api.getSession({
