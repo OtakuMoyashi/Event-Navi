@@ -2,17 +2,15 @@
 "use server";
 
 import { getDb } from "@/lib/db";
-import { admins, invites } from "@/lib/db/schema";
+import { admins } from "@/lib/db/schema";
 import { eq } from "drizzle-orm";
 import { auth } from "@/lib/auth";
 import { passwordSchema } from "@/lib/schema/auth";
 import z from "zod";
-import { hashInviteToken } from "@/features/auth/invite/lib";
 
 const SignUpSchema = z.object({
   email: z.email(),
   password: passwordSchema,
-  inviteToken: z.string().min(1),
 });
 
 const hasUserId = (data: unknown): data is { user: { id: string } } => {
@@ -25,11 +23,10 @@ const hasUserId = (data: unknown): data is { user: { id: string } } => {
   return typeof id === "string" && id.length > 0;
 };
 
-export async function signUpAdmin(prevState: any, formData: FormData) {
+export async function signUpSuperAdmin(prevState: any, formData: FormData) {
   const validationResult = SignUpSchema.safeParse({
     email: formData.get("email"),
     password: formData.get("password"),
-    inviteToken: formData.get("inviteToken"),
   });
 
   if (!validationResult.success) {
@@ -39,76 +36,10 @@ export async function signUpAdmin(prevState: any, formData: FormData) {
       error: "招待リンクが必要です。",
     };
   }
-  const now = new Date();
 
   const db = await getDb();
 
   const { email, password } = validationResult.data;
-  const inviteToken = validationResult.data.inviteToken;
-
-  const inviteTokenHash = await hashInviteToken(inviteToken);
-  const inviteRows = await db
-    .select({
-      id: invites.id,
-      role: invites.role,
-      targetScope: invites.targetScope,
-      organizationId: invites.organizationId,
-      usedCount: invites.usedCount,
-      maxUses: invites.maxUses,
-      expiresAt: invites.expiresAt,
-      revokedAt: invites.revokedAt,
-    })
-    .from(invites)
-    .where(eq(invites.tokenHash, inviteTokenHash))
-    .limit(1);
-
-  const invite = inviteRows[0];
-  if (!invite) {
-    return {
-      success: false,
-      message: null,
-      error: "招待リンクが無効です。",
-    };
-  }
-
-  if (invite.revokedAt) {
-    return {
-      success: false,
-      message: null,
-      error: "この招待リンクは無効化されています。",
-    };
-  }
-
-  if (invite.expiresAt.getTime() <= now.getTime()) {
-    return {
-      success: false,
-      message: null,
-      error: "招待リンクの有効期限が切れています。",
-    };
-  }
-
-  if (invite.usedCount >= invite.maxUses) {
-    return {
-      success: false,
-      message: null,
-      error: "この招待リンクは既に使用済みです。",
-    };
-  }
-
-  if (
-    invite.targetScope !== "ORGANIZATION" ||
-    invite.role !== "ORGANIZATION_ADMIN" ||
-    !invite.organizationId
-  ) {
-    return {
-      success: false,
-      message: null,
-      error: "この招待リンクは組織管理者作成には使用できません。",
-    };
-  }
-
-  const consumedInviteId = invite.id;
-  const consumedInviteNextCount = invite.usedCount + 1;
 
   try {
     const response = await auth.api.signUpEmail({
@@ -132,20 +63,8 @@ export async function signUpAdmin(prevState: any, formData: FormData) {
     await db.insert(admins).values({
       userId: userId,
       email: email,
-      role: "ORGANIZATION_ADMIN",
-      organizationId: invite.organizationId,
+      role: "SUPER_ADMIN",
     });
-
-    const usedAt = new Date();
-    await db
-      .update(invites)
-      .set({
-        usedCount: consumedInviteNextCount,
-        usedAt,
-        acceptedByUserId: userId,
-        updatedAt: usedAt,
-      })
-      .where(eq(invites.id, consumedInviteId));
 
     return {
       success: true,
@@ -166,7 +85,7 @@ const SignInSchema = z.object({
   password: passwordSchema,
 });
 
-export async function signInAdmin(prevState: any, formData: FormData) {
+export async function signInSuperAdmin(prevState: any, formData: FormData) {
   const validationResult = SignInSchema.safeParse({
     email: formData.get("email"),
     password: formData.get("password"),

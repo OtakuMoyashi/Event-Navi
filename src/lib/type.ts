@@ -9,3 +9,10 @@ export const STORE_TYPE_MAP = {
   ATTRACTION: { label: "企画" },
   FOOD: { label: "模擬店" },
 };
+
+export const ADMIN_ROLE_MAP = {
+  SUPER_ADMIN: { label: "システム管理者" },
+  ORGANIZATION_ADMIN: { label: "組織管理者" },
+  EVENT_ADMIN: { label: "イベント管理者" },
+  STORE_ADMIN: { label: "店舗管理者" },
+} as const;

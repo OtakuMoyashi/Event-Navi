@@ -32,7 +32,7 @@ function ListItem({
   );
 }
 
-export default function MainLayout({
+export default function DashBoardLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -43,8 +43,8 @@ export default function MainLayout({
         <NavigationMenu>
           <NavigationMenuList>
             <NavigationMenuItem>
-              <Link href="/" className={`bg-transparent text-xl`}>
-                Gakusai-Hub
+              <Link href="/dashboard" className={`bg-transparent text-xl`}>
+                ダッシュボード
               </Link>
             </NavigationMenuItem>
           </NavigationMenuList>
@@ -55,7 +55,9 @@ export default function MainLayout({
               <NavigationMenuTrigger>メニュー</NavigationMenuTrigger>
               <NavigationMenuContent>
                 <ul className="w-48">
-                  <ListItem href="/user" title="ユーザーページ" />
+                  <ListItem href="/admin" title="管理者ページ" />
+                  <ListItem href="/staff" title="スタッフページ" />
+                  <ListItem href="/super-admin" title="システム管理ページ" />
                 </ul>
               </NavigationMenuContent>
             </NavigationMenuItem>
@@ -64,8 +66,18 @@ export default function MainLayout({
         <NavigationMenu className="hidden lg:block">
           <NavigationMenuList>
             <NavigationMenuItem>
-              <Link href="/user" className={`bg-transparent`}>
-                ユーザーページ
+              <Link href="/admin" className={`bg-transparent`}>
+                管理者ページ
+              </Link>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <Link href="/staff" className={`bg-transparent`}>
+                スタッフページ
+              </Link>
+            </NavigationMenuItem>
+            <NavigationMenuItem>
+              <Link href="/super-admin" className={`bg-transparent`}>
+                システム管理ページ
               </Link>
             </NavigationMenuItem>
           </NavigationMenuList>

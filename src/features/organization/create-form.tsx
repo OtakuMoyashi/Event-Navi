@@ -11,14 +11,6 @@ import {
   FieldSeparator,
   FieldSet,
 } from "@/components/ui/field";
-import {
-  Select,
-  SelectTrigger,
-  SelectContent,
-  SelectItem,
-  SelectGroup,
-  SelectValue,
-} from "@/components/ui/select";
 import { MessagePrompt } from "@/components/prompt/message-prompt";
 import { Input } from "@/components/ui/input";
 
@@ -45,10 +37,6 @@ export function CreateOrganizationForm() {
                 <Field>
                   <FieldLabel>組織名</FieldLabel>
                   <Input name="name" required disabled={isPending} />
-                </Field>
-                <Field>
-                  <FieldLabel>招待コード</FieldLabel>
-                  <Input name="inviteCode" required disabled={isPending} />
                 </Field>
               </FieldGroup>
             </FieldSet>

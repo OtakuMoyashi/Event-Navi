@@ -1,7 +1,7 @@
 "use client";
 
 import { useActionState, useEffect } from "react";
-import { signUpAdmin } from "./action";
+import { signUpSuperAdmin } from "./action";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
@@ -16,17 +16,13 @@ import { Input } from "@/components/ui/input";
 import { MessagePrompt } from "@/components/prompt/message-prompt";
 import { useRouter } from "next/navigation";
 
-interface SignUpAdminFormProps {
-  inviteToken?: string;
-}
-
-export default function SignUpAdminForm({ inviteToken }: SignUpAdminFormProps) {
+export default function SignUpSuperAdminForm() {
   const router = useRouter();
-  const [state, formAction, isPending] = useActionState(signUpAdmin, null);
+  const [state, formAction, isPending] = useActionState(signUpSuperAdmin, null);
 
   useEffect(() => {
     if (state?.success) {
-      router.push("/signin/admin");
+      router.push("/signin/super-admin");
     }
   }, [state, router]);
 
@@ -37,9 +33,6 @@ export default function SignUpAdminForm({ inviteToken }: SignUpAdminFormProps) {
       </CardHeader>
       <CardContent>
         <form action={formAction}>
-          {inviteToken && (
-            <input type="hidden" name="inviteToken" value={inviteToken} />
-          )}
           <FieldGroup>
             <FieldSet>
               <FieldGroup>

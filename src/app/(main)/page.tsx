@@ -14,7 +14,7 @@ import { events } from "@/lib/db/schema";
 import { getDbAsync } from "@/lib/db";
 
 //TODO 組織一覧も追加する
-export default async function Home() {
+export default async function HomePage() {
   const db = await getDbAsync();
   const fetchedEvents = await db.select().from(events);
   return (

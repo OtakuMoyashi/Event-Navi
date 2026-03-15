@@ -26,7 +26,7 @@
       "database_name": "gakusai-hub",
       "database_id": "4ee1d495-df1c-4749-9d8d-1f7a7a81986e",
       "migrations_dir": "drizzle/migrations",
-      "remote": true,
+      "remote": false,
     },
   ],
 }

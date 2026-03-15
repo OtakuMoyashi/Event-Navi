@@ -1,7 +1,6 @@
 import { defineConfig } from "drizzle-kit";
 
 const isProduction = process.env.NODE_ENV === "production";
-
 const config = isProduction
   ? defineConfig({
       out: "./drizzle/migrations",
@@ -19,7 +18,7 @@ const config = isProduction
       schema: "./src/lib/db/schema.ts",
       dialect: "sqlite",
       dbCredentials: {
-        url: `.wrangler/state/v3/d1/miniflare-D1DatabaseObject/de8195be5d640185e89d8077469f458342761795f95e66aac36fd080e726b5de.sqlite`,
+        url: ".wrangler/state/v3/d1/miniflare-D1DatabaseObject/de8195be5d640185e89d8077469f458342761795f95e66aac36fd080e726b5de.sqlite",
       },
     });
 

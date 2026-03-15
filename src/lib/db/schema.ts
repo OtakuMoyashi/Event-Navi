@@ -24,6 +24,22 @@ export const adminRoleValues = [
 ] as const;
 export type AdminRole = (typeof adminRoleValues)[number];
 
+export const inviteScopeValues = [
+  "SYSTEM",
+  "ORGANIZATION",
+  "EVENT",
+  "STORE",
+] as const;
+export type InviteScope = (typeof inviteScopeValues)[number];
+
+export const inviteRoleValues = [
+  "ORGANIZATION_ADMIN",
+  "EVENT_ADMIN",
+  "STORE_ADMIN",
+  "STAFF",
+] as const;
+export type InviteRole = (typeof inviteRoleValues)[number];
+
 export const users = sqliteTable("user", {
   id: text("id").primaryKey(),
   name: text("name"),
@@ -86,7 +102,6 @@ export const organizations = sqliteTable("organizations", {
   slug: text("slug").notNull().unique(),
   name: text("name").notNull(),
   description: text("description"),
-  inviteCode: text("inviteCode").notNull(),
   createdAt: integer("createdAt", { mode: "timestamp_ms" })
     .notNull()
     .$defaultFn(() => new Date()),
@@ -317,6 +332,44 @@ export const staffs = sqliteTable("staffs", {
 
 export type Staff = typeof staffs.$inferSelect;
 
+export const invites = sqliteTable("invites", {
+  id: text("id")
+    .primaryKey()
+    .$defaultFn(() => createId()),
+  tokenHash: text("tokenHash").notNull().unique(),
+  issuerAdminId: text("issuerAdminId").references(() => admins.id),
+  issuerScope: text("issuerScope", { enum: inviteScopeValues })
+    .$type<InviteScope>()
+    .notNull(),
+  targetScope: text("targetScope", { enum: inviteScopeValues })
+    .$type<InviteScope>()
+    .notNull(),
+  role: text("role", { enum: inviteRoleValues }).$type<InviteRole>().notNull(),
+  organizationId: text("organizationId").references(() => organizations.id, {
+    onDelete: "cascade",
+  }),
+  eventId: text("eventId").references(() => events.id, {
+    onDelete: "cascade",
+  }),
+  storeId: text("storeId").references(() => stores.id, {
+    onDelete: "cascade",
+  }),
+  maxUses: integer("maxUses").notNull().default(1),
+  usedCount: integer("usedCount").notNull().default(0),
+  expiresAt: integer("expiresAt", { mode: "timestamp_ms" }).notNull(),
+  usedAt: integer("usedAt", { mode: "timestamp_ms" }),
+  revokedAt: integer("revokedAt", { mode: "timestamp_ms" }),
+  acceptedByUserId: text("acceptedByUserId").references(() => users.id),
+  createdAt: integer("createdAt", { mode: "timestamp_ms" })
+    .notNull()
+    .$defaultFn(() => new Date()),
+  updatedAt: integer("updatedAt", { mode: "timestamp_ms" })
+    .notNull()
+    .$defaultFn(() => new Date()),
+});
+
+export type Invite = typeof invites.$inferSelect;
+
 export const storesRelations = relations(stores, ({ one, many }) => ({
   event: one(events, {
     fields: [stores.eventId],
@@ -392,6 +445,29 @@ export const adminsRelations = relations(admins, ({ one }) => ({
   store: one(stores, {
     fields: [admins.storeId],
     references: [stores.id],
+  }),
+}));
+
+export const invitesRelations = relations(invites, ({ one }) => ({
+  issuerAdmin: one(admins, {
+    fields: [invites.issuerAdminId],
+    references: [admins.id],
+  }),
+  organization: one(organizations, {
+    fields: [invites.organizationId],
+    references: [organizations.id],
+  }),
+  event: one(events, {
+    fields: [invites.eventId],
+    references: [events.id],
+  }),
+  store: one(stores, {
+    fields: [invites.storeId],
+    references: [stores.id],
+  }),
+  acceptedByUser: one(users, {
+    fields: [invites.acceptedByUserId],
+    references: [users.id],
   }),
 }));
 

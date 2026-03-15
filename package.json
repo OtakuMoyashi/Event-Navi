@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "build": "next build --webpack",
-    "dev": "dotenv -e .env.local -- next dev",
+    "dev": "dotenv -e .env.local -- next dev ",
     "test": "next dev",
     "start": "next start",
     "lint": "next lint",
@@ -12,7 +12,7 @@
     "db:push": "drizzle-kit push",
     "db:push:remote": "cross-env NODE_ENV=production drizzle-kit push",
     "db:migrate": "drizzle-kit migrate",
-    "db:studio": "drizzle-kit studio",
+    "db:studio:local": "drizzle-kit studio --config=drizzle.config.local.ts",
     "db:studio:remote": "cross-env NODE_ENV=production drizzle-kit studio",
     "preview": "opennextjs-cloudflare build && opennextjs-cloudflare preview",
     "deploy": "opennextjs-cloudflare build && opennextjs-cloudflare deploy",
